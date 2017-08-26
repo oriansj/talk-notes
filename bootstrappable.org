@@ -1,0 +1,93 @@
+bootstrappable.org project                                           -*- org -*-
+
+* What?
+
+** full source bootstrapping for GuixSD
+
+* Why?
+
+** reproducibility helps with software freedom
+
+Reproducible builds are a set of software development practices that
+create a verifiable path from human readable source code to the binary
+code used by computers.
+
+*** what about the compiler?
+
+We have the sources: they always lead to bitwise-same binary, but what
+about the compiler?
+
+*** the current way out: ignore the problem
+
+ ``recipe for yoghurt: add yoghurt to milk''
+
+*** from the GuixSD manual
+
+   The distribution is fully “bootstrapped” and “self-contained”: each
+package is built based solely on other packages in the distribution.
+
+The root of this dependency graph is a small set of “bootstrap
+binaries”, provided by the ‘(gnu packages bootstrap)’ module.  For more
+information on bootstrapping, *note Bootstrapping::.
+*** new solution: full source bootstrapping path, Stage0 and Mes
+
+* What?
+
+** Software: Stage0 and Mes
+
+** Stage0
+
+*** hex.0: amazing ~300 byte self-hosting hex assembler that we consider to be source
+*** a M0 macro assembler written in .0
+*** a M1 macro assembler written in M0
+*** a hex2 linker written in M0
+
+Look:
+    https://git.savannah.nongnu.org/cgit/stage0.git/tree/Linux%20Bootstrap/hex0.hex
+
+Do:
+    git clone https://git.savannah.nongnu.org/git/stage0.git
+    cd stage0
+    make
+    bin/hex < Linux\ Bootstrap/hex0.hex > hex-1
+    chmod +x hex-1  # later: bin/exec_enable hex-1
+    ./hex-1 < Linux\ Bootstrap/hex0.hex > hex-2
+
+** Mes
+
+    https://gitlab.com/janneke/mes
+
+*** mes.c: a scheme interpreter prototyped in C ~1400 Lines
+*** mescc.scm: a C compiler written in Scheme (uses Nyacc C99 parser in Scheme)
+
+*** mes.M1: this scheme interpreter in annotated M1 assembly
+
+* How to bootstrap?
+
+    hex + hex.0 => hex-1
+    hex-1 + M0.0 -> M0
+    M0 + M1.M0 -> M1.0
+    M0 + hex2_linker.M0 -> hex2
+    M1 + mes.M1 -> mes
+    mes + mescc.scm + tcc.c -> tcc.M1 -> tcc
+    tcc + gcc.c -> gcc
+    *done*
+
+* current status
+** stage0: hex.0, M0 done; M1, hex2_linker prototyped in C
+** tcc compiled with mescc correctly compiles: int main () {return 42;}
+** mes+mescc.scm are mutual self hosting
+** during development we run mescc.scm on Guile (mes is slooowww)
+** tcc compiled with gcc is known to compile gcc
+
+* TODO
+** fix mescc.scm so that tcc can correctly compile gcc
+** fix bootstrap-loops: (Nyacc?, mes.M1?, psyntax.pp?)
+** make gcc bootstrappable again, remove [need for] tcc stage?
+** stage1/2 LISP, FORTH?
+** integrate with GuixSD
+** x86_64, arm?
+
+* Contact
+** #bootstrappable, #guix on freenode
+** bootstrappable.org
