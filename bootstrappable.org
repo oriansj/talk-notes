@@ -36,42 +36,79 @@ information on bootstrapping, *note Bootstrapping::.
 ** Software: Stage0 and Mes
 
 ** Stage0
+https://savannah.nongnu.org/projects/stage0
+*** knight-vm
+Using a hardware specification that was implemented back in the 1970s in TTL and reduced down to the essentials.
+sub 32KB reference written in trivial C to allow easy manual porting to assembly.
 
-*** hex.0: amazing ~300 byte self-hosting hex assembler that we consider to be source
-*** a M0 macro assembler written in .0
-*** a M1 macro assembler written in M0
-*** a hex2 linker written in M0
+This enables a universal bootstrap on entirely alien hardware (SPARC, PowerPC, MIPS, RISCV, ARM, x86, z80, 6502, VAX, PDP-10, etc) running arbitrary software (Linux, Windows, OSX, DOS, CPM, ITS, etc) to exactly reproduce exact bootstrap binaries from source in moderately high level languages (lisp and FORTH).
 
-Look:
-    https://git.savannah.nongnu.org/cgit/stage0.git/tree/Linux%20Bootstrap/hex0.hex
+If you can write a compatible, every step should produce IDENTICAL results.
+This lowers the floor for bootstrapping down to the level of difficulty which can be achieved within a couple weeks of work.
 
-Do:
-    git clone https://git.savannah.nongnu.org/git/stage0.git
-    cd stage0
-    make
-    bin/hex < Linux\ Bootstrap/hex0.hex > hex-1
-    chmod +x hex-1  # later: bin/exec_enable hex-1
-    ./hex-1 < Linux\ Bootstrap/hex0.hex > hex-2
+*** Stage0 steps
+- hex0 monitor (280bytes) ensures you don't need a text editor or any other software period. Trivial to make by hand (toggling in bytes if you want) or using a trivial program of your own (./bin/hex < stage0/stage0_monitor.hex0 > roms/stage0_monitor)
+- hex0 assembler (260 bytes) Only supports line comments (# and ;) [Could be smaller and if you trust your text editor, you can use this as the bootstrap instead of the hex monitor]
+- hex1 assembler (488 bytes) written in hex0 and provides single char labels and relative displacements only (16bit for knight-vm, 32bit for amd64)
+- hex2 assembler (1036 bytes) written in hex1 and provides long labels, adds absolute addresses and the missing set (8bit relative, 16bit absolute and 32bit absolute)
+- M0 macro assembler (1792 bytes) written in hex2 and now allows arbitrary definitions (like DEFINE ADD 05000 or DEFINE ADDI32_to_RAX 4805)
+- Stage0 FORTH (4008 bytes) written in M0 macro assembly and extends itself in its own FORTH Primitives and has a slowly growing initial library
+- Stage0 Lisp (7984 bytes [and slowly growing]) written in M0 macro assembly. Supports all of the LISP primitives defined in McCarthy's 1960 paper [Turns out he missed a few things] with some modern improvements like Lexical scope, let expressions and raw string support.
+
+*** Stage0 future
+- Lisp compiler written in Stage0 Lisp or FORTH that targets multiple platforms.
+- Platform specific ports of M1 and hex2 written in Stage0 Lisp
+- VHDL Knight-vm on FPGA
+- Knight on TTL with manually punched paper tape (Game over Trusting trust attack)
+
+*** helping
+- Simply verify our sha256sum'd steps produce identical binaries on your weird shit (git clone 'https://git.savannah.nongnu.org/git/stage0.git' && cd stage0 && make && make test
+- Hack new functionality in Stage0 Lisp or FORTH
+- Find/report bugs
+- Audit stage0
+- Create programs that make bootstrapping easier
+
+** mescc-tools
+https://github.com/oriansj/mescc-tools
+*** First
+mescc-tools are a port of the stage0 bootstrap to AMD64/x86 ELF for Linux to allow those who don't trust the knight-vm to bootstrap without it and to provide a target example for stage0 cross-platform builds and verification.
+All pieces are being first written in assembly and manually converted to the level required.
+The high level functionality to be bootstrapped is already implemented in: hex2_linker.c, exec_enable.c and M1-macro.c (So you can start leveraging it in any of your bootstrapping projects today!)
+
+*** Status
+- sub-hex0 assembler (303 bytes) [Only supports # line comments] but resulting binaries can't run without execute bit set and requires linux kernel. ( Written in M1 and sub-hex0 with both producing identical binaries)
+- exec_enable (235 bytes) simply sets a single file identically to chmod 777. (Written in M1 and is waiting to be converted to sub-hex0)
+- hex1 assembler (838 bytes) Single letter labels and 32bit relative displacements (written in M1 and hex1 but still neds to be manually converted to hex0)
+
+*** Work in progress
+- hex2 assembler
+- M0 macro assembler
+- M1 macro assembler
+
+*** Future
+- stage0 vm in M1
+- Get gdb and objdump to read M1 binaries properly
 
 ** Mes
+https://gitlab.com/janneke/mes
 
-    https://gitlab.com/janneke/mes
+*** mes.c
+a scheme interpreter prototyped in C ~1400 Lines
 
-*** mes.c: a scheme interpreter prototyped in C ~1400 Lines
-*** mescc.scm: a C compiler written in Scheme (uses Nyacc C99 parser in Scheme)
+*** mescc.scm
+a C compiler written in Scheme (uses Nyacc C99 parser in Scheme)
 
-*** mes.M1: this scheme interpreter in annotated M1 assembly
+*** mes.M1
+this scheme interpreter in annotated M1 assembly
 
 * How to bootstrap?
-
-    hex + hex.0 => hex-1
-    hex-1 + M0.0 -> M0
-    M0 + M1.M0 -> M1.0
-    M0 + hex2_linker.M0 -> hex2
-    M1 + mes.M1 -> mes
-    mes + mescc.scm + tcc.c -> tcc.M1 -> tcc
-    tcc + gcc.c -> gcc
-    *done*
+hex0 (monitor or assembler) + hex1.hex0 => hex1-assembler ( now our hex supports relative jumps calculations)
+hex1-assembler + hex2.hex1 => hex2-assembler ( now our hex supports absolute address calculations and long labels)
+hex2-assembler + M0.hex2 => M0-macro-assembler ( now we can write in pure assembly)
+M0-macro-assembler + mes.M1 => mes
+mes + mescc.scm + tcc.c => tcc.M1 => tcc
+tcc + gcc.c => gcc
+*done*
 
 * current status
 ** stage0: hex.0, M0 done; M1, hex2_linker prototyped in C
