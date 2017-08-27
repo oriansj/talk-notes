@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Bootstrappable builds</title>
+<meta name="author" content="(Ricardo Wurmus)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/solarized.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Bootstrappable builds</h1><h2 class="author">Ricardo Wurmus</h2><p class="date">Created: 2017-08-27 Sun 02:19</p>
+</section>
+
+<section>
+<section id="slide-org353aaed" data-background="./yoghurt.jpg">
+<h2 id="org353aaed">Recipe for yoghurt:</h2>
+<p class="fragment (appear)">
+<b>add yoghurt to milk</b>
+</p>
+
+<ul>
+<li class="fragment appear">“yoghurt software” undermines software freedom</li>
+<li class="fragment appear"><b>ignore</b>: use existing binaries to build new binaries</li>
+<li class="fragment appear">retrace <b>history</b>, save old tools from bit rot</li>
+<li class="fragment appear">write <b>new</b> alternative language implementations</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orga56d0bf">
+<h2 id="orga56d0bf">Java</h2>
+<ul>
+<li class="fragment appear">JDK is written in Java</li>
+<li class="fragment appear">GCJ needs ECJ (Java), bundles pre-compiled GNU Classpath <code>:-(</code></li>
+
+</ul>
+
+</section>
+<section id="slide-org6f65d07">
+<h3 id="org6f65d07">JDK bootstrap</h3>
+<ol>
+<li class="fragment appear">Jikes (C++) -&gt; SableVM (Java + C)</li>
+<li class="fragment appear">old Ant (Java) -&gt; old ECJ (Java)</li>
+<li class="fragment appear">ECJ -&gt; GNU Classpath 0.99 -&gt; JamVM</li>
+<li class="fragment appear">JamVM -&gt; GNU Classpath devel (for Java ~1.6) -&gt; JamVM’</li>
+<li class="fragment appear"><b>OpenJDK</b> via IcedTea 1.x -&gt; 2.x -&gt; 3.x</li>
+
+</ol>
+
+</section>
+<section id="slide-org98684ff">
+<h3 id="org98684ff">Java libraries</h3>
+<ul>
+<li class="fragment appear">cultural problem: download/bundle pre-built packages</li>
+<li class="fragment appear">only leaf nodes are built from source</li>
+<li class="fragment appear">dependency <b>cycles</b> are common</li>
+<li class="fragment appear">cannot use modern build tools</li>
+<li class="fragment appear">needs lots of patience</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org117ebe4">
+<h2 id="org117ebe4">Haskell</h2>
+<ul>
+<li class="fragment appear">All versions of GHC are written in Haskell</li>
+<li class="fragment appear">need GHC <code>(n-1)</code> to build GHC <code>n</code></li>
+<li class="fragment appear">history is littered with defunct Haskell systems: nhc98, Yale Haskell, Hugs</li>
+<li class="fragment appear"><b>failed</b>: use Hugs to build nhc98 to build GHC
+see: <a href="https://elephly.net/posts/2017-01-09-bootstrapping-haskell-part-1.html">https://elephly.net/posts/2017-01-09-bootstrapping-haskell-part-1.html</a></li>
+<li class="fragment appear"><b>next</b>: use Hugs interpreter to build patched GHC directly</li>
+<li class="fragment appear"><b>future</b>: revive and extend Yale Haskell?</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgf3aad22">
+<h2 id="orgf3aad22">The elephant in the room…</h2>
+
+<div class="figure">
+<p><object type="image/svg+xml" data="./elephly.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgb697fc4">
+<h2 id="orgb697fc4">GCC</h2>
+<ul>
+<li class="fragment appear">needs C++ compiler since version 4.7</li>
+<li class="fragment appear">is there a path from reasonably auditable source to GCC?</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orga771767">
+<h2 id="orga771767">Stage0 and Mes</h2>
+<div class="outline-text-2" id="text-orga771767">
+</div></section>
+<section id="slide-org6465c88">
+<h3 id="org6465c88">Stage0</h3>
+<p>
+<a href="https://git.savannah.nongnu.org/git/stage0.git">https://git.savannah.nongnu.org/git/stage0.git</a>
+</p>
+
+<ul>
+<li><code>hex.0</code>: self-hosting hex assembler that we consider to be source (&lt; 300 bytes)</li>
+<li>M0 macro assembler written in .0</li>
+<li>M1 macro assembler written in M0</li>
+<li>a hex2 linker written in M0</li>
+
+</ul>
+
+</section>
+<section id="slide-org8afd4d9">
+<h3 id="org8afd4d9">Mes</h3>
+<p>
+<a href="https://gitlab.com/janneke/mes">https://gitlab.com/janneke/mes</a>
+</p>
+
+<ul>
+<li>mes.c: a scheme interpreter prototyped in C ~1400 Lines</li>
+<li>mescc.scm: a C compiler written in Scheme (uses Nyacc C99 parser in Scheme)</li>
+<li>mes.M1: this scheme interpreter in annotated M1 assembly</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org0db13e6">
+<h2 id="org0db13e6">Current status</h2>
+<ul>
+<li>stage0: hex.0, M0 done; M1, <code>hex2_linker</code> prototyped in C</li>
+<li>tcc compiled with mescc correctly compiles: <code>int main () {return 42;}</code></li>
+<li>mes+mescc.scm are mutually self-hosting</li>
+<li>during development we run mescc.scm on Guile (mes is slooowww)</li>
+<li>tcc compiled with GCC is known to compile GCC</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orga8c68fe">
+<h2 id="orga8c68fe">Open issues</h2>
+<ul>
+<li>fix mescc.scm so that tcc can correctly compile GCC</li>
+<li>fix bootstrap-loops: (Nyacc?, mes.M1?, psyntax.pp?)</li>
+<li>make GCC bootstrappable again, remove [need for] tcc stage?</li>
+<li>stage1/2 LISP, FORTH?</li>
+<li>integrate with GuixSD</li>
+<li>x86<sub>64</sub>, arm?</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org118b062">
+<h2 id="org118b062">Contact</h2>
+<ul>
+<li><code>#bootstrappable</code>, <code>#guix</code> on freenode</li>
+<li><a href="http://bootstrappable.org">http://bootstrappable.org</a></li>
+<li><a href="mailto:bootstrappable@freelists.org">mailto:bootstrappable@freelists.org</a></li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'slide', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
