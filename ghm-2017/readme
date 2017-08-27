@@ -1,0 +1,5 @@
+These are the slides for Ricardo's talk about Bootstrappable Builds at
+the GNU Hacker's Meeting 2017 in Germany.
+
+The org-mode file was turned into a fancy HTML + JavaScript
+presentation with reveal.js and The "org-reveal" package for Emacs.
