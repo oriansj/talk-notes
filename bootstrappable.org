@@ -192,6 +192,32 @@ done and continues to reduce the development load
 + report bugs, issues, concerns or recommendations
 + testing and finding issues with our documentation (we are human after all)
 
+* strengths of current plan
++ stage0 vm is platform agnostic and arbitrary implementations in both software
+and hardware are encouraged.
++ Every possible port of mescc-tools is buildable by every other possible
+mescc-tool port and thus forces any hardware/software trusting trust attack to
+compromise all past, present and future hardware platforms, including those that
+are made for fun out of TTL logic:
+http://cpuville.com/Projects/Original-CPU/Original-CPU-home.html or even those
+made out of individual transistors: https://monster6502.com/ or should someone
+wish http://web.cecs.pdx.edu/~harry/Relay/ using electromechanical relays.
++ Porting of stage0 and mescc-tools to alternate platforms becomes a
+straightforward mechanical exercise.
++ No specific host platform is required until the mescc stage.
+
+* weakness of current plan
++ Initial mescc-tools implementation depends upon a trusted linux binary.
++ Stage0 knight-vm performance is bad and thus makes the entire process slow.
++ On ram contrained systems, the performance gets even worse and requires the
+addition of paging functionality.
++ Hardware which doesn't align immediates to 4bit multiples are not supported,
+or supportable without a change in the hex2_linker design. (Problem for RISCV)
++ Hardware which doesn't have contiguous immediates that are a multiple of 8bits
+are not supported or supportable without a change in the hex2_linker design.
+(Problem for RISCV and ARM)
++ Requires large amounts of largely mechanical effort
+
 * Contact
 #bootstrappable and #guix on freenode
 via bootstrappable.org

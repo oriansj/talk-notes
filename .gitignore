@@ -1,0 +1,7 @@
+# Ignore any media file as they should not be included
+*.webm
+*.mp4
+*.ogv
+*.mp3
+*.ogg
+*.wav
