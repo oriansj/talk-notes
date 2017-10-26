@@ -1,0 +1,22 @@
+title: Perfect reproducibility through cross-platform bootstrapping
+Subtitle (if an option): An introduction to stage0 and mes.
+
+Abstract:
+Have you ever made yogurt? In order to make it, you first need to add yogurt to
+milk. But what if you don't have yogurt to make yogurt? How do you bootstrap
+yogurt?
+
+We have a similar problem in software when trying to create reproducible builds.
+How can you build (compile) if you don't have a builder (compiler)? How do you
+bootstrap a reproducible build? This is the yogurt software problem.
+
+The goal of reproducible builds is to increase trust that the binaries we produce
+match the sources we use to build them. In this talk I will introduce the stage0
+and mes projects, which are doing great work to support reproducible builds in
+projects which use gcc by collaborating to bootstrap gcc from the barest of bones
+up to a fully functional gcc compiler. By bootstrapping gcc, stage0 and mes are
+working to solve the yogurt software problem.
+
+By the end of this talk, audience members will know why reproducible builds
+matter, how to support reproducible builds by contributing to stage0 and mes,
+and where to get started with their contributions.
