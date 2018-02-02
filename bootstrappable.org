@@ -300,6 +300,11 @@ made out of individual transistors: https://monster6502.com/ or should someone
 wish http://web.cecs.pdx.edu/~harry/Relay/ using electromechanical relays.
 + Porting of stage0 and mescc-tools to alternate platforms becomes a
 straightforward mechanical exercise.
++ M2-Planet is trivial to modify to support alternate hardware platforms and
+and thus function as a cross-platform, self-hosting compiler.
++ M2-Planet's output is 100% deterministic and easily predictable; even major
+code changes result in only in differences directly related to the changed code
+block.
 + No specific host platform is required until the mescc stage.
 
 * weakness of current plan
@@ -318,3 +323,47 @@ are not supported or supportable without a change in the hex2_linker design.
 #bootstrappable and #guix on freenode
 via bootstrappable.org
 via our mailing list: bootstrappable@freelists.org
+
+* FAQ
+** Why aren't you doing more in FORTH
++ Because FORTH developers have not contributed more.
+
+** Why don't you have this language?
++ Because you did not write it yet or make any useful bootstrapping programs in
+it either.
+
+** What about backdoored hardware?
++ The good news is this is simple to port to arbitrary hardware, so the cost
+needed to bootstrap hardware you designed yourself is lower than ever.
++ There is nothing we can do in terms of software that eliminates the risk of
+Nexus Intruder program class hardware subversion; as the only solution to that
+risk is to have your own trusted lithography fabrication plant that is run using
+only hardware that you know only has trusted and uncompromised hardware.
+
+** What about this hardware platform?
++ If you want us to supprt your hardware platform, you need to have a reasonable
+hardware target (encoding can be expressed in human readable form) and provide
+the documentation and testing required.
+
+** Why is there an ELF header?
++ mescc-tools is the operating system/hardware specific port of stage0
++ ELF is not actually required for mescc-tools
++ BIOS level versions of mescc-tools is possible by simply rewriting the
+syscalls into BIOS calls, removing the ELF header, adjusting the base address
+and adding the standard PC boot signature (0xAA55)
+
+** BIOS level bootstrapping isn't enough
++ We completely agree; however writing 79,000+ custom bootstraps isn't viable.
++ Simply implement the stage0 virtual machine via TTL logic or individual
+transistors to be absolutely sure that the hardware basis of the bootstrap was
+not compromised.
+
+** Why not use already existing C compilers written in Assembly?
++ We have never found one that runs on modern hardware (we only found a pdp11 C
+compiler which is so primitive as to be useless) and hardware emulators capable
+of running such programs are more complex than M2-Planet and still require
+bootstrapping
+
+** Why not just go back and verify compilers instead?
++ It doesn't address the problem of the trusting trust attack and would take far
+far longer than what we are willing to do.
