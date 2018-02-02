@@ -1,0 +1,75 @@
+#+TITLE: Bootstrappable builds
+#+AUTHOR: The bootstrappable team
+#+REVEAL_THEME: solarized
+#+REVEAL_TRANS: slide
+#+OPTIONS: num:nil toc:nil
+
+* Recipe for yoghurt:
+:PROPERTIES:
+:reveal_background: ../fosdem_2017/yoghurt.jpg
+:license:  CC-BY 2.0, Marco Verch (http://foto.wuestenigel.com/homemade-yogurt/)
+:END:
+
+#+ATTR_REVEAL: :frag (appear)
+*add yoghurt to milk*
+
+#+ATTR_REVEAL: :frag (appear)
++ “yoghurt software” undermines software freedom
++ *ignore*: use existing binaries to build new binaries
++ retrace *history*, save old tools from bit rot
++ write *new* alternative language implementations
+
+* GCC
+#+ATTR_REVEAL: :frag (appear)
++ needs C++ compiler since version 4.7
++ is there a path from reasonably auditable source to GCC?
+
+* Stage0 and Mes
+
+** Stage0
+https://git.savannah.nongnu.org/git/stage0.git
+https://github.com/oriansj/M2-Planet
+
++ hex0: self-hosting hex assembler that we consider to be source (< 300 bytes)
++ hex1: a hex assembler that supports single character relative labels
++ hex2: a hex assembler that supports long labels, absolute addresses, relative displacements and multiple architectures
++ M1: a macro assembler that is written in hex2 and allows arbitrary instruction definitions (DEFINE ADD FF04)
++ M2-Planet: a PLAtform NEutral Transpiler that looks alot like C and is to be written in M1
+
+#+ATTR_REVEAL: :frag (appear)
++ Works on multiple hardware and software platforms
++ Able to do cross platform M1 program builds with identical results
+
+#+ATTR_REVEAL: :frag (appear)
++ Able to do cross platform M2-Planet program builds with identical results
+
+** Mes
+https://gitlab.com/janneke/mes
+
++ mes.c: a scheme interpreter prototyped in C ~1400 Lines
++ mescc.scm: a C compiler written in Scheme (uses Nyacc C99 parser in Scheme)
+
+#+ATTR_REVEAL: :frag (appear)
++ mes.M1: mes.c in annotated M1 assembly to be elimated when M2-Planet can build mes.c
+
+* Current status
++ stage0: All but M2-Planet done and a bunch of porting
++ tcc compiled with mescc compiles working C programs
++ stage0 is Operating system and Hardware platform neutral
++ mescc-tools port well underway with i386 and AMD64; ARM port starting shortly
++ mes+mescc.scm are mutually self-hosting
++ during development we run mescc.scm on Guile (mes is slooowww, but lots of improvements)
++ tcc compiled with GCC is known to compile GCC
+
+* Open issues
++ fix mes.c performance
++ RISC-V unbootstrappable with anything less than GCC
++ fix bootstrap-loops: (Nyacc?, mes.M1?, psyntax.pp?)
++ make GCC bootstrappable again, remove [need for] tcc stage?
++ integrate with GuixSD
++ Nexus Intruder problem still unsolvable without full control of lithography process.
+
+* Contact
++ =#bootstrappable=, =#guix= on freenode
++ http://bootstrappable.org
++ mailto:bootstrappable@freelists.org
