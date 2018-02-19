@@ -1,0 +1,39 @@
+digraph "Current bootstrap Map" {
+	"NULL"  [label = "cyan3: done and essential\nblack: done but not essential\ngreen2: done but are not essential yet\nred1: potential paths to parts still being enginneered", shape = box];
+
+	"hex0-monitor" [label = "hex0 Monitor", shape = box, fontname = Helvetica];
+	"hex0-assembler" [label = "hex0 Assembler", shape = box, fontname = Helvetica];
+	"hex1-assembler" [label = "hex1 Assembler", shape = box, fontname = Helvetica];
+	"hex2-assembler" [label = "hex2 Assembler", shape = box, fontname = Helvetica];
+	"M1-Macro" [label = "M1 Macro assembler", shape = box, fontname = Helvetica];
+	"Slow_Lisp" [label = "Slow Lisp", shape = box, fontname = Helvetica];
+	"Stage0-FORTH" [label = "Stage0 FORTH", shape = box, fontname = Helvetica];
+	"M2-Planet" [label = "M2-PLANET", shape = box, fontname = Helvetica];
+	"M2-Moon" [label = "M2-Moon", shape = box, fontname = Helvetica];
+	"mes.c" [label = "mes.c", shape = box, fontname = Helvetica];
+	"mescc" [label = "mescc", shape = box, fontname = Helvetica];
+	"tcc" [label = "tcc", shape = box, fontname = Helvetica];
+	"gcc_4.7" [label = "gcc 4.7", shape = box, fontname = Helvetica];
+
+	"cat" [label = "cat", shape = box, fontname = Helvetica];
+	"SET" [label = "SET editor", shape = box, fontname = Helvetica];
+
+	"hex0-monitor" -> "SET" [color = black];
+	"hex0-monitor" -> "hex0-assembler" [color = cyan3];
+	"hex0-assembler" -> "hex1-assembler" [color = cyan3];
+	"hex1-assembler" -> "hex2-assembler" [color = cyan3];
+	"hex2-assembler" -> "M1-Macro" [color = cyan3];
+	"M1-Macro" -> "cat" [color = black];
+	"M1-Macro" -> "Slow_Lisp" [color = green2];
+	"M1-Macro" -> "Stage0-FORTH" [color = green2];
+	"M1-Macro" -> "M2-Planet" [color = red1];
+	"M1-Macro" -> "M2-Moon" [color = red1];
+	"Slow_Lisp" -> "M2-Planet" [color = red1];
+	"Slow_Lisp" -> "M2-Moon" [color = red1];
+	"Stage0-FORTH" -> "M2-Planet" [color = red1];
+	"M2-Planet" -> "mes.c" [color = red1];
+	"M2-Moon" -> "mescc" [color = red1];
+	"mes.c" -> "mescc" [color = cyan3];
+	"mescc" -> "tcc" [color = cyan3];
+	"tcc" -> "gcc_4.7" [color = cyan3];
+}
