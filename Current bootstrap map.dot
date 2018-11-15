@@ -11,6 +11,8 @@ digraph "Current bootstrap Map" {
 	"cc_x86" [label = "cc_x86", shape = box, fontname = Helvetica];
 	"M2-Planet" [label = "M2-PLANET", shape = box, fontname = Helvetica];
 	"M2-Moon" [label = "M2-Moon", color = red, shape = box, fontname = Helvetica];
+	"mescc-tools-seed" [label = "mescc-tools-seed", shape = box, fontname = Helvetica];
+	"mescc-tools" [label = "mescc-tools", shape = box, fontname = Helvetica];
 	"mes.c" [label = "mes.c", shape = box, fontname = Helvetica];
 	"mescc" [label = "mescc", shape = box, fontname = Helvetica];
 	"tcc" [label = "tcc", shape = box, fontname = Helvetica];
@@ -31,6 +33,10 @@ digraph "Current bootstrap Map" {
 	"cc_x86" -> "M2-Planet" [color = cyan3];
 	"M1-Macro" -> "M2-Moon" [color = red1];
 	"M2-Planet" -> "mes.c" [color = red1];
+	"cc_x86" -> "mescc-tools-seed" [color = cyan3];
+	"mescc-tools-seed" -> "mescc-tools" [color = cyan3];
+	"M2-Planet" -> "mescc-tools" [color = cyan3];
+	"mescc-tools" -> "mes.c" [color = red1];
 	"mes.c" -> "mescc" [color = cyan3];
 	"mescc" -> "tcc" [color = cyan3];
 	"tcc" -> "gcc_4.7" [color = cyan3];
