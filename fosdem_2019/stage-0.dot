@@ -1,0 +1,107 @@
+digraph  {
+  node[shape=box,width=1,height=0.25];
+  edge [height=0.25];
+
+  "hex0-monitor" [label = "hex0 Monitor", color = black, shape = box];
+  "hex0-assembler" [label = "hex0 Assembler", color = black, shape = box];
+  "SET" [label = "SET editor", color = cyan3, shape = box];
+  # "hex1-assembler" [label = "hex1 Assembler", color = black, shape = box];
+  # "hex2-assembler" [label = "hex2 Assembler", color = black, shape = box];
+  # "M1-Macro" [label = "M1 Macro assembler", color = black, shape = box];
+  # "cat" [label = "cat", color = cyan3, shape = box];
+  # "Slow_Lisp" [label = "Slow Lisp", color = green3, shape = box];
+  # "Stage0-FORTH" [label = "Stage0 FORTH", color = green3, shape = box];
+  # "cc_x86" [label = "cc_x86", color = black, shape = box];
+  # "M2-Planet" [label = "M2-PLanet", color = black, shape = box];
+  # "M2-Moon" [label = "M2-Moon", color = red1, shape = box];
+  # "mescc-tools-seed" [label = "mescc-tools-seed", color = black, shape = box];
+  # "?" [label = "?", color = red1, shape = box];
+  # "bootstrap-binaries" [label = "bootstrap-binaries", color=red1, shape = box];
+  # "mescc-tools" [label = "mescc-tools", color = black, shape = box];
+  # "Mes C Lib.M2" [label = "Mes C Lib.M2", color = red1, shape = box];
+  # "mes.M2" [label = "mes.M2", color = red1, shape = box];
+  # "mescc" [label = "mescc", color = black, shape = box];
+  # "Mes C Lib +tcc" [label = "Mes C Lib +tcc", color = black, shape = box];
+  # "tcc" [label = "tcc", color = black, shape = box];
+  # "Mes C Lib +GNU" [label = "Mes C Lib +GNU", color = black, shape = box];
+  # "gcc-core 2.95.3" [label = "gcc-core 2.95.3", color = black, shape = box];
+  # "glibc 2.2.5" [label = "glibc 2.2.5", color = black, shape = box];
+  # "gcc 2.95.3" [label = "gcc 2.95.3", color = black, shape = box];
+  # "glibc 2.16" [label = "glibc 2.16", color = black, shape = box];
+  # "gcc 4.7.4" [label = "gcc 4.7.4", color = black, shape = box];
+
+  "SET" -> "hex0-monitor" [color = cyan3];
+  "hex0-assembler" -> "hex0-monitor" [color = black];
+  "hex1-assembler" -> "hex0-assembler" [color = black];
+  # "hex2-assembler" -> "hex1-assembler" [color = black];
+  # "M1-Macro" -> "hex2-assembler" [color = black];
+  # "cat" -> "M1-Macro" [color = cyan3];
+  # "Slow_Lisp" -> "M1-Macro" [color = green3];
+  # "Stage0-FORTH" -> "M1-Macro" [color = green3];
+  # "cc_x86" -> "M1-Macro" [color = black];
+  # "M2-Planet" -> "cc_x86" [color = black];
+  # "M2-Moon" -> "M1-Macro" [color = red1];
+
+  # "mescc-tools-seed" -> "cc_x86" [color = black];
+  # "mescc-tools" -> "mescc-tools-seed" [color = black];
+  # "mescc-tools" -> "M2-Planet" [color = black];
+
+  # "Mes C Lib.M2" -> "mescc-tools" [color = red1];
+  # "Mes C Lib.M2" -> "M2-Planet" [color = red1];
+
+  # "mes.M2" -> "mescc-tools" [color = red1];
+  # "mes.M2" -> "Mes C Lib.M2" [color = red1];
+  # "mes.M2" -> "M2-Planet" [color = red1];
+  # "mescc" -> "mes.M2" [color = black];
+
+  # "Mes C Lib +tcc" -> "mes.M2" [color = red1];
+
+  # "tcc" -> "Mes C Lib +tcc" [color = black];
+  # "tcc" -> "bootstrap-binaries" [color = black];
+  # "tcc" -> "mescc" [color = black];
+
+  # "gcc-core 2.95.3" -> "Mes C Lib +GNU " [color = black];
+  # "gcc-core 2.95.3" -> "bootstrap-binaries" [color = black];
+  # "gcc-core 2.95.3" -> "tcc" [color = black];
+
+  # "make" -> "Mes C Lib +GNU" [color = black];
+  # "make" -> "tcc" [color = black];
+  # "make" -> "bootstrap-binaries" [color = black];
+
+  # "glibc 2.2.5" -> "gcc-core 2.95.3" [color = black];
+  # "glibc 2.2.5" -> "binutils" [color = black];
+  # "glibc 2.2.5" -> "Mes C Lib +GNU" [color = black];
+  # "glibc 2.2.5" -> "make" [color = black];
+  # "glibc 2.2.5" -> "bootstrap-binaries" [color = black];
+
+  # "gcc 2.95.3" -> "gcc-core 2.95.3" [color = black];
+  # "gcc 2.95.3" -> "binutils" [color = black];
+  # "gcc 2.95.3" -> "glibc 2.2.5" [color = black];
+  # "gcc 2.95.3" -> "make" [color = black];
+  # "gcc 2.95.3" -> "bootstrap-binaries" [color = black];
+
+  # "glibc 2.16" -> "glibc 2.2.5" [color = black];
+  # "glibc 2.16" -> "binutils" [color = black];
+  # "glibc 2.16" -> "gcc 2.95.3" [color = black];
+  # "glibc 2.16" -> "make" [color = black];
+  # "glibc 2.16" -> "bootstrap-binaries" [color = black];
+
+  # "gcc 4.7.4" -> "glibc 2.16" [color = black];
+  # "gcc 4.7.4" -> "binutils" [color = black];
+  # "gcc 4.7.4" -> "gcc 2.95.3" [color = black];
+  # "gcc 4.7.4" -> "make" [color = black];
+  # "gcc 4.7.4" -> "bootstrap-binaries" [color = black];
+
+  node [shape=plaintext]
+  subgraph cluster_01 {
+    key [label=<<table border="0" cellpadding="2" cellspacing="0" cellborder="0">
+      <tr><td align="left"><font color="black">black</font></td><td align="left">done, essential</td></tr>
+      <tr><td align="left"><font color="cyan3">cyan</font></td><td align="left">done, optional</td></tr>
+<!--
+      <tr><td align="left"><font color="green3">green</font></td><td align="left">done, undecided</td></tr>
+      <tr><td align="left"><font color="red1">red</font></td><td align="left">in progress, essential</td></tr>
+      <tr><td align="left"><font color="orange">orange</font></td><td align="left">in progress, undecided</td></tr>
+!-->
+      </table>>]
+  }
+}

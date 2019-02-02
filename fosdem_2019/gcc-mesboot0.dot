@@ -1,0 +1,92 @@
+digraph "Guix bag" {
+
+  node[width=1,height=0.25];
+  edge [height=0.25];
+
+  dpi=75
+  # "/gnu/store/gz3agxnnlgkafw2c8jnvk2hqmlh85pkc-guile-bootstrap-2.0.drv" [fontcolor = red]
+
+//HANDCRAFTED UNTIL HERE TO BE ABLE TO CUSTOMIZE
+
+  "/gnu/store/mywrsxmbsz9k87z755mnymmpdjv0jvf1-gcc-mesboot0-2.95.3.drv" [label = "gcc-mesboot0@2.95.3", shape = box, fontname = Helvetica];
+  "/gnu/store/mywrsxmbsz9k87z755mnymmpdjv0jvf1-gcc-mesboot0-2.95.3.drv" -> "/gnu/store/fh33abhfvsdgdrg54m86yhmkihfp1g2j-binutils-mesboot0-2.20.1a.drv" [color = darkgoldenrod];
+  "/gnu/store/mywrsxmbsz9k87z755mnymmpdjv0jvf1-gcc-mesboot0-2.95.3.drv" -> "/gnu/store/52nz2cbswm4n91707gy8945h2s4jgvfb-gcc-core-mesboot-2.95.3.drv" [color = darkgoldenrod];
+  "/gnu/store/mywrsxmbsz9k87z755mnymmpdjv0jvf1-gcc-mesboot0-2.95.3.drv" -> "/gnu/store/rn88dllv6vh4mxwbr4v9wjmnl4ml3xs2-glibc-mesboot0-2.2.5.drv" [color = darkgoldenrod];
+  "/gnu/store/mywrsxmbsz9k87z755mnymmpdjv0jvf1-gcc-mesboot0-2.95.3.drv" -> "/gnu/store/00rjhpbkzk86s4pksjg934l310iaxxjr-bootstrap-binaries-0.drv" [color = darkgoldenrod];
+  "/gnu/store/mywrsxmbsz9k87z755mnymmpdjv0jvf1-gcc-mesboot0-2.95.3.drv" -> "/gnu/store/qf1x4bvxg8ihbgmv57yyiwkj5y8zzmk0-diffutils-mesboot-2.7.drv" [color = darkgoldenrod];
+  "/gnu/store/mywrsxmbsz9k87z755mnymmpdjv0jvf1-gcc-mesboot0-2.95.3.drv" -> "/gnu/store/q8d60ln0dxjvqd2ymi1g6xyk3046m23n-linux-libre-headers-bootstrap-0.drv" [color = darkgoldenrod];
+  "/gnu/store/mywrsxmbsz9k87z755mnymmpdjv0jvf1-gcc-mesboot0-2.95.3.drv" -> "/gnu/store/vys62fkr9p3qfp9mc36456ffbpz24n60-make-mesboot0-3.80.drv" [color = darkgoldenrod];
+  "/gnu/store/fh33abhfvsdgdrg54m86yhmkihfp1g2j-binutils-mesboot0-2.20.1a.drv" [label = "binutils-mesboot0@2.20.1a", shape = box, fontname = Helvetica];
+  "/gnu/store/fh33abhfvsdgdrg54m86yhmkihfp1g2j-binutils-mesboot0-2.20.1a.drv" -> "/gnu/store/7lcpxky7sn4c9c86ywri6y3x2d4681iv-tcc-boot-0.9.27.drv" [color = peachpuff4];
+  "/gnu/store/fh33abhfvsdgdrg54m86yhmkihfp1g2j-binutils-mesboot0-2.20.1a.drv" -> "/gnu/store/00rjhpbkzk86s4pksjg934l310iaxxjr-bootstrap-binaries-0.drv" [color = peachpuff4];
+  "/gnu/store/fh33abhfvsdgdrg54m86yhmkihfp1g2j-binutils-mesboot0-2.20.1a.drv" -> "/gnu/store/qf1x4bvxg8ihbgmv57yyiwkj5y8zzmk0-diffutils-mesboot-2.7.drv" [color = peachpuff4];
+  "/gnu/store/fh33abhfvsdgdrg54m86yhmkihfp1g2j-binutils-mesboot0-2.20.1a.drv" -> "/gnu/store/vys62fkr9p3qfp9mc36456ffbpz24n60-make-mesboot0-3.80.drv" [color = peachpuff4];
+  "/gnu/store/7lcpxky7sn4c9c86ywri6y3x2d4681iv-tcc-boot-0.9.27.drv" [label = "tcc-boot@0.9.27", shape = box, fontname = Helvetica];
+  "/gnu/store/7lcpxky7sn4c9c86ywri6y3x2d4681iv-tcc-boot-0.9.27.drv" -> "/gnu/store/pa9s0y0dx6a60a72434syb1zfxgmqilr-mes-boot-0.19.drv" [color = red];
+  "/gnu/store/7lcpxky7sn4c9c86ywri6y3x2d4681iv-tcc-boot-0.9.27.drv" -> "/gnu/store/kd9ly1185dn9z1mbkn0wd2r3fcv1bkw5-tcc-boot0-0.9.26-5.c7b3f59.drv" [color = red];
+  "/gnu/store/7lcpxky7sn4c9c86ywri6y3x2d4681iv-tcc-boot-0.9.27.drv" -> "/gnu/store/00rjhpbkzk86s4pksjg934l310iaxxjr-bootstrap-binaries-0.drv" [color = red];
+  "/gnu/store/pa9s0y0dx6a60a72434syb1zfxgmqilr-mes-boot-0.19.drv" [label = "mes-boot@0.19", shape = box, fontname = Helvetica];
+  "/gnu/store/pa9s0y0dx6a60a72434syb1zfxgmqilr-mes-boot-0.19.drv" -> "/gnu/store/gd83makzwnb2aq1x0hylfsi8gaxln5js-bootstrap-mescc-tools-0.5.2.drv" [color = darkseagreen];
+  "/gnu/store/pa9s0y0dx6a60a72434syb1zfxgmqilr-mes-boot-0.19.drv" -> "/gnu/store/00rjhpbkzk86s4pksjg934l310iaxxjr-bootstrap-binaries-0.drv" [color = darkseagreen];
+  "/gnu/store/pa9s0y0dx6a60a72434syb1zfxgmqilr-mes-boot-0.19.drv" -> "/gnu/store/629yzay882kh1yhpqddps2psfhpjrk2q-bootstrap-mes-0.19.drv" [color = darkseagreen];
+  #  "/gnu/store/pa9s0y0dx6a60a72434syb1zfxgmqilr-mes-boot-0.19.drv" -> "/gnu/store/gz3agxnnlgkafw2c8jnvk2hqmlh85pkc-guile-bootstrap-2.0.drv" [color = darkseagreen];
+  "/gnu/store/gd83makzwnb2aq1x0hylfsi8gaxln5js-bootstrap-mescc-tools-0.5.2.drv" [label = "bootstrap-mescc-tools@0.5.2", shape = box, fontname = Helvetica];
+  "/gnu/store/00rjhpbkzk86s4pksjg934l310iaxxjr-bootstrap-binaries-0.drv" [label = "bootstrap-binaries@0", shape = box, fontname = Helvetica];
+  "/gnu/store/629yzay882kh1yhpqddps2psfhpjrk2q-bootstrap-mes-0.19.drv" [label = "bootstrap-mes@0.19", shape = box, fontname = Helvetica];
+  # "/gnu/store/gz3agxnnlgkafw2c8jnvk2hqmlh85pkc-guile-bootstrap-2.0.drv" [label = "guile-bootstrap@2.0", shape = box, fontname = Helvetica];
+  "/gnu/store/kd9ly1185dn9z1mbkn0wd2r3fcv1bkw5-tcc-boot0-0.9.26-5.c7b3f59.drv" [label = "tcc-boot0@0.9.26-5.c7b3f59", shape = box, fontname = Helvetica];
+  "/gnu/store/kd9ly1185dn9z1mbkn0wd2r3fcv1bkw5-tcc-boot0-0.9.26-5.c7b3f59.drv" -> "/gnu/store/pa9s0y0dx6a60a72434syb1zfxgmqilr-mes-boot-0.19.drv" [color = dimgrey];
+  "/gnu/store/kd9ly1185dn9z1mbkn0wd2r3fcv1bkw5-tcc-boot0-0.9.26-5.c7b3f59.drv" -> "/gnu/store/gd83makzwnb2aq1x0hylfsi8gaxln5js-bootstrap-mescc-tools-0.5.2.drv" [color = dimgrey];
+  "/gnu/store/kd9ly1185dn9z1mbkn0wd2r3fcv1bkw5-tcc-boot0-0.9.26-5.c7b3f59.drv" -> "/gnu/store/00rjhpbkzk86s4pksjg934l310iaxxjr-bootstrap-binaries-0.drv" [color = dimgrey];
+  "/gnu/store/kd9ly1185dn9z1mbkn0wd2r3fcv1bkw5-tcc-boot0-0.9.26-5.c7b3f59.drv" -> "/gnu/store/629yzay882kh1yhpqddps2psfhpjrk2q-bootstrap-mes-0.19.drv" [color = dimgrey];
+ #  "/gnu/store/kd9ly1185dn9z1mbkn0wd2r3fcv1bkw5-tcc-boot0-0.9.26-5.c7b3f59.drv" -> "/gnu/store/gz3agxnnlgkafw2c8jnvk2hqmlh85pkc-guile-bootstrap-2.0.drv" [color = dimgrey];
+  "/gnu/store/qf1x4bvxg8ihbgmv57yyiwkj5y8zzmk0-diffutils-mesboot-2.7.drv" [label = "diffutils-mesboot@2.7", shape = box, fontname = Helvetica];
+  "/gnu/store/qf1x4bvxg8ihbgmv57yyiwkj5y8zzmk0-diffutils-mesboot-2.7.drv" -> "/gnu/store/pa9s0y0dx6a60a72434syb1zfxgmqilr-mes-boot-0.19.drv" [color = blue];
+  "/gnu/store/qf1x4bvxg8ihbgmv57yyiwkj5y8zzmk0-diffutils-mesboot-2.7.drv" -> "/gnu/store/7lcpxky7sn4c9c86ywri6y3x2d4681iv-tcc-boot-0.9.27.drv" [color = blue];
+  "/gnu/store/qf1x4bvxg8ihbgmv57yyiwkj5y8zzmk0-diffutils-mesboot-2.7.drv" -> "/gnu/store/00rjhpbkzk86s4pksjg934l310iaxxjr-bootstrap-binaries-0.drv" [color = blue];
+  "/gnu/store/qf1x4bvxg8ihbgmv57yyiwkj5y8zzmk0-diffutils-mesboot-2.7.drv" -> "/gnu/store/vys62fkr9p3qfp9mc36456ffbpz24n60-make-mesboot0-3.80.drv" [color = blue];
+  "/gnu/store/vys62fkr9p3qfp9mc36456ffbpz24n60-make-mesboot0-3.80.drv" [label = "make-mesboot0@3.80", shape = box, fontname = Helvetica];
+  "/gnu/store/vys62fkr9p3qfp9mc36456ffbpz24n60-make-mesboot0-3.80.drv" -> "/gnu/store/7lcpxky7sn4c9c86ywri6y3x2d4681iv-tcc-boot-0.9.27.drv" [color = blue];
+  "/gnu/store/vys62fkr9p3qfp9mc36456ffbpz24n60-make-mesboot0-3.80.drv" -> "/gnu/store/00rjhpbkzk86s4pksjg934l310iaxxjr-bootstrap-binaries-0.drv" [color = blue];
+  "/gnu/store/52nz2cbswm4n91707gy8945h2s4jgvfb-gcc-core-mesboot-2.95.3.drv" [label = "gcc-core-mesboot@2.95.3", shape = box, fontname = Helvetica];
+  "/gnu/store/52nz2cbswm4n91707gy8945h2s4jgvfb-gcc-core-mesboot-2.95.3.drv" -> "/gnu/store/fh33abhfvsdgdrg54m86yhmkihfp1g2j-binutils-mesboot0-2.20.1a.drv" [color = darkseagreen];
+  "/gnu/store/52nz2cbswm4n91707gy8945h2s4jgvfb-gcc-core-mesboot-2.95.3.drv" -> "/gnu/store/7lcpxky7sn4c9c86ywri6y3x2d4681iv-tcc-boot-0.9.27.drv" [color = darkseagreen];
+  "/gnu/store/52nz2cbswm4n91707gy8945h2s4jgvfb-gcc-core-mesboot-2.95.3.drv" -> "/gnu/store/00rjhpbkzk86s4pksjg934l310iaxxjr-bootstrap-binaries-0.drv" [color = darkseagreen];
+  "/gnu/store/52nz2cbswm4n91707gy8945h2s4jgvfb-gcc-core-mesboot-2.95.3.drv" -> "/gnu/store/qf1x4bvxg8ihbgmv57yyiwkj5y8zzmk0-diffutils-mesboot-2.7.drv" [color = darkseagreen];
+  "/gnu/store/52nz2cbswm4n91707gy8945h2s4jgvfb-gcc-core-mesboot-2.95.3.drv" -> "/gnu/store/vys62fkr9p3qfp9mc36456ffbpz24n60-make-mesboot0-3.80.drv" [color = darkseagreen];
+  "/gnu/store/rn88dllv6vh4mxwbr4v9wjmnl4ml3xs2-glibc-mesboot0-2.2.5.drv" [label = "glibc-mesboot0@2.2.5", shape = box, fontname = Helvetica];
+  "/gnu/store/rn88dllv6vh4mxwbr4v9wjmnl4ml3xs2-glibc-mesboot0-2.2.5.drv" -> "/gnu/store/fh33abhfvsdgdrg54m86yhmkihfp1g2j-binutils-mesboot0-2.20.1a.drv" [color = blue];
+  "/gnu/store/rn88dllv6vh4mxwbr4v9wjmnl4ml3xs2-glibc-mesboot0-2.2.5.drv" -> "/gnu/store/52nz2cbswm4n91707gy8945h2s4jgvfb-gcc-core-mesboot-2.95.3.drv" [color = blue];
+  "/gnu/store/rn88dllv6vh4mxwbr4v9wjmnl4ml3xs2-glibc-mesboot0-2.2.5.drv" -> "/gnu/store/00rjhpbkzk86s4pksjg934l310iaxxjr-bootstrap-binaries-0.drv" [color = blue];
+  "/gnu/store/rn88dllv6vh4mxwbr4v9wjmnl4ml3xs2-glibc-mesboot0-2.2.5.drv" -> "/gnu/store/qf1x4bvxg8ihbgmv57yyiwkj5y8zzmk0-diffutils-mesboot-2.7.drv" [color = blue];
+  "/gnu/store/rn88dllv6vh4mxwbr4v9wjmnl4ml3xs2-glibc-mesboot0-2.2.5.drv" -> "/gnu/store/kd7b9sba79s1l7hjdhav51gvci5ws4jy-mesboot-headers-0.19.drv" [color = blue];
+  "/gnu/store/rn88dllv6vh4mxwbr4v9wjmnl4ml3xs2-glibc-mesboot0-2.2.5.drv" -> "/gnu/store/vys62fkr9p3qfp9mc36456ffbpz24n60-make-mesboot0-3.80.drv" [color = blue];
+  "/gnu/store/kd7b9sba79s1l7hjdhav51gvci5ws4jy-mesboot-headers-0.19.drv" [label = "mesboot-headers@0.19", shape = box, fontname = Helvetica];
+  "/gnu/store/kd7b9sba79s1l7hjdhav51gvci5ws4jy-mesboot-headers-0.19.drv" -> "/gnu/store/00rjhpbkzk86s4pksjg934l310iaxxjr-bootstrap-binaries-0.drv" [color = cyan3];
+  "/gnu/store/kd7b9sba79s1l7hjdhav51gvci5ws4jy-mesboot-headers-0.19.drv" -> "/gnu/store/q8d60ln0dxjvqd2ymi1g6xyk3046m23n-linux-libre-headers-bootstrap-0.drv" [color = cyan3];
+  "/gnu/store/q8d60ln0dxjvqd2ymi1g6xyk3046m23n-linux-libre-headers-bootstrap-0.drv" [label = "linux-libre-headers-bootstrap@0", shape = box, fontname = Helvetica];
+
+// HANDCRAFTED FROM HERE TO MAKE THE STATIC BOOTSTRAP BINARIES VISIBLE
+
+  bash [fontname = Helvetica]
+  bzip2 [fontname = Helvetica]
+  coreutils [fontname = Helvetica]
+  gawk [fontname = Helvetica]
+  grep [fontname = Helvetica]
+  gzip [fontname = Helvetica]
+  patch [fontname = Helevtica]
+  sed [fontname = Helvetica]
+  tar [fontname = Helvetica]
+  xz [fontname = Helevtica]
+
+  "/gnu/store/00rjhpbkzk86s4pksjg934l310iaxxjr-bootstrap-binaries-0.drv" -> bash
+  "/gnu/store/00rjhpbkzk86s4pksjg934l310iaxxjr-bootstrap-binaries-0.drv" -> bzip2
+  "/gnu/store/00rjhpbkzk86s4pksjg934l310iaxxjr-bootstrap-binaries-0.drv" -> coreutils
+  "/gnu/store/00rjhpbkzk86s4pksjg934l310iaxxjr-bootstrap-binaries-0.drv" -> gawk
+  "/gnu/store/00rjhpbkzk86s4pksjg934l310iaxxjr-bootstrap-binaries-0.drv" -> grep
+  "/gnu/store/00rjhpbkzk86s4pksjg934l310iaxxjr-bootstrap-binaries-0.drv" -> gzip
+  "/gnu/store/00rjhpbkzk86s4pksjg934l310iaxxjr-bootstrap-binaries-0.drv" -> patch
+  "/gnu/store/00rjhpbkzk86s4pksjg934l310iaxxjr-bootstrap-binaries-0.drv" -> sed
+  "/gnu/store/00rjhpbkzk86s4pksjg934l310iaxxjr-bootstrap-binaries-0.drv" -> tar
+  "/gnu/store/00rjhpbkzk86s4pksjg934l310iaxxjr-bootstrap-binaries-0.drv" -> xz
+}
