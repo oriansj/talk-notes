@@ -1,0 +1,44 @@
+11:12:26 janneke@dundal:~/src/mes/doc 
+$ guix build bootstrap-tarballs
+substitute: updating list of substitutes from 'http://mirror.hydra.gnu.org'... 100.0%
+The following files will be downloaded:
+   /gnu/store/6bym1yf3x500dhzc3z8lqk0frnd5qcka-bootstrap-tarballs-0
+   /gnu/store/jddviycivycfhaqahqff6n18y9w46gpz-gcc-stripped-tarball-4.9.4
+   /gnu/store/myfikfgx74dzlm3lc217kchxnckri5qq-static-binaries-tarball-0
+   /gnu/store/mzk1bc3pfrrf4qnfs3zkj5ch83srnvpx-binutils-static-stripped-tarball-2.27
+   /gnu/store/x5zrmh820yc054w00cy00iixwghmly2y-glibc-stripped-tarball-2.24
+   /gnu/store/znsf5d7xbqkp4rrjgzsklmwmms8m5i3m-guile-static-stripped-tarball-2.0.12
+@ substituter-started /gnu/store/mzk1bc3pfrrf4qnfs3zkj5ch83srnvpx-binutils-static-stripped-tarball-2.27 /gnu/store/9hhljacc22jppmjx57xc7c46by10y8gh-guix-0.12.0-4.d9da/libexec/guix/substitute
+Downloading http://mirror.hydra.gnu.org/nar/mzk1bc3pfrrf4qnfs3zkj5ch83srnvpx-binutils-static-stripped-tarball-2.27 (2.0MiB installed)...
+ binutils-static-stripped-tarball-2.27             3.5MiB/s 00:01 | 2.0MiB transferred
+
+@ substituter-succeeded /gnu/store/mzk1bc3pfrrf4qnfs3zkj5ch83srnvpx-binutils-static-stripped-tarball-2.27
+@ substituter-started /gnu/store/jddviycivycfhaqahqff6n18y9w46gpz-gcc-stripped-tarball-4.9.4 /gnu/store/9hhljacc22jppmjx57xc7c46by10y8gh-guix-0.12.0-4.d9da/libexec/guix/substitute
+Downloading http://mirror.hydra.gnu.org/nar/jddviycivycfhaqahqff6n18y9w46gpz-gcc-stripped-tarball-4.9.4 (15.5MiB installed)...
+ gcc-stripped-tarball-4.9.4                       4.0MiB/s 00:04 | 15.5MiB transferred
+
+@ substituter-succeeded /gnu/store/jddviycivycfhaqahqff6n18y9w46gpz-gcc-stripped-tarball-4.9.4
+@ substituter-started /gnu/store/x5zrmh820yc054w00cy00iixwghmly2y-glibc-stripped-tarball-2.24 /gnu/store/9hhljacc22jppmjx57xc7c46by10y8gh-guix-0.12.0-4.d9da/libexec/guix/substitute
+Downloading http://mirror.hydra.gnu.org/nar/x5zrmh820yc054w00cy00iixwghmly2y-glibc-stripped-tarball-2.24 (1.6MiB installed)...
+ glibc-stripped-tarball-2.24                       697KiB/s 00:02 | 1.6MiB transferred
+
+@ substituter-succeeded /gnu/store/x5zrmh820yc054w00cy00iixwghmly2y-glibc-stripped-tarball-2.24
+@ substituter-started /gnu/store/znsf5d7xbqkp4rrjgzsklmwmms8m5i3m-guile-static-stripped-tarball-2.0.12 /gnu/store/9hhljacc22jppmjx57xc7c46by10y8gh-guix-0.12.0-4.d9da/libexec/guix/substitute
+Downloading http://mirror.hydra.gnu.org/nar/znsf5d7xbqkp4rrjgzsklmwmms8m5i3m-guile-static-stripped-tarball-2.0.12 (3.1MiB installed)...
+ guile-static-stripped-tarball-2.0.12              3.2MiB/s 00:01 | 3.1MiB transferred
+
+@ substituter-succeeded /gnu/store/znsf5d7xbqkp4rrjgzsklmwmms8m5i3m-guile-static-stripped-tarball-2.0.12
+@ substituter-started /gnu/store/myfikfgx74dzlm3lc217kchxnckri5qq-static-binaries-tarball-0 /gnu/store/9hhljacc22jppmjx57xc7c46by10y8gh-guix-0.12.0-4.d9da/libexec/guix/substitute
+Downloading http://mirror.hydra.gnu.org/nar/myfikfgx74dzlm3lc217kchxnckri5qq-static-binaries-tarball-0 (5.7MiB installed)...
+ static-binaries-tarball-0                         4.1MiB/s 00:01 | 5.7MiB transferred
+
+@ substituter-succeeded /gnu/store/myfikfgx74dzlm3lc217kchxnckri5qq-static-binaries-tarball-0
+@ substituter-started /gnu/store/6bym1yf3x500dhzc3z8lqk0frnd5qcka-bootstrap-tarballs-0 /gnu/store/9hhljacc22jppmjx57xc7c46by10y8gh-guix-0.12.0-4.d9da/libexec/guix/substitute
+Downloading http://mirror.hydra.gnu.org/nar/6bym1yf3x500dhzc3z8lqk0frnd5qcka-bootstrap-tarballs-0 (2KiB installed)...
+ bootstrap-tarballs-0                                385KiB/s 00:00 | 520B transferred
+
+@ substituter-succeeded /gnu/store/6bym1yf3x500dhzc3z8lqk0frnd5qcka-bootstrap-tarballs-0
+/gnu/store/6bym1yf3x500dhzc3z8lqk0frnd5qcka-bootstrap-tarballs-0
+12:05:09 janneke@dundal:~/src/mes/doc 
+$ 12:05:09 janneke@dundal:~/src/mes/doc 
+$ 

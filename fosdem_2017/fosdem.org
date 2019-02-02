@@ -1,0 +1,662 @@
+#+TITLE: GNU Mes
+#+TITLE: \smaller[2]{Maxwell Equations of Software}
+#+DATE:2017-02-05
+#+EMAIL: janneke@gnu.org
+#+AUTHOR: janneke@gnu.org
+#+COPYRIGHT: Jan (janneke) Nieuwenhuizen <janneke@gn.org>
+#+LICENSE: GNU Free Documentation License, version 1.3 or later.
+#+LATEX_HEADER:\institute{FOSDEM'17}
+#+LATEX_HEADER:\def\ahref#1#2{\htmladdnormallink{#2}{#1}}
+#+OPTIONS: H:2
+#+LATEX_CLASS: beamer
+#+LATEX_CLASS_OPTIONS: [presentation]
+#+LATEX_HEADER: \usepackage{relsize}
+#+LATEX_HEADER: \usepackage{hyperref}
+#+latex_header: \mode<beamer>{\usetheme{X}}
+#+BEAMER_THEME: X
+#+BEAMER_FRAME_LEVEL: 2
+#+COLUMNS: %45ITEM %10BEAMER_ENV(Env) %10BEAMER_ACT(Act) %4BEAMER_COL(Col) %8BEAMER_OPT(Opt)
+
+* Mes, WHAT?
+
+# ** TEST
+# - @@beamer:<1->@@ Item 1
+# - @@beamer:<2->@@ Item 2
+
+# GNU LilyPond, Verum
+# Depression: France, Netherlands, US: about 20%; 10x more than 50 years ago
+
+** Mes: Full Source Bootstrapping
+
+*** Bootstrapping                                             :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_COL: 0.6
+    :END:
+  * Where do compilers come from?
+  * Who compiled the compiler?
+  * Chicken and Egg
+*** WTF                                                       :B_block:BMCOL:
+#+LATEX:\includegraphics[width=0.4\textwidth]{mes.png}
+    :PROPERTIES:
+    :BEAMER_COL: 0.3
+    :xBEAMER_ACT: <2->
+    :xBEAMER_ENV: block
+    :END:
+
+*** mes: A tiny Scheme interpreter in Hex [or simple C?]
+    :PROPERTIES:
+    :BEAMER_ACT: <2->
+    :END:
+
+*** mescc: A C compiler in Scheme, executed by Mes
+  :PROPERTIES:
+  :BEAMER_ACT: <3->
+  :END:
+  * Mes + CC =
+#+xATTR_LATEX: :=\linewidth
+#+xLATEX:\includegraphics[width=0.25\textwidth]{fsb-logo.png}
+#+LATEX:\rightskip=-3cm\includegraphics[width=0.2\textwidth]{fsb-logo-guile-guix-mes.png}
+
+* Mes, what NOT?
+  :PROPERTIES:
+  :xBEAMER_ENV: note
+  :END:
+
+** Mes is a strategy
+   * NOT a goal in itself -- only a means or proof of concept
+   * NOT a general purpose Scheme -- close to R6RS
+   * NOT an alternative for Guile -- reuse Guile modules
+
+* Mes, WHY?
+
+** Inspiration: what do you want?
+
+*** Meaning, Autonomy, Co-Creation, Self-Realization
+  :PROPERTIES:
+  :BEAMER_ACT: <2->
+  :END:
+  * Discovering, Hacking, Motivating, Playing
+
+*** A planet of enlightened beings
+  :PROPERTIES:
+  :BEAMER_ACT: <3->
+  :END:
+# * Awakening of consciousness
+  * Look inward
+  * Be happy
+  * Be helpful
+*** A world where all software is free
+  :PROPERTIES:
+  :BEAMER_ACT: <4->
+  :END:
+  * Support \ahref{https://gnu.org}{GNU}
+  * Create free software
+#  * Be patient, be wise
+
+** Inspiration: when do you want it?
+
+*** NOW!!!
+  :PROPERTIES:
+  :BEAMER_ACT: <2->
+  :END:
+
+** Inspiration
+
+*** To finally run GNU
+  * GuixSD: GNU in the flesh
+  :PROPERTIES:
+#  :BEAMER_ACT: <1->
+  :END:
+
+#  * Michael Nielsen: \ahref{http://www.michaelnielsen.org/ddi/lisp-as-the-maxwells-equations-of-software}{Lisp as the Maxwell's Equations of Software}
+
+# *** recap the 4 freedoms
+#   :PROPERTIES:
+#   :BEAMER_ACT: <3->
+#   :END:
+
+** 1941: The \ahref{https://en.wikipedia.org/wiki/Four_Freedoms}{Four Freedoms}
+  :PROPERTIES:
+  :BEAMER_ENV: note
+  :END:
+*** for all people on our planet
+
+   * Freedom of speech
+   * Freedom of worship
+   * Freedom from want
+   * Freedom from fear
+
+-- Franklin D. Roosevelt
+
+** 1984 Four Software Freedoms: GNU GPL
+  :PROPERTIES:
+  :xBEAMER_ENV: note
+  :END:
+*** The freedom to
+
+   * 0 run the program as you wish, for any purpose
+   * 1 study how the program works, and change it if you wish
+   * 2 redistribute copies so you can help your neighbor
+   * 3 share copies of your modified versions with others
+
+-- Richard M. Stallman
+
+# 1: Access to the source code is a precondition for this.
+
+# 3: By doing this you can give the whole community a chance to benefit
+# from your changes. Access to the source code is a precondition for
+# this.
+
+** 2013 Debian's \ahref{https://reproducible-builds.org}{reproducible-builds.org}
+
+*** Verifiable path: source -> binary
+Reproducible builds are a set of software development practices that
+create a verifiable path from human readable source code to the binary
+code used by computers.
+
+*** Does this binary come from the given source?
+  * Always different binary...dunno?
+  * Same binary
+     * Always good, always bad?
+
+** 2015 GuixSD \ahref{https://www.gnu.org/software/guix/news/reproducible-builds-a-means-to-an-end.html}{Reproducible builds: a means to an end}
+
+# GNU Guix is committed to improving the freedom and autonomy of
+# computer users. This obviously manifests in the fact that GuixSD is a
+# fully free distro, and this is what GNU stands for. All the packages
+# in Guix are built from source, including things like firmware where
+# there is an unfortunate tendency to use pre-built binaries; that way,
+# users can know what software they run. On the technical side, Guix
+# also tries hard to empower users by making the whole system as
+# hackable as possible, in a uniform way—making Freedom #1 practical, à
+# la Emacs.
+
+*** A technical means to an end
+   * guarantee user autonomy and safety
+      * GNU+GuixSD: fully free distro
+      * NixOS: fully isolated build environment
+      * NixOS: full list of dependencies
+      * reproducible builds: bit-for-bit identical binaries
+
+-- Ludovic Courtès
+
+** 2016 From GuixSD to Mes: The bootstrap binaries
+
+*** GuixSD ... source
+   * source/binary transparency
+   * all is built from source
+   * *EVERYTHING*
+   * starting from the ... *bootstrap binaries*
+
+
+   The distribution is fully “bootstrapped” and “self-contained”: each
+package is built based solely on other packages in the distribution.
+
+The root of this dependency graph is a small set of “bootstrap
+binaries”, provided by the ‘(gnu packages bootstrap)’ module.  For more
+information on bootstrapping, *note Bootstrapping::.
+
+
+[2010]: Eelco Dolstra, Andres Löh, and Nicolas Pierron described
+sources of non-determinism in their 2010 JFP paper about NixOS
+
+
+** GuixSD bootstrap graph
+
+#+LATEX:\includegraphics[width=0.8\textwidth]{bootstrap-graph.png}
+
+
+** GuixSD bootstrap tarballs
+#+BEGIN_SRC bash
+$ du -schx $(readlink $(guix build bootstrap-tarballs)/*)
+2.1M	/gnu/store/mzk1bc3pfrrf4qnfs3zkj5ch83srnvpx-binutils-static-stripped-tarball-2.27/binutils-static-stripped-2.27-x86_64-linux.tar.xz
+16M	/gnu/store/jddviycivycfhaqahqff6n18y9w46gpz-gcc-stripped-tarball-4.9.4/gcc-stripped-4.9.4-x86_64-linux.tar.xz
+1.7M	/gnu/store/x5zrmh820yc054w00cy00iixwghmly2y-glibc-stripped-tarball-2.24/glibc-stripped-2.24-x86_64-linux.tar.xz
+3.1M	/gnu/store/znsf5d7xbqkp4rrjgzsklmwmms8m5i3m-guile-static-stripped-tarball-2.0.12/guile-static-stripped-2.0.12-x86_64-linux.tar.xz
+5.7M	/gnu/store/myfikfgx74dzlm3lc217kchxnckri5qq-static-binaries-tarball-0/static-binaries-0-x86_64-linux.tar.xz
+28M	total
+$ for i in $(readlink $(guix build bootstrap-tarballs)/*);\
+  do sudo tar xf $i; done
+$ du -schx *
+125M	bin
+13M	include
+18M	lib
+43M	libexec
+4.3M	share
+202M	total
+#+END_SRC
+
+
+** Inspiration
+
+*** To finally run GNU
+  :PROPERTIES:
+  :BEAMER_ACT: <1->
+  :END:
+  * GuixSD: GNU in the flesh
+*** Bootstrap binaries: source all the way down?
+  :PROPERTIES:
+  :BEAMER_ACT: <1->
+  :END:
+  * OriansJ: \ahref{https://github.com/oriansj/stage0}{self-hosting hex assembler}
+*** The computer revolution hasn't happened yet
+  :PROPERTIES:
+  :BEAMER_ACT: <2->
+  :END:
+  * Alan Kay
+The computer revolution is very new, and all of the good ideas have
+not been universally implemented
+
+** Bootstrapping: Chicken and Egg
+
+#+LATEX:\includegraphics[width=0.3\textwidth]{egg.png}
+
+** Inspiration
+
+*** To finally run GNU
+  :PROPERTIES:
+  :BEAMER_ACT: <1->
+  :END:
+  * GuixSD: GNU in the flesh
+*** Bootstrap binaries: source all the way down?
+  :PROPERTIES:
+  :BEAMER_ACT: <1->
+  :END:
+  * OriansJ: \ahref{https://github.com/oriansj/stage0}{self-hosting hex assembler}
+*** The computer revolution hasn't happened yet
+  :PROPERTIES:
+  :BEAMER_ACT: <1->
+  :END:
+  * Alan Kay
+The computer revolution is very new, and all of the good ideas have
+not been universally implemented
+*** \ahref{http://queue.acm.org/detail.cfm?id=1039523}{LISP as the Maxwell's Equations of Software}
+  :PROPERTIES:
+  :BEAMER_ACT: <1->
+  :END:
+That was the big revelation to me when I [..] finally understood that
+the half page of code on the bottom of page 13 of the Lisp 1.5 manual
+was Lisp in itself.  These were “Maxwell’s Equations of Software!”
+
+  * \ahref{http://www.softwarepreservation.org/projects/LISP/book/LISP\%25201.5\%2520Programmers\%2520Manual.pdf}{LISP-1.5}: page 13
+
+
+** Chicken and Egg
+
+   * the shortest path from hex to gcc
+   * using Maxwell's Equations of Software
+
+** Bootstrapping: Chicken and Egg
+
+#+LATEX:\includegraphics[width=0.3\textwidth]{mes.png}
+
+
+* Mes: HOW?
+
+** LISP-1.5 John McCarthy: page 13
+
+# convert -density 150 -quality 100 -flatten -sharpen 0x1.0 LISP-1.5-page-13.pdf LISP-1.5-page-13.png
+#+BEGIN_COMMENT
+[[file:LISP-1-5-page-13-bottom.png][LISP-1.5 page 13 bottom]]
+#+END_COMMENT
+
+#+ATTR_LATEX: :width=\linewidth
+#+LATEX:\includegraphics[width=\textwidth]{LISP-1-5-page-13-bottom.png}
+
+** Eval/Apply
+  * core
+    * apply
+    * eval
+  * helpers
+    * assoc
+    * pairlis
+    * evcon
+    * evlis
+  * primitives
+    * atom
+    * car
+    * cdr
+    * cons
+    * eq
+
+** LISP-1.5 in Guile Scheme: APPLY
+
+#+BEGIN_SRC scheme
+(define (apply fn x a)
+  (cond
+   ((atom fn)
+    (cond
+     ((eq fn CAR)  (caar x))
+     ((eq fn CDR)  (cdar x))
+     ((eq fn CONS) (cons (car x) (cadr x)))
+     ((eq fn ATOM) (atom (car x)))
+     ((eq fn EQ)   (eq (car x) (cadr x)))
+     (#t           (apply (eval fn a) x a))))
+   ((eq (car fn) LAMBDA)
+                   (eval (caddr fn) (pairlis (cadr fn) x a)))
+   ((eq (car fn) LABEL)
+                   (apply (caddr fn) x (cons (cons (cadr fn)
+                                                   (caddr fn))
+                                             a)))))
+#+END_SRC
+
+** LISP-1.5 in Guile Scheme: EVAL
+
+#+BEGIN_SRC scheme
+(define (eval e a)
+  (cond
+   ((atom e) (cdr (assoc e a)))
+   ((atom (car e))
+    (cond ((eq (car e) QUOTE) (cadr e))
+          ((eq (car e) COND)  (evcon (cdr e) a))
+          (#t                 (apply (car e)
+                                     (evlis (cdr e) a) a))))
+   (#t       (apply (car e) (evlis (cdr e) a) a))))
+#+END_SRC
+
+** LISP-1.5 in Scheme: ASSOC, PAIRLIS, EVCON, EVLIS
+
+#+BEGIN_SRC scheme
+(define (assoc x a)
+  (cond ((eq (caar a) x) (car a))
+        (#t (assoc x (cdr a)))))
+
+(define (pairlis x y a)
+  (cond ((null x) a)
+        (#t (cons (cons (car x) (car y))
+                  (pairlis (cdr x) (cdr y) a)))))
+
+(define (evcon c a)
+  (cond ((eval (caar c) a) (eval (cadar c) a))
+        (#t (evcon (cdr c) a))))
+
+(define (evlis m a)
+  (cond ((null m) NIL)
+        (#t (cons (eval (car m) a) (evlis (cdr m) a)))))
+#+END_SRC
+
+
+** LISP-1.5 in C
+
+  * closures
+  * symbols
+  * specials? =()= =#t= =#f= =*unspecified*= =*undefined*=
+  * macros
+  * syntax-rules
+  * records
+  * modules/importing
+
+** Garbage/Jam Collector
+
+*** Abelson & Sussman
+With a real computer we will eventually run out of free
+space in which to construct new pairs.(1)
+
+*** footnote(1)
+
+This may not be true eventually, because memories may get large
+enough so that it would be impossible to run out of free memory in the
+lifetime of the computer.  For example, there are about {3\cdot10^{13}}
+microseconds in a year, so if we were to ‘cons’ once per microsecond we
+would need about 10^{15} cells of memory to build a machine that could
+operate for 30 years without running out of memory.
+
+
+** C parser: roll your own LALR
+
+*** Lalr
+  * minimal ANSI-C parser
+
+   =int main (){puts ("Hello, world!");return 0;}=
+
+** C parser: Nyacc
+*** Pros
+  * full C99 parser
+  * ...including C pre-processor
+  * perspective of building complete C compiler in Guile
+  * tsunami of enthusiasm and contributors!
+
+** C parser: Nyacc
+
+*** Cons: more TODO for Mes
+  * keywords
+  * =define*=, =lambda*=
+    * optargs
+  * exeptions, =catch=, =throw=
+    * =call/cc=
+  * fluids, =with-fluid=
+  * =syntax-case=
+    * André van Tonder's 2006-2007 streak in 14 "commits"
+    * psyntax: another bootstrap loop?!
+  * R7RS's Ellipsis
+    * Guile-1.8
+  * =#;=-comments
+  * =#||#=-comments
+
+** C parser: Nyacc
+
+*** Cons: more TODO for Mes
+
+  * Cond supports ==>=
+  * Bugfixes
+    * Cond now evaluates its test clauses only once
+    * Append can also handle one argument
+    * For-each now supports 2 list arguments
+    * Map now supports 3 list arguments
+    * Backslash in string is supported
+    * Closure is not a pair
+    * All standard characters are supported
+
+  * 36 new functions
+#+BEGIN_SRC scheme
+  1+, 1-, abs, and=>, append-reverse, ash, char<\=?, char<?,
+  char>=?, char>?, even?, filter, delete, delq, vector-copy,
+  fold, fold-right, getenv, iota, keyword->symbol list-head,
+  list-tail, negative?, odd?, positive?, remove!, remove,
+  string->number, string-copy, string-prefix?, string=,
+  string=?, symbol->keyword symbol-append, symbol-prefix?,
+  unless, write, zero?
+#+END_SRC
+
+* Mes: WHERE?
+
+
+** Timeline
+
+*** June 19: \ahref{https://lists.gnu.org/archive/html/guile-user/2016-06/msg00061.html}{on bootstrapping: introducing Mes}
+# https://gnunet.org/bot/log/guile/2016-05-19
+  * LISP-1.5 in Scheme and in C
+*** September 25: \ahref{https://lists.gnu.org/archive/html/guile-user/2016-09/msg00061.html}{on bootstrapping: 2nd status report on Mes}
+# https://gnunet.org/bot/log/guile/2016-09-25
+  * Scheme primitives in C, closures, macros, 97 tests, LALR
+  * Produce ELF binary from
+#+BEGIN_SRC C
+int main ()
+{
+  int i;
+  puts ("Hi Mes!\n");
+  for (i = 0; i < 4; ++i)
+    puts ("  Hello, world!\n");
+  return 1;
+}
+#+END_SRC
+  * in 1'20"
+
+** Timeline
+
+*** October 23: 0.1 [not announced]
+  * =let-syntax=, =match=
+  * compile main.c in 2s (was 1'20")
+  * add REPL
+
+*** November 21: 0.2 [not announced]
+  * psyntax integration, =syntax-case=, =load=
+
+*** December 12: \ahref{https://lists.gnu.org/archive/html/guile-user/2016-12/msg00008.html}{on bootstrapping: first Mes 0.3 released}
+# https://gnunet.org/bot/log/guile/2016-12-12
+  * Garbage Collector/Jam Scraper
+
+*** December 25: \ahref{https://lists.gnu.org/archive/html/guile-user/2016-12/msg00041.html}{Mes 0.4 released}
+# https://gnunet.org/bot/log/guile/2016-12-25
+  * run Nyacc, PEG, reduced core
+
+** Status
+
+*** core C prototype: 1150 lines
+*** non-essential C sources:
+#+BEGIN_SRC bash
+  210 lib.c
+  157 math.c
+  126 posix.c
+  134 reader.c
+  627 total
+#+END_SRC
+
+** Status
+*** tiny-mes.c: 270 lines
+  * compiles with mescc
+  * i386-lib: =i386:exit=, =i3886:open=, =i386:read=, =i386:write=
+  * tiny-libc: =getchar=, =putchar=, =puts=, =strcmp=, =strlen=
+  * runs
+#+BEGIN_SRC bash
+Hello tiny-mes!
+reading: module/mes/hack-32.mo
+MES *GOT MES*
+(#\A(#\B))
+#+END_SRC
+
+** Status
+
+*** mini-mes.c: 800 lines
+  * 12kB binary
+  * 2500 lines assembly
+  * runs with gcc
+#+BEGIN_SRC bash
+Hello mini-mes!
+reading: module/mes/hack-32.mo
+MES *GOT MES*
+cells read: 19
+symbols: 1
+program[10]: (cons(0(1)))
+(0 . 1)
+#+END_SRC
+  * compiles with mescc
+    * 83 statements skipped
+
+** Status
+
+*** current Guix package
+
+#+BEGIN_SRC bash
+01:16:51 janneke@dundal:~/src/mes
+$ guix package -f guix.scm
+The following package will be upgraded:
+   mes	0.4.f84e97fc -> 0.4.f84e97fc	/gnu/store/2fsy1cd24pnwkv7a1zd0anzk3zz8ysdn-mes-0.4.f84e97fc
+
+#+END_SRC
+
+
+
+** Misc
+  :PROPERTIES:
+  :BEAMER_ENV: note
+  :END:
+
+civodul
+
+Impressive!
+
+   Is it a goal to try interpret a language as close as possible to that of
+   Guile, and have the same libraries?  I guess that could help in the
+   future: we could use (system base lalr), nyacc, etc.
+
+   Also, currently there’s approximately 2K lines of C.  How do you plan to
+   make sure that it doesn’t grow over time, or even that it shrinks?  :-)
+
+   This all sounds very promising, thanks a lot!
+
+arnebab
+
+This is really cool! Thank you for your work!
+
+  > How do you compile the interpreter?
+
+paroneayea/cwebber
+First, I'm really excited you're making progress on Mes!
+
+  > Second, Scheme48 did something similar to this, called "Pre-Scheme",
+    which is how they bootstrapped Scheme48 iirc.  Have you heard of it or
+    looked at it?
+
+  https://en.wikipedia.org/wiki/PreScheme
+
+  * PreScheme in Scheme48
+  * \ahref{http://canonical.org/~kragen/sw/urscheme/}{Ur-Scheme}
+R5RS to x86 Assembly
+
+** What's next?
+
+  * psyntax
+    * source or binary?
+    * alternative syntax-case?
+    * rewrite Nyacc without syntax-case, R7RS-ellipsis?
+  * call/cc vs eval/apply/evlis?
+  * merge with Guile?
+  * compile Guile or compile Gcc?
+  * prototype? in C
+    * move from C to Hex?
+    * move from C to [Pre]Scheme
+
+** Thanks
+*** Thanks                                                    :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_COL: 0.48
+    :BEAMER_ENV: block
+    :END:
+   * John McCarthy
+   * Richard Stallman
+   * Eelco Dolstra
+   * Ludovic Courtès
+   * Rutger van Beusekom
+   * Christopher A. Webber
+*** Thanks everyone else                                      :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_COL: 0.48
+    :xBEAMER_ACT: <2->
+    :BEAMER_ENV: block
+    :END:
+    * LISP-1.5
+    * GNU
+    * NixOS
+    * Debian reproducible builds
+    * GuixSD
+    * FOSDEM
+*** Connect
+    * irc  freenode.net [[irc://guix@freenode.net][#guix]] [[irc://guile@freenode.net][#guile]]
+    * mail [[mailto://guile-user@gnu.org][guile-user@gnu.org]]
+    * git  [[https://gitlab.com/janneke/mes][git@gitlab.com:janneke/mes.git]]
+
+# * Copying
+#  :PROPERTIES:
+#  :COPYING: t
+#  :END:
+
+#   Copyright \copy 2017 Jan (janneke) Nieuwenhuizen <janneke@gnu.org>
+
+# C-c C-e l b     (org-beamer-export-to-latex)
+# C-c C-e l P     (org-beamer-export-to-pdf)
+
+* Legalese
+  :PROPERTIES:
+  :COPYING: t
+  :END:
+
+  Copyright \copy 2017 Jan (janneke) Nieuwenhuizen <janneke@gnu.org>
+
+  #+BEGIN_QUOTE
+  Permission is granted to copy, distribute and/or modify this
+  document under the terms of the GNU Free Documentation License,
+  Version 1.3 or any later version published by the Free Software
+  Foundation; with no Invariant Sections, with no Front-Cover Texts,
+  and with no Back-Cover Texts.
+  #+END_QUOTE

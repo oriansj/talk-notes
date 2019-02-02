@@ -1,0 +1,1326 @@
+#+TITLE: GNU Mes
+#+TITLE: \smaller[2]{-- Reduced Binary Seed bootstrap}
+#+DATE:2019-02-02
+#+EMAIL: janneke@gnu.org
+#+AUTHOR: janneke@gnu.org
+#+OPTIONS: ^:nil
+#+COPYRIGHT: Jan (janneke) Nieuwenhuizen <janneke@gn.org>
+#+LICENSE: GNU Free Documentation License, version 1.3 or later.
+#+LATEX_HEADER:\institute{FOSDEM'19}
+#+LATEX_HEADER:\def\ahref#1#2{\htmladdnormallink{#2}{#1}}
+#+OPTIONS: H:2
+#+LATEX_CLASS: beamer
+#+LATEX_CLASS_OPTIONS: [presentation]
+#+LATEX_HEADER: \usepackage{relsize}
+#+LATEX_HEADER: \usepackage{hyperref}
+#+latex_header: \mode<beamer>{\usetheme{X}}
+#+BEAMER_THEME: X
+#+BEAMER_FRAME_LEVEL: 2
+#+COLUMNS: %45ITEM %10BEAMER_ENV(Env) %10BEAMER_ACT(Act) %4BEAMER_COL(Col) %8BEAMER_OPT(Opt)
+
+* Reduced Binary Seed bootstrap: Introduction.
+
+** Reduced Binary Seed bootstrap: GNU Mes
+
+*** GNU Mes
+   :PROPERTIES:
+   :BEAMER_COL: 0.6
+   :BEAMER_ENV: block
+   :END:
+
+  * A Scheme interpreter written in ~5,000LOC of simple C.
+
+  * A C compiler written in Scheme.
+
+  * Built on eval/apply, the *Maxwell Equations of Software*.
+
+*** LOGO
+   :PROPERTIES:
+   :BEAMER_COL: 0.3
+   :BEAMER_ENV: quote
+   :END:
+#+LATEX:\rightskip=2cm\includegraphics[width=0.7\textwidth]{mes.png}
+
+** What is a Compiler?
+   :PROPERTIES:
+   :BEAMER_opt: t
+   :END:
+*** A compiler takes source code and produces executable object code
+#+BEGIN_src bash
+$ gcc hello.c -o hello
+$ ./hello => "Hello, Mes!"
+$ gcc hello.c -S -o hello.s
+#+END_src
+*** hello.c                                                   :B_block:BMCOL:
+   :PROPERTIES:
+   :BEAMER_opt: t
+   :BEAMER_env: block
+   :BEAMER_col: 0.44
+   :END:
+#+BEGIN_SRC c
+void
+main ()
+{
+  puts ("Hello, Mes!");
+}
+
+
+#+END_SRC
+*** hello.s                                                   :B_block:BMCOL:
+   :PROPERTIES:
+   :BEAMER_opt: t
+   :BEAMER_env: block
+   :BEAMER_col: 0.52
+   :END:
+#+BEGIN_SRC asm
+main: push   %ebp
+      mov    %esp,%ebp
+      push   _string_0
+      call   puts
+      add    $4,%esp
+      leave
+      ret
+_string_0: .string "Hello, Mes!"
+#+END_SRC
+
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_ENV: ignoreheading
+   :END:
+#+BEGIN_SRC dot
+#+END_SRC
+
+# *** hello.o object code
+# #+BEGIN_SRC dot
+# 5589e5689b020001e8dc00000083c404c9c3
+# #+END_SRC
+
+# *** IGNORE
+#    :PROPERTIES:
+#    :BEAMER_COL: 0.48
+#    :BEAMER_ENV: ignoreheading
+#    :END:
+# #+BEGIN_SRC dot
+# #+END_SRC
+
+# *** hello executable code
+# #+BEGIN_SRC dot
+# 7f454c460101...5589e5689b020001e8dc00000083c404c9c3
+# #+END_SRC
+
+** What is a Compiler?
+*** A compiler takes source code and produces executable object code
+#+BEGIN_src bash
+$ gcc -c hello.s -o hello.o
+$ gcc hello.o -o hello
+$ ./hello => "Hello, Mes!"
+#+END_SRC
+
+*** hello.o object code
+#+BEGIN_SRC dot
+5589e5689b020001e8dc00000083c404c9c3
+#+END_SRC
+
+*** hello executable code
+#+BEGIN_SRC dot
+7f454c460101...5589e5689b020001e8dc00000083c404c9c3
+#+END_SRC
+
+
+** What is a Binary Seed?
+
+  1. A binary (program) that was not build from source.
+  2. A binary (program) that was injected from a previous generation.
+    + Think: Binutils, GCC, Glibc, Go, Haskel, Java, Perl, Rust, ...
+
+** What is a Bootstrap Seed?
+
+*** In Guix 0.16 ~250MB
+   :PROPERTIES:
+   :BEAMER_COL: 0.6
+   :BEAMER_ENV: block
+   :END:
+
+  * "bootstrap-binaries": bash, binutils, bzip2, coreutils, gawk, gcc, glibc, grep, gzip, patch, sed, tar, and xz.
+
+*** LOGO
+   :PROPERTIES:
+   :BEAMER_COL: 0.3
+   :BEAMER_ENV: quote
+   :END:
+
+#+LATEX:\rightskip=2cm\includegraphics[width=0.75\textwidth]{Guix.png}
+
+# *** In Guix @core-updates :B_block:BMCOL:
+#    :PROPERTIES:
+#    :BEAMER_COL: 0.48
+#    :BEAMER_ENV: block
+#    :END:
+#   * bash, bzip2, coreutils, gawk, grep, gzip, mescc-tools, mes, patch, sed, tar, and xz.
+
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+
+*** In Debian ~ 450MB
+   :PROPERTIES:
+   :BEAMER_COL: 0.6
+   :BEAMER_ENV: block
+   :END:
+  * "debootstrap" + "build-essential": adduser, apt, base-files, base-passwd, bash, binutils, bsdutils, bzip2, coreutils, cpp, cpp-6, dash, debconf, debian-archive-keyring, debianutils, diffutils, dpkg, dpkg-dev, e2fslibs, e2fsprogs, findutils, g++, g++-6, gcc, gcc-6, gcc-6-base, gpgv, grep, gzip...
+# hostname, init-system-helpers, libacl1, libapt-pkg5.0, libasan3, libatomic1, libattr1, libaudit-common, libaudit1, libblkid1, libbz2-1.0, libc-bin, libc-dev-bin, libc6, libc6-dev, libcap-ng0, libcc1-0, libcilkrts5, libcomerr2, libdb5.3, libdebconfclient0, libdpkg-perl, libfdisk1, libgcc-6-dev, libgcc1, libgcrypt20, libgdbm3, libgmp10, libgomp1, libgpg-error0, libisl15, libitm1, liblsan0, liblz4-1, liblzma5, libmount1, libmpc3, libmpfr4, libmpx2, libncursesw5, libpam-modules, libpam-modules-bin, libpam-runtime, libpam0g, libpcre3, libperl5.24, libquadmath0, libselinux1, libsemanage-common, libsemanage1, libsepol1, libsmartcols1, libss2, libstdc++-6-dev, libstdc++6, libsystemd0, libtinfo5, libtsan0, libubsan0, libudev1, libustr-1.0-1, libuuid1, linux-libc-dev, login, lsb-base, make, mawk, mount, multiarch-support, ncurses-base, ncurses-bin, passwd, patch, perl, perl-base, perl-modules-5.24, sed, sensible-utils, sysvinit-utils, tar, tzdata, util-linux, xz-utils, and zlib1g.
+
+*** LOGO
+   :PROPERTIES:
+   :BEAMER_COL: 0.3
+   :BEAMER_ENV: quote
+   :END:
+#+LATEX:\rightskip=2cm\includegraphics[width=0.65\textwidth]{debian+debian.png}
+
+** What is a Bootstrap?
+
+*** Impossible task: pull yourself up on your boot straps
+
+#+LATEX:\rightskip=2cm\includegraphics[width=0.3\textwidth]{boot-strap.png}
+
+*** Software: to create your first: kernel, shell, C compiler, ...
+
+#+LATEX:\includegraphics[width=0.15\textwidth]{gcc.png}
+#+LATEX:{\fontsize{20}{10}\selectfont source\normalsize}
+#+LATEX:{\fontsize{40}{20}\selectfont + ?? =}
+#+LATEX:\includegraphics[width=0.15\textwidth]{gcc.png}
+#+LATEX:{\fontsize{20}{10}\selectfont binary\normalsize}
+
+** How to Bootstrap: An Old Recipe...
+#+LATEX:\rightskip=2cm\includegraphics[width=0.3\textwidth]{yoghurt.png}\\
+   #+BEGIN_QUOTE
+Recipe for yoghurt: Add yoghurt to milk -- Anonymous
+   #+END_QUOTE
+
+** How to Bootstrap: Create your first GCC
+
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+
+Traditional recipe: like yoghurt
+#+LATEX:\\[1cm]
+#+LATEX:\includegraphics[width=0.15\textwidth]{gcc.png}
+#+LATEX:{\fontsize{10}{5}\selectfont source\normalsize}
+#+LATEX:{\fontsize{40}{20}\selectfont +}
+#+LATEX:\includegraphics[width=0.15\textwidth]{gcc.png}
+#+LATEX:{\fontsize{10}{5}\selectfont binary - 1\normalsize}
+#+LATEX:{\fontsize{40}{10}\selectfont = \normalsize}
+#+LATEX:\includegraphics[width=0.15\textwidth]{gcc.png}
+#+LATEX:{\fontsize{10}{5}\selectfont binary\normalsize}
+#+LATEX:\\[1cm]
+
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+
+... and done!
+
+** Reduced Binary Seed: Remove Binutils, GCC, and GLIBC
+#+LATEX:\rightskip=2cm\includegraphics[width=1.0\textwidth]{gcc-mesboot0.png}
+
+** GNU Mes: Reduced Binary Seed bootstrap
+
+*** GNU Mes v0.19 (dec 2018)
+
+  * mes.c: small Scheme interpreter written in a simple C subset
+    + 5000LOC
+    + mostly Guile-compatible
+  * mescc.scm: A C compiler written in mes-compatible Guile Scheme
+    + Nyacc C99 parser
+  * Mes C Library
+    + libc.c: small C library for mes.c (25 functions, 1000LOC)
+    + libc+tcc.c (80 functions, 3000LOC)
+    + libc+gnu.c: bootstrap support libraries (160 functions, 6000LOC)
+
+*** Reduced Binary Seed bootstrap (unreleased: @core-updates)
+  * Bootstrap GNU without binutils, GCC, or C Library
+  * Halves the size of the trusted set of binaries
+    + Debian: 450MB, Guix: 250MB, RBSb-Guix: 130MB
+
+
+* Reduced Binary Seed bootstrap: Why?
+
+** Reduced Binary Seed bootstrap: Why?
+
+*** Safety/Security
+  * Ken Thompson's "Reflections on trusting trust" attack.
+#  * James Comey: one ought to take responsibility for safety and security.
+*** Moral duty
+  * James Comey: ought to take responsibility for safety and security.
+*** We like source
+  * Everything in Guix is built from source, except the bootstrap binaries.
+*** Tradition
+  * This is how we used to do it.
+*** Pragmatism
+  * Support new hardware architecture
+** Reduced Binary Seed bootstrap: Why?
+*** Legality
+  * Is it even legal to distribute a GCC binary in DisneyWorld?
+*** Inspiration
+  * Stage0's hex0 Monitor/Assembler.
+
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+#+LATEX:\vspace*{10cm}
+
+** Bruce Schneier: "Trusting trust" attack gotten easier
+
+   #+BEGIN_QUOTE
+It's interesting: the "trusting trust" attack has actually gotten
+easier over time, because compilers have gotten increasingly complex,
+giving attackers more places to hide their attacks.
+   #+END_QUOTE
+
+   #+BEGIN_QUOTE
+Here's how you can use a simpler compiler -- that you can trust more --
+to act as a watchdog on the more sophisticated and more complex
+compiler.  -- Bruce Schneier, \ahref{https://www.schneier.com/blog/archives/2006/01/countering_trus.html}{2006}
+   #+END_QUOTE
+
+** Peter Herdman: "Trusting trust" more fitting today
+   #+BEGIN_QUOTE
+Reflecting on 'Reflections on Trusting Trust'
+   #+END_QUOTE
+   #+BEGIN_QUOTE
+Enterprises appear to be overlooking or bypassing robust software
+assurance processes and procedures
+   #+END_QUOTE
+   #+BEGIN_QUOTE
+Thompsons essay is probably more fitting today than it was when it was
+written.
+   #+END_QUOTE
+   #+BEGIN_QUOTE
+The moral of this article is that you still cannot trust any software.
+-- Peter Herdman, \ahref{http://www.varlogsecurity.com/20141031.htm}{2014}
+   #+END_QUOTE
+
+** David A. Wheeler: Address subverted bootstrap code
+   #+BEGIN_QUOTE
+Bootstrappable builds focuses on minimizing the amount of bootstrap
+binaries.  They're not just interested in the direct "bootstrap" code
+to boot a computer, but also what is necessary to generate the direct
+bootstrap code.
+   #+END_QUOTE
+   #+BEGIN_QUOTE
+The problem bootstrappable builds is trying to address is a real one,
+namely, they are worried about subverted bootstrap code. -- David
+A. Wheeler, \ahref{https://dwheeler.com/trusting-trust/}{2016}
+   #+END_QUOTE
+
+** James Comey: Ought to take responsibility
+   #+BEGIN_QUOTE
+I put a piece of tape [..] over the camera [of my personal laptop ..] so
+that people who don’t have authority don’t look at you.  I think that’s
+a good thing.  I think people ought to take responsibility for their own
+safety and security. -- \ahref{https://www.telegraph.co.uk/technology/2016/09/15/put-tape-over-your-webcam-fbi-director-warns/}{US FBI director James Comey, 2016}
+   #+END_QUOTE
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+That probably also applies to dowloading binaries from the internet and
+running them; paraphrasing
+   #+BEGIN_quote
+The FBI thinks that we ought to bootstrap our computers from source.
+   #+END_quote
+
+** Trust: No Known Universal Back Door
+   :PROPERTIES:
+   :BEAMER_ENV: note
+   :END:
+   #+LATEX:\rightskip=-3cm\includegraphics[width=1.0\textwidth]{mark-zuckerberg-tape.png}
+
+
+** Ludovic Courtès: Reduce seeds to bare minimum
+   #+BEGIN_QUOTE
+These big chunks of binary code are practically non-auditable which
+breaks the source to binary transparency that we get in the rest of
+the package dependency graph.
+   #+END_QUOTE
+   #+BEGIN_QUOTE
+Every unauditable binary leaves us vulnerable to compiler backdoors as
+described by Ken Thompson in the 1984 paper *Reflections on Trusting
+Trust*.
+   #+END_QUOTE
+   #+BEGIN_QUOTE
+Thus, our goal is to reduce the set of bootstrap binaries to the bare
+minimum.  -- Ludovic Courtès (GNU Guix documentation, December 2017)
+   #+END_QUOTE
+
+# ** Tradition: Aim for the Stars
+# ** Aim for the Stars: Full Source Bootstrap
+# #+LATEX:\includegraphics[width=0.6\textwidth]{fsb-logo-guile-guix-mes.png}
+
+** Is it legal to distribute a GCC binary in DisneyWorld?
+*** Only if you distribute, or give access to the `Corresponding Source'
+   #+BEGIN_QUOTE
+  The "Corresponding Source" for a work in object code form means all
+the source code needed to generate, install, and (for an executable
+work) run the object code and to modify the work, including scripts to
+control those activities.  However, it does not include the work's
+System Libraries, or general-purpose tools or generally available free
+programs which are used unmodified in performing those activities but
+which are not part of the work.  -- GNU GPL version 3
+   #+END_QUOTE
+*** Let's assume GCC was built using GCC-1
+  * Is GCC-1 a `System Library? or
+  * Is GCC-1 a `general-purpose tool'? or
+  * Was GCC-1 a `generally available free program'?
+
+** Journey to the source?
+#+LATEX:\hspace{115mm}\tiny{???}\\[-2.0ex]
+#+LATEX:\hspace{ 90mm}\tiny{Soft Landing Systems}\\[-0.5ex]
+#+LATEX:\hspace{ 82mm}\tiny{0.90 .. 0.01}\\[-1.0ex]
+#+LATEX:\hspace{ 74mm}\tiny{0.93rc5}\\[-1.1ex]
+#+LATEX:\hspace{ 66mm}\tiny{0.93rc6}\\[-1.0ex]
+#+LATEX:\hspace{ 60mm}\tiny{1.1 buzz}\\[-1.0ex]
+#+LATEX:\hspace{ 54mm}\tiny{1.2 rex}\\[-1.0ex]
+#+LATEX:\hspace{ 48mm}\tiny{1.3 bo}\\[-1.0ex]
+#+LATEX:\hspace{ 42mm}\tiny{2.0 hamm}\\[-0.6ex]
+#+LATEX:\hspace{ 37mm}\tiny{2.1 slink}\\[-1.1ex]
+#+LATEX:\hspace{ 30mm}\scriptsize{2.2 potato}\\[-1.1ex]
+#+LATEX:\hspace{ 24mm}\footnotesize{3.0 woody}\\[-1.1ex]
+#+LATEX:\hspace{ 19mm}\small{3.1 sarge}\\[-1.0ex]
+#+LATEX:\hspace{ 14mm}\normalsize{4 etch}\\[-1.1ex]
+#+LATEX:\hspace{ 10mm}\large{5 lenny}\\[-1.2ex]
+#+LATEX:\hspace{ 6mm}\Large{6 squeeze}\\[-1.2ex]
+#+LATEX:\hspace{ 3mm}\LARGE{7 wheezy}\\[-1.2ex]
+#+LATEX:\hspace{ 1mm}\huge{8 jessie}\\[-0.5ex]
+#+LATEX:\hspace{ 0mm}\Huge{9 stretch}
+#+LATEX:\normalsize
+   #+BEGIN_QUOTE
+As time goes on we will expire the binary packages for old releases.
+Currently we have binaries for squeeze, lenny, etch, sarge, woody,
+potato, slink, hamm and bo available, and only source code for the other
+releases.  -- \ahref{https://www.debian.org/distrib/archive}{www.debian.org/distrib/archive}
+   #+END_QUOTE
+
+** Inspiration: Stage0's 500 byte hex0 Monitor
+   #+BEGIN_src
+## ELF Header
+7F 45 4C 46        ## e_ident[EI_MAG0-3] ELF's magic number
+02                 ## e_ident[EI_CLASS] Indicating 64 bit
+01                 ## e_ident[EI_DATA] Indicating little endianness
+...
+   #+END_src
+   #+BEGIN_src
+## ascii other
+48 c7 c0 ff ff ff ff # mov $0xffffffffffffffff,%rax
+c3                   # retq
+
+## start
+49 c7 c7 ff ff ff ff # mov $0xffffffffffffffff,%r15
+49 c7 c6 00 00 00 00 # mov $0x0,%r14
+
+## Loop
+48 c7 c2 01 00 00 00 # mov $0x1,%rdx
+48 c7 c6 99 01 60 00 # mov $0x600199,%rsi
+48 c7 c7 00 00 00 00 # mov $0x0,%rdi
+   #+END_src
+
+
+* Reduced Binary Seed bootstrap: How?
+** How: Remove Yoghurt-software!
+#+LATEX:\includegraphics[width=0.7\textwidth]{yoghurt.png}
+** How: Remove Yoghurt-software!
+#+LATEX:\includegraphics[width=0.7\textwidth]{yoghurt-eaten.png}\\
+
+** Is GNU GCC Yoghurt-software?
+#+LATEX:\rightskip=2cm\includegraphics[width=0.2\textwidth]{gcc.png}
+#+LATEX:{\fontsize{50}{60}\selectfont $\cong$ }
+#+LATEX:\rightskip=2cm\includegraphics[width=0.3\textwidth]{yoghurt.png}
+#+LATEX:{\fontsize{50}{60}\selectfont\ ?}
+
+** From boot-strap to boot-strip
+#+LATEX:\rightskip=2cm\includegraphics[width=0.25\textwidth]{boot-strap.png}
+#+LATEX:{\fontsize{50}{60}\selectfont => }
+#+LATEX:\rightskip=2cm\includegraphics[width=0.25\textwidth]{boot-strip.png}
+#+LATEX:{\fontsize{50}{60}\selectfont\ !}
+
+** Is TCC Yoghurt-software?
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+# GCC can be built with TCC and the Mes C Library
+# #+LATEX:\\[1cm]
+#+LATEX:\rightskip=2cm\includegraphics[width=0.2\textwidth]{tcc.png}
+#+LATEX:{\fontsize{50}{60}\selectfont $\cong$ }
+#+LATEX:\rightskip=2cm\includegraphics[width=0.3\textwidth]{yoghurt.png}
+#+LATEX:{\fontsize{50}{60}\selectfont\ ?}
+
+** Is Mes+MesCC Yoghurt-software?
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+# TCC can be built with Mes and MesCC
+# #+LATEX:\\[1cm]
+#+LATEX:\rightskip=2cm\includegraphics[width=0.2\textwidth]{mes.png}
+#+LATEX:{\fontsize{50}{60}\selectfont \ \ $\cong$ }
+#+LATEX:\rightskip=2cm\includegraphics[width=0.3\textwidth]{yoghurt.png}
+#+LATEX:{\fontsize{50}{60}\selectfont\ ?}
+
+** MesCC: Compile to M1
+#+BEGIN_src bash
+mescc -S scaffold/hello.c -o hello.M1
+mescc scaffold/hello.c    -o a.out
+#+END_src
+*** hello.c                                                   :B_block:BMCOL:
+   :PROPERTIES:
+   :BEAMER_COL: 0.48
+   :BEAMER_ENV: block
+   :END:
+#+BEGIN_SRC c
+void
+main ()
+{
+  puts ("Hello, Mes!");
+}
+
+
+
+#+END_SRC
+*** hello.M1                                                  :B_block:BMCOL:
+   :PROPERTIES:
+   :BEAMER_COL: 0.48
+   :BEAMER_ENV: block
+   :END:
+#+BEGIN_SRC dot
+:main
+  push___%ebp
+  mov____%esp,%ebp
+  sub____$i32,%esp %0x1054
+  push___$i32 &_string_0
+  call32 %puts
+  add____$i8,%esp !0x4
+  leave
+  ret
+
+#+END_SRC
+
+** MesCC [M1-macro]: Assemble to hex2
+#+BEGIN_src bash
+mescc -c scaffold/hello.c -o hello.hex2
+#+END_src
+*** hello.hex2
+#+BEGIN_SRC dot
+:main
+55
+89e5
+81ec
+54100000
+68
+&_string_0
+e8
+%puts
+83c4
+04
+c9
+c3
+#+END_SRC
+
+** MesCC [hex2-linker]: Link to ELF
+*** M1-Macros :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_COL: 0.44
+    :BEAMER_ENV: block
+    :END:
+#+BEGIN_SRC dot
+DEFINE push__%ebp       55
+DEFINE mov___%esp,%ebp  89e5
+DEFINE sub___$i32,%esp  81ec
+DEFINE push__$i32       68
+#+END_SRC
+*** ...continued :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_COL: 0.52
+    :BEAMER_ENV: block
+    :END:
+#+BEGIN_SRC dot
+DEFINE call32           e8
+DEFINE sub___$i32,%esp  81ec
+DEFINE leave            c9
+DEFINE ret              c3
+#+END_SRC
+*** a.out
+#+BEGIN_SRC dot
+0100026d <main>:
+ 100026d:	55                   	push   %ebp
+ 100026e:	89 e5                	mov    %esp,%ebp
+ 1000270:	81 ec 54 10 00 00    	sub    $0x1054,%esp
+ 1000276:	68 9b 02 00 01       	push   $0x100029b
+ 100027b:	e8 dc 00 00 00       	call   100035c <puts>
+ 1000280:	83 c4 04             	add    $0x4,%esp
+ 1000283:	c9                   	leave
+ 1000284:	c3                   	ret
+#+END_SRC
+
+* Reduced Binary Seed bootstrap: Future.
+
+** Future: Aim for the Stars: Full Source Bootstrap
+#+LATEX:\includegraphics[width=0.6\textwidth]{fsb-logo-guile-guix-mes.png}
+
+** Aim for the Stars: Stage 0
+#+LATEX:\rightskip=2cm\includegraphics[width=0.8\textwidth]{stage-0.png}
+
+** Aim for the Stars: Stage 1
+#+LATEX:\rightskip=2cm\includegraphics[width=1.0\textwidth]{stage-1.png}
+
+** Aim for the Stars: Stage 2
+#+LATEX:\rightskip=2cm\includegraphics[width=0.55\textwidth]{stage-2.png}
+
+** Aim for the Stars: Stage mes
+#+LATEX:\rightskip=2cm\includegraphics[width=0.65\textwidth]{stage-mes.png}
+
+** Aim for the Stars: Stage mesboot
+#+LATEX:\rightskip=2cm\includegraphics[width=0.85\textwidth]{stage-mesboot.png}
+
+
+
+
+
+
+** Aim for the Stars: Further reductions
+*** In progress
+  * Gash: Scheme-only Bootstrap (Guix @wip-bootstrap)
+    - Bootstrap Guix from only =mescc-tools=, =mes=, =gash=, =guile=.
+  * Mes v0.20: Mes C Lib support for awk, bash, sed, tar.
+  * Bootstrap Mes.M2 using M2-Planet.
+  * A Reduced Binary Seed bootstrap for Nix.
+  * Skip gcc-2.95.3 stage, build gcc-4.x directly?
+*** Later
+  * Inspire the GCC developers to write their own bootstrap story.
+  * Remove =bootstrap-mescc-tools=, =bootstrap-mes=.
+  * Fully replace =bootstrap-guile= with =bootstrap-mes=.
+  * Other Architectures (ARM).
+  * Non-functional distributions (Debian, a *BSD?).
+
+** Aim for the Stars: Gash
+*** Recent merger between historical Gash and Geesh
+  * Gash: experimental PEG parser for Bash
+    + focus on converting shell to Guile
+    + shelly Guile scripting and interactive use
+  * Geesh: LALR parser for POSIX sh
+    + focus on sh compliance and bootstrap
+*** Current focus
+  * Scheme-only bootstrap
+  * 0.1 release
+*** Features
+  * Bootstraps Bash 4.4: configure script, make shell snippets
+  * awk lexer parser basename cat chmod cmp compress cp cut diff dirname expr find grep ln ls mkdir mv printf reboot rm rmdir sed reader
+    sleep sort tar test testb touch tr uname uniq wc which
+
+* Thanks
+** Thanks
+*** Thanks                                                    :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_COL: 0.48
+    :BEAMER_ENV: block
+    :END:
+   * John McCarthy
+   * Eelco Dolstra
+   * Ludovic Courtès
+   * Matt Wette
+   * Jeremiah Orians
+   * Rutger van Beusekom
+*** Thanks everyone else                                      :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_COL: 0.48
+    :xBEAMER_ACT: <2->
+    :BEAMER_ENV: block
+    :END:
+    * LISP-1.5
+    * GNU/Linux
+    * Nix
+    * Debian
+    * Reproducible builds
+    * Guix
+*** Connect
+    * irc  freenode.net [[irc://bootstrappable@freenode.net][#bootstrappable]] [[irc://guix@freenode.net][#guix]]
+    * mail [[mailto://guix-devel@gnu.org][guix-devel@gnu.org]], [[mailto:bug-mes@gnu.org][bug-mes@gnu.org]]
+    * git  [[https://git.savannah.gnu.org/git/mes.git][https://git.savannah.gnu.org/git/mes.git]]
+    * web  [[http://bootstrappable.org][bootstrappable.org]]
+
+
+* Legalese
+  :PROPERTIES:
+  :COPYING: t
+  :END:
+
+  Copyright \copy 2017,2019 Jan (janneke) Nieuwenhuizen <janneke@gnu.org>
+
+  #+BEGIN_QUOTE
+  Permission is granted to copy, distribute and/or modify this
+  document under the terms of the GNU Free Documentation License,
+  Version 1.3 or any later version published by the Free Software
+  Foundation; with no Invariant Sections, with no Front-Cover Texts,
+  and with no Back-Cover Texts.
+  #+END_QUOTE
+
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+  Images [for copyright see README]
+  #+BEGIN_QUOTE
+  Permission is granted to copy, distribute and/or modify
+  these works under the terms of the Creative Commons
+  Attribution-ShareAlike 4.0 International License.
+  #+END_QUOTE
+
+* Extra: Maxwell Equations of Software
+** \ahref{http://queue.acm.org/detail.cfm?id=1039523}{LISP as the Maxwell's Equations of Software}
+   #+BEGIN_QUOTE
+That was the big revelation to me when I [..] finally understood that
+the half page of code on the bottom of page 13 of the Lisp 1.5 manual
+was Lisp in itself.  These were “Maxwell’s Equations of Software!”  -- Alan Kay
+   #+END_QUOTE
+
+** \ahref{http://www.softwarepreservation.org/projects/LISP/book/LISP\%25201.5\%2520Programmers\%2520Manual.pdf}{LISP-1.5 John McCarthy: page 13}
+# convert -density 150 -quality 100 -flatten -sharpen 0x1.0 LISP-1.5-page-13.pdf LISP-1.5-page-13.png
+#+ATTR_LATEX: :width=\linewidth
+#+LATEX:\includegraphics[width=\textwidth]{LISP-1-5-page-13-bottom.png}
+** LISP-1.5 in Guile Scheme: APPLY
+
+#+BEGIN_SRC scheme
+(define (apply fn x a)
+  (cond
+   ((atom fn)
+    (cond
+     ((eq fn CAR)  (caar x))
+     ((eq fn CDR)  (cdar x))
+     ((eq fn CONS) (cons (car x) (cadr x)))
+     ((eq fn ATOM) (atom (car x)))
+     ((eq fn EQ)   (eq (car x) (cadr x)))
+     (#t           (apply (eval fn a) x a))))
+   ((eq (car fn) LAMBDA)
+                   (eval (caddr fn) (pairlis (cadr fn) x a)))
+   ((eq (car fn) LABEL)
+                   (apply (caddr fn) x (cons (cons (cadr fn)
+                                                   (caddr fn))
+                                             a)))))
+#+END_SRC
+
+** LISP-1.5 in Guile Scheme: EVAL
+
+#+BEGIN_SRC scheme
+(define (eval e a)
+  (cond
+   ((atom e) (cdr (assoc e a)))
+   ((atom (car e))
+    (cond ((eq (car e) QUOTE) (cadr e))
+          ((eq (car e) COND)  (evcon (cdr e) a))
+          (#t                 (apply (car e)
+                                     (evlis (cdr e) a) a))))
+   (#t       (apply (car e) (evlis (cdr e) a) a))))
+#+END_SRC
+
+** LISP-1.5 in Scheme: ASSOC, PAIRLIS, EVCON, EVLIS
+
+#+BEGIN_SRC scheme
+(define (assoc x a)
+  (cond ((eq (caar a) x) (car a))
+        (#t (assoc x (cdr a)))))
+
+(define (pairlis x y a)
+  (cond ((null x) a)
+        (#t (cons (cons (car x) (car y))
+                  (pairlis (cdr x) (cdr y) a)))))
+
+(define (evcon c a)
+  (cond ((eval (caar c) a) (eval (cadar c) a))
+        (#t (evcon (cdr c) a))))
+
+(define (evlis m a)
+  (cond ((null m) NIL)
+        (#t (cons (eval (car m) a) (evlis (cdr m) a)))))
+#+END_SRC
+
+
+* Extra: History
+** History -- 1984 Four Software Freedoms: GNU GPL
+*** 1984 Four Software Freedoms: GNU GPL
+   + The freedom to
+     - 0 run the program as you wish, for any purpose
+     - 1 study how the program works, and change it if you wish
+     - 2 redistribute copies so you can help your neighbor
+     - 3 share copies of your modified versions with others
+   #+BEGIN_QUOTE
+-- Richard M. Stallman
+   #+END_QUOTE
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+#+LATEX:\vspace*{10cm}
+
+** History -- 1941: The \ahref{https://en.wikipedia.org/wiki/Four_Freedoms}{Four Freedoms}
+  :PROPERTIES:
+  :BEAMER_ENV: note
+  :END:
+*** for all people on our planet
+
+   * Freedom of speech
+   * Freedom of worship
+   * Freedom from want
+   * Freedom from fear
+
+-- Franklin D. Roosevelt
+
+** History -- 1990s Reproducible GNU Tools \ahref{https://lists.reproducible-builds.org/pipermail/rb-general/2017-January/000309.html}{@Cygnus}
+  * 1984 Four Software Freedoms: GNU GPL
+*** 1990s Reproducible GNU Tools \ahref{https://lists.reproducible-builds.org/pipermail/rb-general/2017-January/000309.html}{@Cygnus}
+   #+BEGIN_QUOTE
+We made the GNU tools that we were shipping and supporting -- and all of
+our test cases compiled by them -- reproducible.  That includes gcc,
+gdb, gas, binutils, gnu make, and a few other things. -- John Gilmore
+   #+END_QUOTE
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+#+LATEX:\vspace*{10cm}
+
+*** Times have changed? :B_note:
+   :PROPERTIES:
+   :BEAMER_env: note
+   :END:
+  * After a period of non-reproducible builds, binutils can now be
+    optionally be configured =--enable-deterministic-archives= to support reproducibility.
+  * Reproducibility patches for GCC were developed by Debian and GNU Guix
+    and take considerable effort to get upstream.
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+#+LATEX:\vspace*{10cm}
+
+** History -- 2006 Nix: Purely Functional Software Deployment
+  * 1984 Four Software Freedoms: GNU GPL
+  * 1990s Reproducible GNU Tools \ahref{https://lists.reproducible-builds.org/pipermail/rb-general/2017-January/000309.html}{@Cygnus}
+*** 2006 Nix: Purely Functional Software Deployment
+  * functional package management
+  * isolated builds
+  * Nix (and GNU Guix) are designed for reproducibility
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+   #+BEGIN_QUOTE
+Installation of a component can lead to the failure of
+previously installed components; a component might require other
+components that are not present; and it is difficult to undo
+deployment actions.
+   #+END_QUOTE
+   #+BEGIN_QUOTE
+This thesis describes a better approach based on a purely functional
+deployment model, implemented in a deployment system called Nix.
+-- Eelco Dolstra
+   #+END_QUOTE
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+#+LATEX:\vspace*{10cm}
+
+** History -- 2007 debian-devel: \ahref{https://lists.debian.org/debian-devel/2007/09/msg00746.html}{Reproducibility}
+  * 1984 Four Software Freedoms: GNU GPL
+  * 1990s Reproducible GNU Tools \ahref{https://lists.reproducible-builds.org/pipermail/rb-general/2017-January/000309.html}{@Cygnus}
+  * 2006 Nix: Functional package management
+*** 2007 debian-devel: \ahref{https://lists.debian.org/debian-devel/2007/09/msg00746.html}{Reproducibility}
+   #+BEGIN_QUOTE
+I think it would be really cool if the Debian policy required that
+packages could be rebuild bit-identical from source.
+   #+END_QUOTE
+   #+BEGIN_QUOTE
+At the moment, it is impossible to independly verify the
+integricity of binary packages. -- Martin Uecker
+   #+END_QUOTE
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+#+LATEX:\vspace*{10cm}
+
+** History -- 2012 \ahref{https://www.gnu.org/software/guix/news/reproducible-builds-a-means-to-an-end.html}{GNU Guix: user atonomy and safety}
+  * 1984 Four Software Freedoms: GNU GPL
+  * 1990s Reproducible GNU Tools \ahref{https://lists.reproducible-builds.org/pipermail/rb-general/2017-January/000309.html}{@Cygnus}
+  * 2006 Nix: Functional package management
+  * 2007 debian-devel: \ahref{https://lists.debian.org/debian-devel/2007/09/msg00746.html}{Reproducibility}
+*** 2012 \ahref{https://www.gnu.org/software/guix/news/reproducible-builds-a-means-to-an-end.html}{GNU Guix: user atonomy and safety}
+  * Reproducible builds: a means to an end
+  * User autonomy and safety
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+   #+BEGIN_QUOTE
+We view “reproducible builds” as a technical means to an end: that of
+guaranteeing user autonomy and safety. -- Ludovic Courtès
+   #+END_QUOTE
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+#+LATEX:\vspace*{10cm}
+
+** History -- 2013 DebConf13: \ahref{https://reproducible-builds.org}{reproducible-builds.org}
+  * 1984 Four Software Freedoms: GNU GPL
+  * 1990s Reproducible GNU Tools \ahref{https://lists.reproducible-builds.org/pipermail/rb-general/2017-January/000309.html}{@Cygnus}
+  * 2006 Nix: Functional package management
+  * 2007 debian-devel: \ahref{https://lists.debian.org/debian-devel/2007/09/msg00746.html}{Reproducibility}
+  * 2012 \ahref{https://www.gnu.org/software/guix/news/reproducible-builds-a-means-to-an-end.html}{GNU Guix: user atonomy and safety}
+*** 2013 DebConf13: \ahref{https://reproducible-builds.org}{reproducible-builds.org}
+  * Lunar organizes \ahref{https://reproducible-builds.org}{reproducible-builds.org}
+# Reproducible builds are a set of software development practices that
+# create a verifiable path from human readable source code to the binary
+# code used by computers.
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+   #+BEGIN_QUOTE
+A build is reproducible if given the same source code, build environment
+and build instructions, any party can recreate bit-by-bit identical
+copies of all specified artifacts.  -- \ahref{https://reproducible-builds.org}{reproducible-builds.org}
+   #+END_QUOTE
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+#+LATEX:\vspace*{10cm}
+
+** History -- 2016 \ahref{https://aspirationtech.org/events/reproduciblebuilds/2016}{R-B Summit II: bootstrappable.org}
+  * 1984 Four Software Freedoms: GNU GPL
+  * 1990s Reproducible GNU Tools \ahref{https://lists.reproducible-builds.org/pipermail/rb-general/2017-January/000309.html}{@Cygnus}
+  * 2006 Nix: Functional package management
+  * 2007 debian-devel: \ahref{https://lists.debian.org/debian-devel/2007/09/msg00746.html}{Reproducibility}
+  * 2012 \ahref{https://www.gnu.org/software/guix/news/reproducible-builds-a-means-to-an-end.html}{GNU Guix: user atonomy and safety}
+  * 2013 DebConf13: \ahref{https://reproducible-builds.org}{reproducible-builds.org}
+*** 2016 \ahref{https://aspirationtech.org/events/reproduciblebuilds/2016}{R-B Summit II: bootstrappable.org}
+   - reproducible builds summit II
+   - session: Writing a statement about what it means to do bootstrappable compilers II
+   - host: Ludovic Courtès
+   - result: Following up on the first session focusing on this effort, the group drafted a first version of the \ahref{http://bootstrappable.org}{bootstrappable.org} website.
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+#+LATEX:\vspace*{10cm}
+
+** History -- 2016 Initial release of Stage0 and Mes
+  * 1984 Four Software Freedoms: GNU GPL
+  * 1990s Reproducible GNU Tools \ahref{https://lists.reproducible-builds.org/pipermail/rb-general/2017-January/000309.html}{@Cygnus}
+  * 2006 Nix: Functional package management
+  * 2007 debian-devel: \ahref{https://lists.debian.org/debian-devel/2007/09/msg00746.html}{Reproducibility}
+  * 2012 \ahref{https://www.gnu.org/software/guix/news/reproducible-builds-a-means-to-an-end.html}{GNU Guix: user atonomy and safety}
+  * 2013 DebConf13: \ahref{https://reproducible-builds.org}{reproducible-builds.org}
+  * 2016 \ahref{https://aspirationtech.org/events/reproduciblebuilds/2016}{R-B Summit II: bootstrappable.org}
+*** 2016 Initial release of Stage0 and Mes
+   Release of Stage0 and Mes
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+#+LATEX:\vspace*{10cm}
+
+** History -- 2018 Reduced Binary Seed bootstrap
+  * 1984 Four Software Freedoms: GNU GPL
+  * 1990s Reproducible GNU Tools \ahref{https://lists.reproducible-builds.org/pipermail/rb-general/2017-January/000309.html}{@Cygnus}
+  * 2006 Nix: Functional package management
+  * 2007 debian-devel: \ahref{https://lists.debian.org/debian-devel/2007/09/msg00746.html}{Reproducibility}
+  * 2012 \ahref{https://www.gnu.org/software/guix/news/reproducible-builds-a-means-to-an-end.html}{GNU Guix: user atonomy and safety}
+  * 2013 DebConf13: \ahref{https://reproducible-builds.org}{reproducible-builds.org}
+  * 2016 \ahref{https://aspirationtech.org/events/reproduciblebuilds/2016}{R-B Summit II: bootstrappable.org}
+  * 2016 Initial release of Stage0 and Mes
+*** 2018 Reduced Binary Seed bootstrap
+    This talk!
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+#+LATEX:\vspace*{10cm}
+
+
+# Extra
+
+
+* Extra: Timeline
+** Timeline 2016
+*** October 23: 0.1 [not announced]
+  * =let-syntax=, =match=
+  * compile main.c in 2s (was 1'20")
+  * add REPL
+
+*** November 21: 0.2 [not announced]
+  * psyntax integration, =syntax-case=, =load=
+
+*** December 12: \ahref{https://lists.gnu.org/archive/html/guile-user/2016-12/msg00008.html}{on bootstrapping: first Mes 0.3 released}
+  * Garbage Collector/Jam Scraper
+
+*** December 25: \ahref{https://lists.gnu.org/archive/html/guile-user/2016-12/msg00041.html}{Mes 0.4 released}
+  * run Nyacc, PEG, reduced core
+
+** Timeline 2017
+
+*** April 27: \ahref{https://lists.gnu.org/archive/html/guile-user/2017-04/msg00056.html}{Mes 0.5 released}
+  * mutual self-hosting
+    - mes.c runs mescc.scm
+    - mescc.scm compiles mes.c
+
+*** May 14: \ahref{https://lists.gnu.org/archive/html/guile-user/2017-05/msg00056.html}{Mes 0.6 released}
+  * MesCC runs on unpatched Nyacc
+  * MesCC compiles 33/55 of tinycc/tests/test2
+
+*** June 3: \ahref{https://lists.gnu.org/archive/html/guile-user/2017-06/msg00010.html}{Mes 0.7 released}
+  * Mes C Library headers and stubs support working on compiling tcc.c
+
+*** June 25: \ahref{https://lists.gnu.org/archive/html/guile-user/2017-06/msg00118.html}{Mes 0.8 released}
+  * MesCC compiles to stage0's hex2 format
+
+** Timeline 2017-2
+
+*** July 26: \ahref{https://lists.gnu.org/archive/html/guile-user/2017-07/msg00089.html}{Mes 0.9 released}
+  * MesCC compiles mes-tcc, to a mostly segfaulting executable
+
+*** September 10: \ahref{https://lists.gnu.org/archive/html/guile-user/2017-09/msg00027.html}{Mes 0.10 released}
+  * mes-tcc can compile a working trivial C program "int main () {return 42;}"
+
+*** November 18: \ahref{https://lists.gnu.org/archive/html/guile-user/2017-11/msg00040.html}{Mes 0.11 released}
+  * MesCC: test suite with 69 tests
+  * less-heavily patched mes-tcc passes 41/69 MesCC C tests
+
+** Timeline 2018
+
+*** April 8: \ahref{https://lists.gnu.org/archive/html/guile-user/2018-04/msg00028.html}{Mes 0.12 released}
+  * performance work: MesCC compiles mes-tcc in ~2h30' (was: ~1day)
+
+*** April 28: \ahref{https://lists.gnu.org/archive/html/guile-user/2018-04/msg00033.html}{Mes 0.13 released}
+  * MesCC builds functional mes-tcc
+  * Patches offered to tcc community, rejected
+
+*** May 24: \ahref{https://lists.gnu.org/archive/html/guile-user/2018-05/msg00022.html}{Mes 0.14 released}
+  * MesCC builds functional, only slightly patched mes-tcc
+
+*** June 12: \ahref{https://lists.gnu.org/archive/html/guile-user/2018-06/msg00017.html}{Mes 0.15 released}
+  * Experimental Guix integration
+  * Mes C Library supports building binutils-2.14, gcc-2.95.3, glibc-2.2.5.
+
+** Timeline 2018-2
+
+*** June 26: \ahref{https://lists.gnu.org/archive/html/guile-user/2018-06/msg00065.html}{Mes 0.16 released}
+  * Fix ELF header bug: all Mes binaries segfault on Linux 4.17
+  * Guix integration: build gcc-4.1.0
+
+*** August 10: \ahref{https://lists.gnu.org/archive/html/guile-user/2018-08/msg00013.html}{GNU Mes 0.17 released}
+  * Mes is an official GNU package
+  * Guix integration: build gcc-4.7.4
+
+*** Ocotber 7: \ahref{https://lists.gnu.org/archive/html/guile-user/2018-10/msg00007.html}{GNU Mes 0.18 released}
+  * Guix integration: Reduced Binary Seed bootstrap (cheat using Guile)
+  * Introduce embarrasing bug: MesCC only runs on Guile
+
+*** December 16: \ahref{https://lists.gnu.org/archive/html/guile-user/2018-12/msg00081.html}{GNU Mes 0.19 released}
+  * Compile mes-tcc in ~8' (was: ~1h30).
+  * Guix integration: Remove MesCC-on-Guile shortcut
+
+
+* Extra: Metrics
+** Metrics: Mes since Fosdem'17
+  * 14 releases: 0.5..0.19
+  * 1174 commits
+
+** Metrics: simplifying-tcc patches
+#+BEGIN_src bash
+  135 0001-bootstrappable-Outline-elf-unions.patch
+   41 0002-bootstrappable-Outline-CValue_str.patch
+   44 0003-bootstrappable-Outline-enum-TCCState_pflag.patch
+  162 0005-bootstrappable-Heterogeneous-initializer-list.patch
+   51 0006-bootstrappable-Simple-initializer-lists.patch
+  496 0007-bootstrappable-Heterogeneous-switch-case.patch
+   26 0008-bootstrappable-(foo--)->bar.baz.patch
+   47 0010-bootstrappable-foo (bar (), baz ()).patch
+  176 0011-bootstrappable-foo ()->bar.patch
+   39 0012-bootstrappable-char foo[][].patch
+   94 0013-bootstrappable-Multi-line-strings.patch
+  187 0014-bootstrappable-sizeof-type.patch
+   36 0015-bootstrappable-str-r-chr-str-0.patch
+   30 0016-bootstrappable-uint16_t-in-struct-on-heap.patch
+   64 0017-bootstrappable-constant-pointer-arithmetic.patch
+ 1704 total
+#+END_src
+
+** Metrics: remaining tcc patches
+#+BEGIN_src bash
+   35 0001-bootstrappable-Work-around-Nyacc-0.80.42-bug.patch
+   47 0002-bootstrappable-HAVE_LONG_LONG.patch
+   47 0003-bootstrappable-HAVE_BITFIELD.patch
+   94 0004-bootstrappable-HAVE_FLOAT.patch
+   27 0005-bootstrappable-Skip-tidy_section_headers.patch
+   26 0006-bootstrappable-Handle-libtcc1.a.patch
+   30 0007-bootstrappable-uint16_t-in-struct-on-heap.patch
+  193 0008-bootstrappable-add-tcc.h-include-guards-to-include-l.patch
+   33 0009-bootstrappable-Work-around-MesCC-bug.patch
+   26 0010-bootstrappable-Force-static-link.patch
+  558 total
+#+END_src
+
+** Metrics: GNU patches
+#+BEGIN_src bash
+   26 tcc-boot-0.9.27.patch
+  157 binutils-boot-2.20.1a.patch
+  137 gcc-boot-2.95.3.patch
+  251 glibc-boot-2.2.5.patch
+   68 gcc-boot-4.7.4.patch
+  352 glibc-boot-2.16.0.patch
+  991 total
+#+END_src
+
+** Metrics: GNU Guix patches
+#+BEGIN_src bash
+gnu: Use i686-linux bootstrap binaries on x86_64-linux.
+bootstrap: Merge mes-minimal into mes-minimal-stripped.
+doc: Update mesboot graph without bootstrap-guile.
+bootstrap: Do not fake, use Mes instead of Guile.
+bootstrap: bootstrap-mes: Update.
+bootstrap: mes-minimal-stripped: Do not strip bin.
+bootstrap: Switch to official bootstrap urls.
+bootstrap: mes-boot: Use mes-boot0 version.
+doc: Update for bootstrap-mescc-tools change.
+bootstrap: Force i686-linux for bootstrap-tarballs.
+bootstrap: Update %bootstrap-tarballs.
+bootstrap: Replace %mescc-tools-seed with %bootstrap-mescc-tools.
+bootstrap: Update %bootstrap-mes.
+bootstrap: Add %bootstrap-mescc-tools.
+bootstrap: Add %mes-minimal.
+bootstrap: Add mescc-tools-static, mescc-tools-static-tarball.
+#+END_src
+
+
+
+* Trust
+   :PROPERTIES:
+   :BEAMER_env: note
+   :END:
+** Trust: Universal Back Doors
+   :PROPERTIES:
+   :BEAMER_env: quote
+   :END:
+Using computers and devices that have a Universal Back Door [such as
+Microsoft Windows, Google ChromeOS, most every mobile phone, TVs,
+routers, pre-2018 Teslas, macOS 2011-2015, ...] is very popular amongst
+users, for personal use as well as professional use.
+# -- personal observation
+
+** Trust: Zoals de waard is...
+   #+BEGIN_QUOTE
+   Zoals de waard is, vertrouwt hen hun gasten. -- ancient Dutch proverb
+   #+END_QUOTE
+
+Trust is a quality of the subject, not of the object.
+
+** Trust: I Decide to trust...
+  * Opaque, uninspected binaries the computer dowloads and runs
+    + Microsoft/Google/Intel
+  * The parties I share sensitive data with
+    - Facebook, the Internet
+  * My government
+  * The US government
+  * The Chinese government
+
+** Trust: Live in Freedom
+   #+BEGIN_QUOTE
+  You can't come forward against the world’s most powerful intelligence
+agencies and be completely free from risk because they’re such powerful
+adversaries.  No one can meaningfully oppose them.  If they want to get
+you, they’ll get you in time. But at the same time you have to make a
+determination about what it is that’s important to you.  -- Edward
+Snowden
+   #+END_QUOTE
+
+** Trust: Easy to do, is it always wise?
+
+  * Money (electronic banking, bitcoin)
+  * IoT (alarm system, self-ordering frigde)
+  * Autonomous driving cars
+  * Robot Aided Surgery
+
+
+
+* UNUSED
+   :PROPERTIES:
+   :BEAMER_env: note
+   :END:
+** The Relevance of "trusting trust" Attack
+   :PROPERTIES:
+   :BEAMER_env: note
+   :END:
+*** More plausible attack vectors
+  * Use someone else's computer+software
+    - A gift
+    - A public computer
+  * Installing a Universal back door
+    - A program that can download a binary and run it without any restrictions
+    + Most proprietary operating systems
+  * Unintentionally installing new software
+    - Supported by most popular chat/email programs and web browsers
+  * Intentionally installing unchallangeable binaries that you download
+    - Installation time
+     + All GNU/Linux distributions
+    - Upgrade, package install
+     + Most GNU/Linux distributions
+  * Install from source only, or from challanged binaries
+    - NixOS
+    - GNU Guix
+
+* Full Source Bootstrapping
+   :PROPERTIES:
+   :BEAMER_env: note
+   :END:
+** Full Source Bootstrapping: GNU Guix
+   :PROPERTIES:
+   :xBEAMER_env: note
+   :END:
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+*** all programs are built from source
+  * The distribution is fully “bootstrapped” and “self-contained”: each package is built based solely on other packages in the distribution.
+*** source/binary transparency
+  * binary substitutes from a trusted source can be used and challenged.
+*** starting from the bootstrap binaries
+  * The root of this dependency graph is a small set of “bootstrap binaries”, provided by the ‘(gnu packages bootstrap)’ module.
+
+** Full Source Bootstrapping: building from nothing
+   #+BEGIN_QUOTE
+Recipe for yoghurt: Add yoghurt to milk -- Anonymous
+   #+END_QUOTE
+** Full Source Bootstrapping: GNU Guix
+*** Traditional bootstrap binaries
+=bash=, =bzip2=, =binutils=, =coreutils=, =diffutils=, =gawk=, =gcc=,
+=glibc=, =grep=, =gzip=, =libc=, =make=, =patch=, =sed=, =tar=,
+and =xz=.
+*** Remove GNU binutils, GNU GCC, and GNU C Library.
+  * Replace by bootstrap-mes, bootstrap-mescc-tools.
+
+** Full Source Bootstrapping: Stage0
+*** Stage0
+  * hex0: 512 bytes of yoghurt
+  * hex0 + hex0.hex => hex0
+*** Stage1
+  * hex0 + hex1.hex => hex1
+  * hex1 + hex2.hex1 => hex2
+  * hex2 + M0-macro.hex2 => M0
+  * M0 + M1-macro.M0 => M1
+*** Stage2
+  * M1 + cc_x86.M1 + cc_x86
+  * cc_x86 + M2-Planet.M1 => M2-Planet
+  * M2-Planet C compiler
+
+** Full Source Bootstrapping: GNU Mes
+*** WIP: Stage3
+  * M2-Planet + mes.M2 => mes
+*** Mesboot
+  * mes + mescc.scm + tcc.c => mes-tcc
+  * mes-tcc + tcc.c => boot0-tcc
+    - boot0-tcc + tcc.c => boot1-tcc
+    - boot1-tcc HAVE_BITFIELD => boot2-tcc
+    - boot2-tcc HAVE_LONG_LONG, HAVE_FLOAT => boot3-tcc
+    - boot3-tcc + tcc.c => boot4-tcc
+  * tcc + binutils-2.14.c => binutils
+  * tcc + binutils + gcc-core-2.95.3.c => gcc-core
+  * binutils + gcc-core + glibc-2.2.5.c => glibc
+  * binutils + gcc-core + glibc + gcc-2.95.3.c => gcc
+
+** Bootstrapping: Recipe for Yoghurt
+   # :PROPERTIES:
+   # :BEAMER_env: note
+   # :END:
+*** Chicken or Egg :B_block:BMCOL:
+   :PROPERTIES:
+   :BEAMER_COL: 0.4
+   :BEAMER_ACT: <1>
+   :BEAMER_ENV: quote
+   :END:
+#+LATEX:\includegraphics[width=0.9\textwidth]{empty-egg.png}
+*** Recipe for Yoghurt: :B_block:BMCOL:
+   :PROPERTIES:
+   :BEAMER_COL: 0.4
+   :BEAMER_ACT: <1->
+   :BEAMER_env: block
+   :END:
+   :PROPERTIES:
+   :END:
+  * ...
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+#+LATEX:\vspace*{10cm}
+
+** Bootstrapping: Recipe for Yoghurt
+   # :PROPERTIES:
+   # :BEAMER_env: note
+   # :END:
+*** Chicken or Egg :B_block:BMCOL:
+   :PROPERTIES:
+   :BEAMER_COL: 0.4
+   :BEAMER_ACT: <1>
+   :BEAMER_ENV: quote
+   :END:
+#+LATEX:\includegraphics[width=0.9\textwidth]{egg.png}
+*** Recipe for Yoghurt: :B_block:BMCOL:
+   :PROPERTIES:
+   :BEAMER_COL: 0.4
+   :BEAMER_ACT: <1->
+   :BEAMER_env: block
+   :END:
+   :PROPERTIES:
+   :END:
+  * 1 Add yoghurt to milk
+  * 2 ...
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+#+LATEX:\vspace*{10cm}
+
+** Bootstrapping: Recipe for Yoghurt
+   # :PROPERTIES:
+   # :BEAMER_env: note
+   # :END:
+*** Chicken or Egg :B_block:BMCOL:
+   :PROPERTIES:
+   :BEAMER_COL: 0.4
+   :BEAMER_ACT: <1>
+   :BEAMER_ENV: quote
+   :END:
+#+LATEX:\includegraphics[width=0.9\textwidth]{mes.png}
+*** Recipe for Yoghurt: :B_block:BMCOL:
+   :PROPERTIES:
+   :BEAMER_COL: 0.4
+   :BEAMER_ACT: <1->
+   :BEAMER_env: block
+   :END:
+   :PROPERTIES:
+   :END:
+  * 1 Add yoghurt to milk
+  * 2 ...
+*** IGNORE
+   :PROPERTIES:
+   :BEAMER_env: ignoreheading
+   :END:
+#+LATEX:\vspace*{10cm}
