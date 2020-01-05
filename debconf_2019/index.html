@@ -1,0 +1,344 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Bootstrappable Debian BoF</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+                <style>
+                  .frameless {
+                      border: 0px !important;
+                      background: rgba(0, 0, 0, 0) !important;
+                      box-shadow: unset !important;
+                  }
+                </style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+			  <section>
+                            <h2>Bootstrappable Debian BoF</h2>
+                            <p>Giovanni Mascellani - <a href="mailto:gio@debian.org">gio@debian.org</a></p>
+                            <p><small>23rd July 2019 - DebConf 19, Curitiba, Brazil</small></p>
+                            <p><img class="frameless" src="openlogo-nd.svg" style="height: 15vh; margin-left: 3vh; margin-right: 3vh;"><img class="frameless" src="Debconf19-horizontal.png" style="height: 15vh; margin-left: 3vh; margin-right: 3vh;"></p>
+                          </section>
+
+                          <section>
+                            <h3>Please help taking notes on gobby!</h3>
+                            <p>gobby.debian.org:debconf19/bof/bootstrappable_debian_bof</p>
+                            <p>Also nice if someone can monitor <code>#debconf-videoconferencia</code> and Gobby chat</p>
+                          </section>
+
+                          <section>
+                            <p>How do I make yogurt?</p>
+                            <p><img src="Cacik-1.jpg" style="height: 50vh;"></p>
+                          </section>
+
+                          <section>
+                            <p><em>To make yogurt, add milk to yogurt</em></p>
+                            <p><img src="Cacik-1.jpg" style="height: 50vh;"></p>
+                          </section>
+
+                          <section>
+                            <h3>What about Debian?</h3>
+                            <p style="margin-top: 5vh;" class="fragment fade-up">Maybe we think:</p>
+                            <p><span style="border: 1px solid; border-color: #fff; padding: 10px;" class="fragment fade-in">Source packages</span><span style="margin-left: 5vh; margin-right: 5vh;" class="fragment fade-in">⇨</span><span style="border: 1px solid; border-color: #fff; padding: 10px;" class="fragment fade-in">Binary packages</span></p>
+                            <p style="margin-top: 5vh;" class="fragment fade-up">But it's more like:</p>
+                            <p><span style="border: 1px solid; border-color: #fff; padding: 10px;" class="fragment fade-in">Source packages</span><span style="margin-left: 5vh; margin-right: 5vh;" class="fragment fade-in">+</span><span style="border: 1px solid; border-color: #fff; padding: 10px;" class="fragment fade-in">Binary packages</span><span style="margin-left: 5vh; margin-right: 5vh;" class="fragment fade-in">⇨</span><span style="border: 1px solid; border-color: #fff; padding: 10px;" class="fragment fade-in">Binary packages</span></p>
+                          </section>
+
+                          <section>
+                            <h3>Why do we care?</h3>
+                            <ul>
+                              <li class="fragment fade-right">Philosphy/freedom
+                                <ul>
+                                  <li>Can we consider Debian source-first? (and binary-second...)</li>
+                                  <li>Freedom to study, adapt and enhance the software</li>
+                                </ul>
+                              </li>
+                              <li class="fragment fade-right">Security
+                                <ul>
+                                  <li>Ken Thompson, <em>Reflections on Trusting Trust</em></li>
+                                </ul>
+                              </li>
+                              <li class="fragment fade-right">
+                                Every now and then we actually need to bootstrap something (a new language, a new architecture). What if this was not a painful thing?
+                              </li>
+                              <li class="fragment fade-right">
+                                Useful for embedded distributions
+                              </li>
+                              <li class="fragment fade-right">
+                                Being sure that everything is built from our current set of sources, not from past ones (also legal concerns)
+                              </li>
+                            </ul>
+                          </section>
+
+                          <section>
+                            <h3>A humble ambition</h3>
+                            <p>One day it will be possible to rebuild all Debian packages starting from nothing more than a few KBs of compiled code (and all the source packages).</p>
+                            <p class="fragment fade-in">Since Debian will also be reproducibly buildable, we will just check that the fingerprints match and happily throw away the result.</p>
+                          </section>
+
+                          <section>
+                            <h3>Where are we now?</h3>
+                          </section>
+
+                          <section>
+                            <h3>Four stages of binary bootstrapping</h3>
+                            <ol>
+                              <li class="fragment fade-right"><b>Inorganic matter</b>: no kernel, just a simple compiler, a few KBs or binary code</li>
+                              <li class="fragment fade-right"><b>Organic molecules</b>: kernel + C compiler, no shell, no standard utils, no distribution</li>
+                              <li class="fragment fade-right"><b>Prokaryote life</b>: kernel + standard userspace + distribution essentials + toolchain (roughly <code>build-essential</code>)</li>
+                              <li class="fragment fade-right"><b>Eukaryote life</b>: a whole distribution</li>
+                            </ol>
+                            <p class="fragment fade-right">Access to source code is always assumed to be unrestricted</p>
+                          </section>
+
+                          <section>
+                            <h3>GNU Guix/GuixSD</h3>
+                            <p><b>Prokaryote</b> ⇨ <b>Eukaryote</b></p>
+                            <p>A package manager and a distribution emphasizing, among other things, reproducibility and bootstrappability. The build dependency graph does not contain cycles, except for a little strongly connected component at the beginning.</p>
+                          </section>
+
+                          <section>
+                            <h3>GNU MES</h3>
+                            <p><b>Organic</b> ⇨ <b>Prokaryote</b></p>
+                            <p>Guix's effort to reduce the bootstrapping seed. Bootstraps GCC + glibc + binutils starting from a much simpler C compiler.</p>
+                          </section>
+
+                          <section>
+                            <h3>botch</h3>
+                            <p><b>Prokaryote</b> ⇨ <b>Eukaryote</b></p>
+                            <p>By Johannes Schauer - <a href="mailto:j.schauer@email.de">j.schauer@email.de</a></p>
+                            <p><a href="https://gitlab.mister-muffin.de/debian-bootstrap/botch/wikis/home">https://gitlab.mister-muffin.de/debian-bootstrap/botch/wikis/home</a></p>
+                            <p>Analyzes build-dep cycles, finds the strongly connected components and suggests how to cut cycles. Generates <a href="https://bootstrap.debian.net/">https://bootstrap.debian.net/</a>.</p>
+                          </section>
+
+                          <section>
+                            <section>
+                              <h3>rebootstrap</h3>
+                              <p><b>Eukaryote</b> ⇨ <b>Prokaryote</b> (for <em>another</em> architecture)</p>
+                              <p>By Helmut Grohne - <a href="helmutg@debian.org">helmutg@debian.org</a></p>
+                              <p><a href="https://wiki.debian.org/HelmutGrohne/rebootstrap">https://wiki.debian.org/HelmutGrohne/rebootstrap</a></p>
+                              <p>Cross bootstraps a Debian architecture assuming to have another one running (typically <code>amd64</code>).</p>
+                              <p>See it in action: <a href="https://jenkins.debian.net/view/rebootstrap/">https://jenkins.debian.net/view/rebootstrap/</a>!</p>
+                            </section>
+                            <section>
+                              <ul>
+                                <li>Sets up a cross toolchain and a Debian repository, then patches and cross compiles packages and adds them to the repository.</li>
+                                <li>Bugs filed: 727 outstanding, 6 forwarded, 21 pending, 176 resolved.</li>
+                              </ul>
+                            </section>
+                          </section>
+
+                          <section>
+                            <section>
+                              <h3>nbs</h3>
+                              <p><b>Organic</b> ⇨ <b>Prokaryote</b></p>
+                              <p><a href="https://gitlab.com/giomasce/nbs">https://gitlab.com/giomasce/nbs</a></p>
+                              <p>Natively bootstraps a standard environment and toolchain starting from tcc and musl.</p>
+                              <p>See it in action: <a href="https://gitlab.com/giomasce/nbs/pipelines">https://gitlab.com/giomasce/nbs/pipelines</a>!</p>
+                            </section>
+                            <section>
+                              <ul>
+                                <li>Compiles and installs tcc and musl in a chroot.</li>
+                                <li>Jumps inside and begins compiling everything else.</li>
+                                <li>Compile dash using a custom C script (also had to rewrite in C a couple of shell scripts).</li>
+                                <li>Compile GNU make using a custom shell script.</li>
+                                <li>Compile a number of standard POSIX utilities from the Heirlooom project.</li>
+                                <li>Compile M4 from FreeBSD, using lex and yacc from Heirloom (Heirloom also has m4, but not powerful enough for later stages).</li>
+                              </ul>
+                            </section>
+                            <section>
+                              <ul>
+                                <li>Compile flex 2.5.11, using lex and yacc from Heirloom; flex lexer was manually ported to be compatible with Heirloom lex.</li>
+                                <li>Compile flex 2.6.4, using the previous flex and yacc from Heirloom.</li>
+                                <li>Compile bison 1.35, which does not require lex or yacc.</li>
+                                <li>Then compile bison 1.75 and 1.875, each time using the previous version.</li>
+                                <li>Bison 2.0 is still to go...</li>
+                              </ul>
+                            </section>
+                          </section>
+
+                          <section>
+                            <section>
+                              <h3>asmc</h3>
+                              <p><b>Inorganic</b> ⇨ <b>Organic</b></p>
+                              <p><a href="https://gitlab.com/giomasce/asmc">https://gitlab.com/giomasce/asmc</a></p>
+                              <p>Bootstraps a Linux kernel starting from a few KBs of binary code, running at ring 0.</p>
+                              <p>See it in action: <a href="https://gitlab.com/giomasce/asmc/pipelines">https://gitlab.com/giomasce/asmc/pipelines</a>!</p>
+                              <p class="fragment fade-in"><b>It also works on real hardware!</b></p>
+                            </section>
+                            <section>
+                              <ul>
+                                <li>Binary seed is just 6066 bytes.</li>
+                                <li>A minimal “kernel”.</li>
+                                <li>Basically just a compiler for a custom language called G.</li>
+                                <li>G is basically C but easy to compile (RPN, only <code>int</code>, simpler lexing).</li>
+                              </ul>
+                            </section>
+                            <section>
+                              <h3>G vs C</h3>
+                              <pre style="display: inline-block; width: 40%;">
+fun sum_numbers 2 {
+  $from
+  $to
+  @from 1 param = ;
+  @to 0 param = ;
+
+  $i
+  $sum
+  @i from = ;
+  @sum 0 = ;
+  while i to <= {
+    @sum sum i + = ;
+    @i i 1 + = ;
+  }
+
+  sum ret ;
+}</pre><pre style="display: inline-block; width: 40%;">
+int sum_numbers(int p1, int p0) {
+  int from;
+  int to;
+  from = p1;
+  to = p0;
+
+  int i;
+  int sum;
+  i = from;
+  sum = 0;
+  while i <= to {
+    sum = sum + i;
+    i = i + 1;
+  }
+
+  return sum;
+}</pre>                             
+             <p>There are also syntaxes for byte operations and indirect function calling</p>
+                            </section>
+                            <section>
+                              <h3>Structures in G</h3>
+                              <pre style="display: inline-block; width: 40%;">
+const MYSTRUCT_FIRST 0
+const MYSTRUCT_SECOND 4
+const MYSTRUCT_THIRD 8
+const SIZEOF_MYSTRUCT 12
+
+
+$ptr
+@ptr SIZEOF_MYSTRUCT malloc = ;
+ptr MYSTRUCT_FIRST take_addr 0 = ;
+ptr MYSTRUCT_SECOND take_addr
+    ptr MYSTRUCT_THIRD take = ;
+ptr free ;</pre><pre style="display: inline-block; width: 40%;">
+typedef struct {
+  int first;
+  int second;
+  int third;
+} MyStruct;
+        
+MyStruct *ptr;
+ptr = malloc(sizeof(MyStruct));
+ptr->first = 0;
+ptr->second = ptr->third;
+
+free(ptr);</pre>
+                            </section>
+                            <section>
+                              <ul>
+                                <li>The G compiler compiles a custom C compiler.</li>
+                                <li>The C compiler is quite bad, but good enough to compile a patched version of tcc.</li>
+                                <li>tcc is now a decent C compiler; it can be used to compile a patched version of iPXE.
+                                  <small><ul>
+                                    <li>This is mostly an exercise step for me in preparation to compile Linux.</li>
+                                    <li>But it has the nice feature that you have now a network driver and can download further code from the net.</li>
+                                  </ul></small>
+                                </li>
+                                <li>Compiling Linux with tcc is not quite there yet, but it <em>might</em> be not too far in the future.</li>
+                              </ul>
+                            </section>
+                          </section>
+
+                          <section>
+                            <h3>Questions?</h3>
+                            <h3>Thoughts?</h3>
+                            <p>Remember this is a BoF!</p>
+                          </section>
+
+                          <section>
+                            <h3>Challenges ahead</h3>
+                            <ul>
+                              <li class="fragment fade-right">Bootstrapping is hard!
+                                <small><ul>
+                                    <li>GCC 4.7 is the last version that can be compiled without a C++ compiler</li>
+                                    <li>GNU Guix has bootstrapping path for OpenJDK 7 and 8, Ant, Maven and Clojure, but not Gradle, Scala or Kotlin</li>
+                                    <li>Some experiments with GHC (Haskell)</li>
+                                    <li>Many other languages and build systems...</li>
+                                </ul></small>
+                              </li>
+                              <li class="fragment fade-right">Missing bootstrappable culture
+                                <small><ul>
+                                    <li>Please make your packages bootstrappable (possibly using build profiles)</li>
+                                    <li>Talk to upstream</li>
+                                </ul></small>
+                              </li>
+                              <li class="fragment fade-right">Implicit dependency on BIOS/firmware/CPU implementation
+                                <small><ul>
+                                    <li>RISC-V?</li>
+                                    <li>Custom discrete components implementation?</li>
+                                </ul></small>
+                              </li>
+                              <li class="fragment fade-right">Many bootstrapping path pass through unmaintained software, especially at the lower levels</li>
+                          </section>
+
+                          <section>
+                            <h3>Thanks for coming!</h3>
+                            <p>Questions? Thoughts? Patches?</p>
+                            <small><ul>
+                                <li><a href="https://wiki.debian.org/DebianBootstrap">https://wiki.debian.org/DebianBootstrap</a></li>
+                                <li><a href="http://bootstrappable.org/">http://bootstrappable.org/</a></li>
+                                <li><a href="https://bootstrapping.miraheze.org/">https://bootstrapping.miraheze.org/</a></li>
+                                <li><code>#debian-bootstrap @OFTC</code></li>
+                                <li><code>debian-cross@lists.debian.org</code></li>
+                                <li><code>#bootstrappable @Freenode</code></li>
+                            </ul></small>
+                          </section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				],
+                            width: 1280,
+                            height: 720,
+			});
+		</script>
+	</body>
+</html>
