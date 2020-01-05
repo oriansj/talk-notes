@@ -1,0 +1,37 @@
+* Past
+** FOSDEM 2017 (Feb 5, 2017 @ 14:30)
+Janneke's first talk about Gnu Mes and his plans for MesCC
+https://video.fosdem.org/2017/K.4.601/guixsdbootstrap.vp8.webm
+https://archive.fosdem.org/2017/schedule/event/guixsdbootstrap/attachments/slides/1693/export/events/attachments/guixsdbootstrap/slides/1693/mes_fosdem.pdf
+(He didn't know about stage0 yet, only saw the hex0 on guix's IRC channel)
+
+** GHM 2017
+Ricardo's first bootstrapping talk, presenting his bootstrapping work on Java
+and presenting on the behalf of Jeremiah and Janneke for the work they have been
+doing.
+https://audio-video.gnu.org/video/ghm2017/2017-08--wurmus--reproducible-bootstrapping--ghm.webm
+https://audio-video.gnu.org/video/ghm2017/2017-08--wurmus--reproducible-bootstrapping--ghm.pdf
+(He had a crash course on stage0 and Mes just 2 days before the talk)
+
+** The Long Con 2018 (Nov 26, 2018 @ UNKNOWN)
+Mark's first talk about bootstrappability and elections
+https://www.youtube.com/watch?v=tAFMFjc6mJk
+
+** FOSDEM 2019 (Feb 2, 2019 @ 15:20)
+A beautiful talk by janneke about havling the size of the Guix bootstrap seed to 120MB.
+https://video.fosdem.org/2019/K.4.201/gnumes.webm
+https://archive.fosdem.org/2019/schedule/event/gnumes/attachments/slides/2848/export/events/attachments/gnumes/slides/2848/gnu_mes_fosdem19_v2.pdf
+
+** Breaking Bitcoin 2019 (June 8, 2019 @ 15:00)
+A brief talk by Carl Dong about bitcoin builds and the importance of bootstrappability
+https://www.youtube.com/watch?v=I2iShmUTEl8
+
+** Deb Conf 19 (July 23, 2019 @ 13:30)
+Giovanni's first talk about his asmc and nbs; with his famous bootstrapping
+evolution perspective.
+https://meetings-archive.debian.net/pub/debian-meetings/2019/DebConf19/bootstrappable-debian-bof.webm
+
+* Future
+** FOSDEM 2020 (Feb 2, 2020 @ 11:50am)
+An exciting talk by janneke about halving the size of the Guix bootstrap seed again, to 60MB.
+https://fosdem.org/2020/schedule/event/gnumes/
