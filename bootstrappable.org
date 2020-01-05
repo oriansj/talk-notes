@@ -23,6 +23,15 @@ We need to stop ignoring the problem and as a community work to fullfill our
 responsibilities to our community and promote the trust and good will that made
 our communties places we wanted to become members of.
 
+** Self-empowerment
+We need to stop feeling powerless to the problems in this world.
+Pick up a shovel and do some serious damage to the problems we want gone.
+
+** Understandability
+I want code easy to reason about at the heart of this bootstrap, so that everyone
+will be able to sit down in the morning and be done by lunch time; understading
+how every piece of it works.
+
 * What?
 Producing from the smallest possible source, create the foundation upon which we
 depend in a clean bootstrapping function that is auditable and stable.
@@ -80,7 +89,6 @@ order to produce something useful in bootstrapping. Adding LISP macros in
 assembly simply is a task no one wants to do.
 
 *** Stage0 future
-- Compile mes-m2
 - VHDL Knight-vm on FPGA
 - Knight on TTL with manually punched paper tape (Game over Trusting trust
 attack/Nexus Intruder attack)
@@ -89,57 +97,85 @@ attack/Nexus Intruder attack)
 - Simply verify our sha256sum'd steps produce identical binaries on your weird
 shit (git clone 'https://git.savannah.nongnu.org/git/stage0.git' && cd stage0 &&
 make && make test
-- Hack new functionality in Stage0 Lisp or FORTH
 - Find/report bugs
 - Audit stage0
-- Create programs that make bootstrapping easier
+- Help out on mes-m2
+
+** mescc-tools-seed
+mescc-tools-seed is a one stop shop to bootstrap from 357bytes to mes-m2
+simply cd into the directory with the architecture you want to bootstrap
+and run kaem --verbose --strict (or just have your preferred shell execute
+the lines in mescc-tools.kaem and mes-m2.kaem [or run them manually yourself])
+
+all major work is done in it's dependencies (mes-m2, M2-Planet and mescc-tools)
+save for if a new architecture port needs to be done.
+
+*** hex0
+The essential core required for bootstrapping, it takes a single input file and
+generates an executable binary following the following rule:
+Add 2 hex characters together and write a byte.
+Supports both \# and ; as line comments
+Weighing in at 357bytes total
+It has been implemented for knight, x86 and AMD64
+
+*** catm
+Since we don't want a bunch of duplicate code and also don't want to depend on
+cat or any shell providing piping or indirection, we created catm. It provides
+the same functionality as cat $Input1 $Input2 ... $InputN > $Output in a smaller
+package that works like catm $Output $Input1 $Input2 ... $InputN.
+Weighing in at 215bytes
+It has been implemented for knight, x86 and AMD64
+
+*** hex1
+Building off of the functionality of hex0, we extend our hex to include single
+character relative labels. Serving only a single purpose (build hex2)
+Weighing in at 689bytes total
+It has been implemented for knight, x86 and AMD64
+
+*** hex2
+The final hex stage needed in any bootstrap project. This adds support for absolute
+addressing, long labels, multiple offset sizes and allows arbitrary base addresses.
+Weighing in at 1406bytes total
+It has been implemented for knight, x86 and AMD64
+
+** mes-m2
+mes-m2 is a scheme interpreter that is currently buildable via M2-Planet and thus
+bootstrappable from our hex0 seed. It is written in a subset of C and slowly
+growing to include all functionality required to finish the bootstrap of GCC
+and guile. With its ultimate goal of functioning as a drop in replacement for
+guile and thus enable the bootstrap of guix as well.
 
 ** mescc-tools
-A port of Stage0 to Linux (i386 and AMD64) using ELF format binaries
+A port of Stage0 to Linux (i386, AMD64, armv7l and AArch64) using ELF format binaries
 https://github.com/oriansj/mescc-tools
 
 *** exec_enable
-The most essential program for Linux/ELF binaries as without setting the execute
-bit, your binaries can't run. Weighing in at 235bytes with the ELF header, this
-trivial program ends up quite essential.
-Currently prototyped in C, hand converted to M1 macro assembly (test 5 and 6).
-
-*** hex0
-The other half of the essential pair required for bootstrapping on i386/AMD64
-Weighing in at 303bytes with the ELF header, this trivial program is critical to
-making all of the later steps.
-Currently prototyped in C, hand converted to M1 macro assembly and hand
-converted into commented hex0 (test 1). (yes it can bootstrap itself)
-
-*** hex1
-Building off of the functionality of hex0 and exec_enable, we extend our hex to
-include single character relative labels. Weighing in at 838bytes with the ELF
-header and serving only a single purpose (build hex2)
-Currently prototyped in C, hand converted to M1 macro assembly and hand
-converted into commented hex1 and hex0 (yes it can bootstrap itself).
+legacy piece no longer required.
 
 *** hex2_linker
-The final hex stage needed in any bootstrap project. This adds support for
-absolute addressing, long labels, multiple offset sizes, eliminates the need for
-execute enable and allows arbitrary base addresses.
-Currently prototyped in C, waiting on hand conversion to M1 macro assembly.
-We have a generated version in M1-macro as a place holder.
-(https://github.com/oriansj/mescc-tools-seed)
+A universal cross-platform linker buildable via M2-Planet. With support for
+absolute addressing, long labels, multiple offset sizes, allows arbitrary base
+addresses and of course line comments.
+It is written in a subset of C
+It is bootstrapped by M2-Planet in mescc-tools-seed
+and supports Knight, x86, AMD64, armv7l and AArch64
 
 *** M1 macro assembler
-The last macro assembler you will ever need to write. This adds support for
-multiple architectures and byte Endianness.
-Currently prototyped in C, waiting on hand conversion to M1 macro assembly.
-We have a generated version in M1-macro as a place holder.
-(https://github.com/oriansj/mescc-tools-seed)
+A universal cross-platform macro assembler. With support for DEFINE line-macros,
+raw strings, hex literals, numerics, alignment operations, padding operations and
+arbitrary byte and bit endianness of output.
+It is written in a subset of C
+It is bootstrapped by M2-Planet in mescc-tools-seed
+and supports Knight, x86, AMD64, armv7l and AArch64.
 
 *** blood-elf
 Since debugging is painful when gdb and objdump have no idea how to handle
 M1-macro files, blood-elf creates a dwarf footer segment from a M1-macro input
 that is in M1-macro format. Not actually needed in bootstrapping but rather
 helpful for those wishing to develop in M1-Macro assembly.
-We have a generated version in M1-macro as a place holder.
-(https://github.com/oriansj/mescc-tools-seed)
+It is written in a subset of C
+It is bootstrapped by M2-Planet in mescc-tools-seed
+and supports all 32 and 64 elf targets.
 
 *** get_machine
 Since automatic tests will always fail since mescc-tools is cross-platform and
@@ -148,13 +184,15 @@ on generated binaries. eg. have your i386 tests run on your i386 hardware but
 not on your ARM, SPARC or RISC-V board. Not actually needed in bootstrapping
 but rather helpful for those wishing to have proper tests for their M1-macro
 programs.
+It is written in a subset of C
+It is bootstrapped by M2-Planet in mescc-tools-seed
+and supports all Posix hosts (if we don't support yours let us know)
 
 *** mescc-tools future
-- Add an untar to eliminate the need for an external unpacker
+- Add support for more architectures
 
 *** helping
 - Port mescc-tools to your weird hardware/Operating system combinations.
-- Write tests for alternate formats to ELF
 - Write tests for alternate hardware targets
 - Find bugs
 
@@ -169,11 +207,21 @@ void
 void*
 int
 int*
+unsigned
+unsigned*
 char
 char*
+char const
+char const*
+long
+long*
+SCM (unsigned long)
+SCM* (unsigned long*)
 FILE
 FILE*
-any struct you wish to define
+FUNCTION (void (*FUNCTION) ()
+FUNCTION* (void* (*FUNCTION) ())
+any struct you wish to define (with unions or arrays supported as well)
 Pointers to any struct you wish to define
 
 All in a trivial to understand implementation
@@ -187,7 +235,7 @@ https://github.com/oriansj/M2-Planet/blob/master/cc_strings.c
 M2-Planet supports 2 types of comments:
 /* Stuff */ block comments
 and
-# Stuff line comments
+\# Stuff line comments
 
 and inorder to maximize compatibility with C M2-Planet does something funny with
 C line comments.
@@ -198,25 +246,28 @@ It and any other odd parsing behavior can be found in the rather trivial parser
 https://github.com/oriansj/M2-Planet/blob/master/cc_reader.c
 
 **** C primitives
-M2-Planet is written using only features that it supports*
+M2-Planet is written using only a subset of the features that it supports
 https://github.com/oriansj/M2-Planet/blob/master/cc_core.c
 
-*inclusions apply (it also supports features required by mescc-tools and adding
-support for features needed by mes-m2)
+The only parts of the C language not supported are C macros, switch statements
+and features that are not useful in bootstrapping and thus are ignored (until
+someone comes up with a reasonable use case)
 
 **** Bootstrapping extras
-M2-Planet supports M1-macro assembly being inlined within functions.
-Support for CONSTANT FOO 4 statements to replace #define FOO 4 and eliminate the
-need for a C preprocessor.
+M2-Planet supports M1-macro assembly being inlined within functions via asm(..);
+Support for CONSTANT FOO 4 statements to replace #define FOO 4 and
+CONSTANT CELL_SIZE sizeof(struct cell) to replace #define CELL_SIZE 1  eliminate
+the need for a C preprocessor entirely.
 
 *** M2-Planet future
-- Cross-platform build support
-- mes-m2 build functionality
+- Porting to AArch64
+- Port to your personal architecture
 
 *** helping
 - Find bugs
 - Improve documentation
 - Send patches
+- Port to your weird hardware
 
 ** Mes
 A late stage bootstrap core componet that ensures that once you have achieved a
@@ -227,17 +278,18 @@ https://gitlab.com/janneke/mes
 *** mes.c
 A scheme interpreter prototyped in C ~1400 Lines that standards at our baseline
 target of minimal functionality. If you can build this or provide equivalent
-functionality, you are good to go.
+functionality, you are good to go. (This will be replaced by mes-m2 when it is
+completed)
 
 *** mescc.scm
-Provided the above exists and is functional, we leverage that to provide a C
-compiler written in Scheme (uses Nyacc C99 parser in Scheme) that is the core of
-this project and is the path to full GCC bootstrapping.
-mescc along with mescc-tools are capable of self bootstrapping.
+Provided a reasonable scheme exists and is functional, we leverage that to
+provide a C compiler written in Scheme (uses Nyacc C99 parser in Scheme) that
+is the core of this project and is the path to full GCC bootstrapping.
+mescc along with slow-utils (or mescc-tools) are capable of self bootstrapping.
 
 *** mes.M1
-This autogenerated program exists as a mechanism to give M2-Planet time to
-properly develop to the level of complexity required to build mes.c directly.
+This autogenerated program exists as a mechanism to give mes-m2 time to
+properly develop to the level of complexity required to run MesCC.
 
 Due to the above issue, although it is the mes.c scheme interpreter in annotated
 M1 assembly. Its trust is what is considered minimally good enough.
@@ -246,26 +298,26 @@ https://gitlab.com/janneke/mes-seed
 ** Gash
 A guile replacement for shell+binutils that can in the future run on mes.c
 
+** Slow-utils
+A guile replacement for mescc-tools; allowing the bootstrap to be reduced down
+to any scheme interpreter.
+
 * How to bootstrap?
-0) stage0
-1) M2-Planet
-2) mescc
-3) tcc
-4) gcc
-5) guix bootstrap binaries
+See Current\ bootstrap\ map.pdf
+
 *done*
 
 * current status
 + mescc has achieved a full path from mescc to gcc 4.7.4
-+ stage0 has achieved a full path from hex monitor to M2-Planet
++ stage0/mescc-tools-seed has achieved a full path from hex0-seeds to mes-m2
 + mescc-tools is largely *done*
-+ M2-Planet is growing a rather impressive feature set.
-+ active community and an exhustive search of possible existing tools has been
-done and continues to reduce the development load
++ M2-Planet is largely *done*
++ mes-m2 is working and slowly expanding in features (feel free to help)
++ We need more scheme programmers
 
 * help
 + programmers to help develop mes-m2 and gash
-+ help find and eliminate bootstrap-loops: (Nyacc?, mes.M1?, psyntax.pp?)
++ help find and eliminate bootstrap-loops: (Nyacc?, psyntax.pp?)
 + integrate with GuixSD (lots of little easy things to do)
 + report bugs, issues, concerns or recommendations
 + testing and finding issues with our documentation (we are human after all)
@@ -285,12 +337,14 @@ and thus function as a cross-platform, self-hosting compiler.
 + M2-Planet's output is 100% deterministic and easily predictable; even major
 code changes result in only in differences directly related to the changed code
 block.
++ mes-m2's behavior is 100% deterministic and not in any way architecture specific
 + No specific host platform is required until the mescc stage.
 
 * weakness of current plan
-+ Initial mescc-tools implementation depends upon a trusted linux binary.
-+ Hardware which have reasonable immediate formats are not supported, (Problem for RISCV)
++ Need to write a Posix in M2-Planet
++ Poorly thought out instruction encodings make for low density binaries (AArch64, RISC-V, etc)
 + Requires large amounts of largely mechanical effort
++ Very very few developers or contributors
 
 * Contact
 #bootstrappable and #guix on freenode
@@ -300,10 +354,12 @@ via our mailing list: bootstrappable@freelists.org
 * FAQ
 ** Why aren't you doing more in FORTH
 + Because FORTH developers have not contributed more.
++ FORTH sucks as a bootstrapping language
 
 ** Why don't you have this language?
 + Because you did not write it yet or make any useful bootstrapping programs in
 it either.
++ Probably because it sucks at bootstrapping
 
 ** What about backdoored hardware?
 + The good news is this is simple to port to arbitrary hardware, so the cost
@@ -312,11 +368,12 @@ needed to bootstrap hardware you designed yourself is lower than ever.
 Nexus Intruder program class hardware subversion; as the only solution to that
 risk is to have your own trusted lithography fabrication plant that is run using
 only hardware that you know only has trusted and uncompromised hardware.
-(libresilicon can really help here)
++ libresilicon is honestly the only path forward currently
 
 ** What about this hardware platform?
 + If you want us to supprt your hardware platform, you need to have a reasonable
 hardware target and provide the documentation and testing required.
++ We can't port to hardware we don't have
 
 ** Why is there an ELF header?
 + mescc-tools is the operating system/hardware specific port of stage0
@@ -324,16 +381,18 @@ hardware target and provide the documentation and testing required.
 + BIOS level versions of mescc-tools is possible by simply rewriting the
 syscalls into BIOS calls, removing the ELF header, adjusting the base address
 and adding the standard PC boot signature (0xAA55)
++ The knight implementation found in stage0 which run on bare metal lack such trivia.
 
 ** BIOS level bootstrapping isn't enough
 + We completely agree; however writing 79,000+ custom bootstraps isn't viable yet.
++ So that is why we are bootstrapping hardware (Knight and x86 later)
 
 ** Why not use already existing C compilers written in Assembly?
-+ We have never found one that runs on modern hardware (we only found a pdp11 C
-compiler which is so primitive as to be useless) and hardware emulators capable
-of running such programs are more complex than M2-Planet and still require
-bootstrapping
++ Because Jeremiah wrote cc_x86 before we found any
++ Because only BDS-c is the only other C compiler ever written in assembly
+and it supports less useful features in bootstrapping than cc_*
++ Even the original Unix C compiler was not written in assembly.
 
 ** Why not just go back and verify compilers instead?
-+ It doesn't address the problem of the trusting trust attack and would take far
-far longer than what we are willing to do.
++ It doesn't address the problem of the trusting trust attack
++ It would take far far longer than what we are willing waste time.
