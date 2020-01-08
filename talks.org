@@ -15,9 +15,10 @@ https://audio-video.gnu.org/video/ghm2017/2017-08--wurmus--reproducible-bootstra
 (a copy are in ghm-2017 folder)
 (He had a crash course on stage0 and Mes just 2 days before the talk)
 
-** The Long Con 2018 (Nov 26, 2018 @ UNKNOWN)
+** The Long Con 2018 (Nov 26, 2018 @ 10:00)
 Mark's first talk about bootstrappability and elections
 https://www.youtube.com/watch?v=tAFMFjc6mJk
+(a copy are in longcon_2018 folder)
 
 ** FOSDEM 2019 (Feb 2, 2019 @ 15:20)
 A beautiful talk by janneke about havling the size of the Guix bootstrap seed to 120MB.
