@@ -172,6 +172,7 @@ mescc-tools-seed is a one stop shop to bootstrap from 357bytes to mes-m2
 simply cd into the directory with the architecture you want to bootstrap
 and run kaem --verbose --strict (or just have your preferred shell execute
 the lines in mescc-tools.kaem and mes-m2.kaem [or run them manually yourself])
+https://github.com/oriansj/mescc-tools-seed
 
 all major work is done in it's dependencies (mes-m2, M2-Planet and mescc-tools)
 save for if a new architecture port needs to be done.
@@ -223,10 +224,13 @@ This is just used to bootstrap M2-Planet.
 
 ** mes-m2
 mes-m2 is a scheme interpreter that is currently buildable via M2-Planet and thus
-bootstrappable from our hex0 seed. It is written in a subset of C and slowly
-growing to include all functionality required to finish the bootstrap of GCC
-and guile. With its ultimate goal of functioning as a drop in replacement for
-guile and thus enable the bootstrap of guix as well.
+bootstrappable from our hex0 seed.
+https://github.com/oriansj/mes-m2
+
+It is written in a subset of C and slowly growing to include all functionality
+required to finish the bootstrap of GCC and guile. With its ultimate goal of
+functioning as a drop in replacement for guile and thus enable the bootstrap of
+guix as well.
 
 This is a rewrite of mes.c with the implicit goal of being easy to understand
 and easy to maintain. Thus preserving a long term path of ensuring scheme's
