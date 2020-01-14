@@ -204,12 +204,34 @@ addressing, long labels, multiple offset sizes and allows arbitrary base address
 Weighing in at 1406bytes total
 It has been implemented for knight, x86 and AMD64
 
+*** M0
+The only Macro assembly stage needed in any bootstrap project. This adds support
+for immediates, DEFINE statements, RAW strings, hex literals and line comments.
+Weighing in at 1860bytes total.
+It has been implemented for knight, x86 and AMD64
+
+*** cc_*
+The only C compiler you would ever need to write in assembly in any bootstrap
+project. With support for: CONSTANT statements, globals, locals, function pointers,
+indirection, C strings, chars, integers, arrays, -> member access, sizeof, *, /,
+%, +, -, >>, <<, <, <=, ==, !=, >=, >, &, &&, |, ||, ^, if, for, while, do,
+inline assembly, breaks, gotos, labels, returns and structs with union support.
+Weighing in at 16,079bytes total
+It has been implemented for knight, x86 and AMD64
+
+This is just used to bootstrap M2-Planet.
+
 ** mes-m2
 mes-m2 is a scheme interpreter that is currently buildable via M2-Planet and thus
 bootstrappable from our hex0 seed. It is written in a subset of C and slowly
 growing to include all functionality required to finish the bootstrap of GCC
 and guile. With its ultimate goal of functioning as a drop in replacement for
 guile and thus enable the bootstrap of guix as well.
+
+This is a rewrite of mes.c with the implicit goal of being easy to understand
+and easy to maintain. Thus preserving a long term path of ensuring scheme's
+bootstrappability. While at the same time being buildable via M2-Planet at all
+times.
 
 ** mescc-tools
 A port of Stage0 to Linux (i386, AMD64, armv7l and AArch64) using ELF format binaries
