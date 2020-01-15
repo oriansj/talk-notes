@@ -401,7 +401,6 @@ See Current\ bootstrap\ map.pdf
 + mes-m2 is working and slowly expanding in features (feel free to help)
 + Gash is progressing and growing nicely
 + Slow-utils is nearly finished
-+ We need more scheme programmers
 
 * help
 + programmers to help develop mes-m2 and gash
@@ -409,6 +408,9 @@ See Current\ bootstrap\ map.pdf
 + integrate with GuixSD (lots of little easy things to do)
 + report bugs, issues, concerns or recommendations
 + testing and finding issues with our documentation (we are human after all)
++ We need more scheme programmers
++ We need people willing to improve documentation (art would be nice)
++ People to tell us all the ways things are broken and we can make it better
 
 * strengths of current plan
 + Every possible port of mescc-tools is buildable by every other possible
