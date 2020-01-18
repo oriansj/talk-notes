@@ -487,3 +487,30 @@ and it supports less useful features in bootstrapping than cc_*
 ** Why not just go back and verify compilers instead?
 + It doesn't address the problem of the trusting trust attack
 + It would take far far longer than what we are willing waste time.
+
+* Caveats
+** You are depending upon Posix (Linux, *BSD, etc)
++ For the current work (mescc-tools-seed), you are absolutely correct.
++ But not for the stage0 work running on Knight as all those pieces run on bare
+metal
++ However there is a plan to bootstrap a posix on bare metal using M2-Planet
+
+** You are depending upon special hardware that people don't have
++ You are absolutely correct.
++ However writing the pieces without depending on the bios is *VERY* hardware
+specific
++ Common hardware also has firmware messured in MB which we can't yet replace.
+
+** Those without special hardware depend upon 4 binary seeds instead of just 1
++ Well one needs a bootloader on modern hardware (I can't avoid this)
++ A minimal posix is needed to provide syscalls enabling easier bootstrapping
+(don't want to avoid this)
++ A minimal shell run execute the bootstrapping steps while running as init
+(Can't avoid this on a posix)
++ A hex0 assembler (Can't avoid this in this sort of bootstrap)
++ We can try to reduce their size and enable the generation of those files
+locally from source.
+
+** Hardware firmware is MB in size
++ Yep, there currently is nothing we can do about it
++ Anyone who wants to work on that is more than free to do so.
