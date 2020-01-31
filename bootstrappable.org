@@ -227,6 +227,8 @@ mes-m2 is a scheme interpreter that is currently buildable via M2-Planet and thu
 bootstrappable from our hex0 seed.
 https://github.com/oriansj/mes-m2
 
+Works on knight-posix, x86, AMD64, ARMv7l and AArch64
+
 It is written in a subset of C and slowly growing to include all functionality
 required to finish the bootstrap of GCC and guile. With its ultimate goal of
 functioning as a drop in replacement for guile and thus enable the bootstrap of
@@ -294,6 +296,8 @@ you can do development in GCC and use M2-Planet to compile the result.
 https://github.com/oriansj/M2-Planet
 
 *** Currently supports
+knight-native, knight-posix, x86, AMD64, ARMv7l and AArch64
+
 **** Types
 void
 void*
@@ -379,6 +383,11 @@ provide a C compiler written in Scheme (uses Nyacc C99 parser in Scheme) that
 is the core of this project and is the path to full GCC bootstrapping.
 mescc along with slow-utils (or mescc-tools) are capable of self bootstrapping.
 
+** NYACC
+Not Yet Another Compiler Compiler, is set of guile modules for generating parsers
+and lexical analyzers.
+https://savannah.nongnu.org/projects/nyacc
+
 ** Gash
 A guile replacement for shell+binutils that can in the future run on mes-m2
 https://savannah.gnu.org/projects/gash
@@ -387,6 +396,7 @@ https://savannah.gnu.org/projects/gash
 A guile replacement for mescc-tools; allowing the bootstrap to be reduced down
 to any scheme interpreter.
 https://github.com/oriansj/slow-utils
+(only M1.scm needs to be finished)
 
 * How to bootstrap?
 See Current\ bootstrap\ map.pdf
@@ -458,7 +468,7 @@ needed to bootstrap hardware you designed yourself is lower than ever.
 + There is nothing we can do in terms of software that eliminates the risk of
 Nexus Intruder program class hardware subversion; as the only solution to that
 risk is to have your own trusted lithography fabrication plant that is run using
-only hardware that you know only has trusted and uncompromised hardware.
+only hardware that you know only has trusted and uncompromised hardware/software.
 + libresilicon is honestly the only path forward currently
 
 ** What about this hardware platform?
