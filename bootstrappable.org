@@ -2,7 +2,7 @@
 bootstrappable.org project
 #bootstrappable on freenode
 
-* What?
+* What is this all about?
 A full source bootstrapping for all free software programs
 (starting with GuixSD)
 
@@ -98,7 +98,7 @@ I want code easy to reason about at the heart of this bootstrap, so that everyon
 will be able to sit down in the morning and be done by lunch time; understading
 how every piece of it works.
 
-* What?
+* What are you doing about it?
 Producing from the smallest possible source, create the foundation upon which we
 depend in a clean bootstrapping function that is auditable and stable.
 
@@ -483,7 +483,7 @@ and thus function as a cross-platform, self-hosting compiler.
 code changes result in only in differences directly related to the changed code
 block.
 + mes-m2's behavior is 100% deterministic and not in any way architecture specific
-+ No specific host platform is required until the mescc stage.
++ No specific host platform is required until the mescc-tools stage.
 
 * weakness of current plan
 + Need to write a Posix in M2-Planet
@@ -513,7 +513,7 @@ needed to bootstrap hardware you designed yourself is lower than ever.
 + There is nothing we can do in terms of software that eliminates the risk of
 Nexus Intruder program class hardware subversion; as the only solution to that
 risk is to have your own trusted lithography fabrication plant that is run using
-only hardware that you know only has trusted and uncompromised hardware/software.
+only hardware/software that you know is trusted and uncompromised.
 + libresilicon is honestly the only path forward currently
 
 ** What about this hardware platform?
@@ -536,7 +536,8 @@ and adding the standard PC boot signature (0xAA55)
 ** Why not use already existing C compilers written in Assembly?
 + Because Jeremiah wrote cc_x86 before we found any
 + Because only BDS-c is the only other C compiler ever written in assembly
-and it supports less useful features in bootstrapping than cc_*
+and it supports less useful features in bootstrapping than cc_* and is
+DOS/CPM only.
 + Even the original Unix C compiler was not written in assembly.
 
 ** Why not just go back and verify compilers instead?
