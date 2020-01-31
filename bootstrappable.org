@@ -356,7 +356,12 @@ CONSTANT CELL_SIZE sizeof(struct cell) to replace #define CELL_SIZE 1  eliminate
 the need for a C preprocessor entirely.
 
 *** M2-Planet future
-- Porting to AArch64
+- Porting to RISC-V
+- Porting to SPARC
+- Porting to MIPS
+- Porting to PowerPC
+- Porting to z80 (maybe)
+- Porting to 6502 (maybe)
 - Port to your personal architecture
 
 *** helping
@@ -392,6 +397,46 @@ https://savannah.nongnu.org/projects/nyacc
 A guile replacement for shell+binutils that can in the future run on mes-m2
 https://savannah.gnu.org/projects/gash
 
+*** Features
++ awk.scm
++ basename.scm
++ cat.scm
++ chmod.scm
++ cmp.scm
++ command.scm
++ compress.scm
++ cp.scm
++ cut.scm
++ diff.scm
++ dirname.scm
++ expr.scm
++ false.scm
++ find.scm
++ grep.scm
++ gzip.scm
++ head.scm
++ ln.scm
++ ls.scm
++ mkdir.scm
++ mv.scm
++ printf.scm
++ pwd.scm
++ reboot.scm
++ rmdir.scm
++ rm.scm
++ sed.scm
++ sleep.scm
++ sort.scm
++ tar.scm
++ test.scm
++ touch.scm
++ tr.scm
++ true.scm
++ uname.scm
++ uniq.scm
++ wc.scm
++ which.scm
+
 ** Slow-utils
 A guile replacement for mescc-tools; allowing the bootstrap to be reduced down
 to any scheme interpreter.
@@ -413,7 +458,7 @@ See Current\ bootstrap\ map.pdf
 + Slow-utils is nearly finished
 
 * help
-+ programmers to help develop mes-m2 and gash
++ programmers to help develop mes-m2 and MesCC
 + help find and eliminate bootstrap-loops: (Nyacc?, psyntax.pp?)
 + integrate with GuixSD (lots of little easy things to do)
 + report bugs, issues, concerns or recommendations
