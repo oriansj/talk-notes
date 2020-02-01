@@ -506,6 +506,8 @@ or if issues are entirely MesCC only bug-mes@gnu.org
 + Because you did not write it yet or make any useful bootstrapping programs in
 it either.
 + Probably because it sucks at bootstrapping
++ One can bootstrap 4 C compilers in 2 hours in Assembly or C; can you even do 1
+in that amount of time in your "magic bootstrapping language"?
 
 ** What about backdoored hardware?
 + The good news is this is simple to port to arbitrary hardware, so the cost
