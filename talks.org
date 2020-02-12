@@ -37,7 +37,9 @@ https://meetings-archive.debian.net/pub/debian-meetings/2019/DebConf19/bootstrap
 https://salsa.debian.org/gio/debconf2019_bootstrappable_debian
 (a copy are in debconf_2019 folder)
 
-* Future
 ** FOSDEM 2020 (Feb 2, 2020 @ 11:50am)
-An exciting talk by janneke about halving the size of the Guix bootstrap seed again, to 60MB.
-https://fosdem.org/2020/schedule/event/gnumes/
+A brief talk by janneke about halving the size of the Guix bootstrap seed again, to 60MB.
+https://video.fosdem.org/2020/AW1.125/gnumes.webm
+https://fosdem.org/2020/schedule/event/gnumes/attachments/slides/3942/export/events/attachments/gnumes/slides/3942/fosdem20.pdf
+
+* Future
