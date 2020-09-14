@@ -56,7 +56,7 @@ $ du -schx *
 14M	share
 145M	total
 
-**** Guix Scheme-only bootstrap binary seed (??? 2020)
+**** Guix Scheme-only bootstrap binary seed (June 15, 2020)
 $ du -schx $(readlink $(~/src/guix/wip-bootstrap/pre-inst-env guix build bootstrap-tarballs)/*)
 5.7M	/gnu/store/1mq2pcd2h7g54xpi2jrgj6ibbi4lgi3c-guile-static-stripped-tarball-2.2.6/guile-static-stripped-2.2.6-x86_64-linux.tar.xz
 80K	/gnu/store/bl1r2bpk6fam8r2gjvr5mvr48i3dm2hn-linux-libre-headers-stripped-tarball-4.19.56/linux-libre-headers-stripped-4.19.56-x86_64-linux.tar.xz
@@ -450,7 +450,7 @@ See Current\ bootstrap\ map.pdf
 
 * current status
 + mescc has achieved a full path from mescc to gcc 4.7.4
-+ stage0/mescc-tools-seed has achieved a full path from hex0-seeds to mes-m2
++ stage0/mescc-tools-seed has achieved a full path from hex0-seeds to mes-m2 and is porting to armv7l
 + mescc-tools is largely *done*
 + M2-Planet is largely *done*
 + mes-m2 is working and slowly expanding in features (feel free to help)
