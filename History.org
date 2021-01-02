@@ -65,6 +65,13 @@ computers or by compromising of wallets of infected systems.
 As a direct response Gitian was developed as a first generation solution to the
 reproducible build problem.
 
+** Dropping DDC on that dissertation
+In 2009 David A. Wheeler dropped the bomb of a dissertation with his:
+Fully Countering Trusting Trust through Diverse Double-Compiling
+
+Which provided formal proofs of how one could with a single trusted system rule
+out trusting trust attacks in other compilers with untrusted bootstraps.
+
 ** Gnu Guix lays out some lambda
 Seeing major problems with Nix's domain specific language Ludovic Courtès and
 some scheme hackers forked Nix with the goal of an FSF approved Distro without
@@ -92,6 +99,7 @@ after by David Suárez, with variations on time and build path. 24% of 5240 sour
 packages were identified as reproducible.
 
 ** A bootstrappable hold my beer
+*** A rant of a beginning
 In 2016 Gnu guix quickly achieved full reproducibility but it was generally
 believed that to reduce the bootstrap binaries smaller than GCC was an impossible
 task as the 28MB compressed (202MB uncompressed) bootstrap binaries were thought
@@ -101,13 +109,29 @@ Jeremiah Orians (Aka OriansJ) responded with a "fuck that" post which included a
 hex0 assembler written in hex0 as a bios boot loader. Thus starting the stage0
 project.
 
-Jan Nieuwenhuizen (Aka janneke) was inspired by the hex assembler but didn't think
-hex was a reasonable path; but becomes motivated when he discovered an article by
-Alan Kay where he mentions lisp 1.5's manual page 13 as "Maxwell's Equations of
-Software" and prototyped a scheme in C; Short after he selected Matt Wette's NYACC
-to help with the parsing of C inputs. He then decides to give a talk at FOSDEM-17
-about his project.
+Jan Nieuwenhuizen (Aka janneke) was inspired by the hex assembler but to put it
+mildly it just felt like an overwhelmingly long path, a fool's undertaking if
+you will; but becomes motivated when he discovered an article by Alan Kay where
+he mentions lisp 1.5's manual page 13 as "Maxwell's Equations of Software" and
+prototyped a scheme in C; Short after he selected Matt Wette's NYACC to help with
+the parsing of C inputs. He then decides to give a talk at FOSDEM-17 about his
+project.
 
+*** An unexpected chatty friendship
 OriansJ saw janneke's talk and sends an email. Shortly after their conversations
 on #Guix started to overwhelm other topics, ultimately inspiring Ricardo Wurmus
 (aka rekado) to create #bootstrappable.
+
+OriansJ went down many foolish paths, he bootstrapped a FORTH (a huge fucking
+waste of time), a compacting garbage collecting lisp (Without macros how
+useless) and did a bunch of work in a VM for hardware they couldn't make yet.
+
+With no real high level language arriving from stage0, jannek had resigned
+himself to having to convert mes.c into M1 macro assembly. A painful task he
+hoped never having to do. Only to be blind sided by OriansJ writing cc_x86.S
+from start to finish in just 20 hours flat.
+
+Now stage0 had a C compiler (M2-Planet) written in C and bootstrapped from hex0.
+The general response: What The FUCK?
+Even hacker news spent a day trying to figure out what the hell happened only to
+conclude that TinyC was better and this was all a waste of everyone's time.
