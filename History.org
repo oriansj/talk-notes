@@ -105,9 +105,13 @@ believed that to reduce the bootstrap binaries smaller than GCC was an impossibl
 task as the 28MB compressed (202MB uncompressed) bootstrap binaries were thought
 to be quite reasonable.
 
-Jeremiah Orians (Aka OriansJ) responded with a "fuck that" post which included a
-hex0 assembler written in hex0 as a bios boot loader. Thus starting the stage0
-project.
+When facing a bully, the first step is break his nose in front of everyone then
+you beat that son of a bitch from the inside out. Gladly take the hits because
+once they stop, they never will return. Having 2 older brothers Jeremiah Orians
+(Aka OriansJ) knew this inside and out and he responded to the general fear of
+having to bootstrap GCC with a "fuck that" post which included a hex0 assembler
+written in hex0 as a bios boot loader and the promise of doing all the hard work
+that no one else wanted to do. Thus starting the stage0 project.
 
 Jan Nieuwenhuizen (Aka janneke) was inspired by the hex assembler but to put it
 mildly it just felt like an overwhelmingly long path, a fool's undertaking if
