@@ -1,0 +1,113 @@
+* The history of bootstrapping
+** Ancient past
+*** 1957 Nexus Intruder Program
+a DOD researcher predicted that circuit designs would probably be done by computers
+and figured out a technique for making hardware circuits that would compromise
+any operating system running on top of it.
+
+The idea being it infected future hardware designs for processors that would be
+used in future computers doing critical engineering work. Thus allowing one to
+compromise the entire infrastructures of entire societies by simply selling cheap
+processors to the Russians.
+
+*** 1974 The trusting trust attack
+Paul Karger and Roger Schell in an Air Force evaluation of Multics showed that
+compilers can be subverted to insert malicious Trojan horses into critical
+software, including themselves. If this attack goes undetected, even complete
+analysis of a system’s source code will not find the malicious code that is
+running, and methods for detecting this particular attack are not widely known.
+
+*** 1980 Cain-C
+In need of a C compiler for his 8080 Ron Cain bootstrapped Small-C on the SRI
+International PDP 11/45 Unix system with an account provided by John Bass for
+Small C development. The provided source code was released with management
+permission into the public domain.
+
+Inspiring many future C compilers, such as TinyC
+
+*** 1984 A public working proof of concept
+Ken Thompson, in his Turing Award acceptance speech in 1983 (published 1984),
+"Reflections on Trusting Trust" demonstrated a working trusting trust attack on
+a C Compiler.
+
+Thompson's version was, officially, never released into the wild. It is believed,
+however, that a version was distributed to BBN and at least one use of the
+backdoor was recorded. There are scattered anecdotal reports of such backdoors in
+subsequent years.
+https://www.quora.com/What-is-a-coders-worst-nightmare?share=1
+
+** A GNU revolution
+Thanks to the freedoms provided by the Gnu Toolset; Cygnus engineers made the
+GNU tools fully reproducible, even for cross-compilation. This required dealing
+with many byte-order issues and floating-point representations and such.
+
+** The Open assault
+** A GRIMLEY spark
+An early advocate of reproducible builds and bootstrapping.
+On March 2001 Edmund GRIMLEY EVANS released his bcompiler: Bootstrapping a simple
+compiler from nothing.
+In 2006 Edmund GRIMLEY EVANS released his CC500.c: A self-compiling compiler for
+a small subset of C.
+Providing a rough map capable of providing a reasonable bootstrap to C from nothing.
+
+** The Gem hidden in the NIX
+NixOS started as a research project by Eelco Dolstra in 2003 with a functional
+declarative package manager.
+
+For the first time allowing a full build chain to be known for EVERY SINGLE
+package, making major build changes something auditable.
+
+** Crypto paranoia
+With the 2008 release of bitcoin, the pipe from malware compromise to cash became
+directly financially profitable either by the installing of miners on unsuspecting
+computers or by compromising of wallets of infected systems.
+
+As a direct response Gitian was developed as a first generation solution to the
+reproducible build problem.
+
+** Gnu Guix lays out some lambda
+Seeing major problems with Nix's domain specific language Ludovic Courtès and
+some scheme hackers forked Nix with the goal of an FSF approved Distro without
+bootstrap blobs all over the build tree.
+
+** The Snowden effect
+The Edward Snowden global surveillance disclosures in 2013 turned the risk of a
+trusting trust from an academic discussion to a practical problem in need of a
+solution.
+
+Fear of a malware that attacks the software development and build processes
+themselves to distribute copies of itself to tens or even hundreds of millions
+of machines in a single, officially signed, instantaneous update.
+
+** The Reproducible revolt
+Mike Perry of The Tor project and Jérémy Bobbio (Aka Lunar) of the Debian Project
+lead the first charge into getting major packages and distros reproducible.
+
+However, it quickly appeared that before fixing issues in the toolchain, it would
+not be possible to even get a single package to be reproducible.
+
+Lunar came up with the first patches for dpkg at the August 2013. This enabled
+hello to build reproducibly. The first large scale rebuild was performed soon
+after by David Suárez, with variations on time and build path. 24% of 5240 source
+packages were identified as reproducible.
+
+** A bootstrappable hold my beer
+In 2016 Gnu guix quickly achieved full reproducibility but it was generally
+believed that to reduce the bootstrap binaries smaller than GCC was an impossible
+task as the 28MB compressed (202MB uncompressed) bootstrap binaries were thought
+to be quite reasonable.
+
+Jeremiah Orians (Aka OriansJ) responded with a "fuck that" post which included a
+hex0 assembler written in hex0 as a bios boot loader. Thus starting the stage0
+project.
+
+Jan Nieuwenhuizen (Aka janneke) was inspired by the hex assembler but didn't think
+hex was a reasonable path; but becomes motivated when he discovered an article by
+Alan Kay where he mentions lisp 1.5's manual page 13 as "Maxwell's Equations of
+Software" and prototyped a scheme in C; Short after he selected Matt Wette's NYACC
+to help with the parsing of C inputs. He then decides to give a talk at FOSDEM-17
+about his project.
+
+OriansJ saw janneke's talk and sends an email. Shortly after their conversations
+on #Guix started to overwhelm other topics, ultimately inspiring Ricardo Wurmus
+(aka rekado) to create #bootstrappable.
