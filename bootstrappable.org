@@ -167,12 +167,12 @@ make && make test
 - Audit stage0
 - Help out on mes-m2
 
-** mescc-tools-seed
-mescc-tools-seed is a one stop shop to bootstrap from 357bytes to mes-m2
+** stage0-posix
+stage0-posix is a one stop shop to bootstrap from 357bytes to mes-m2
 simply cd into the directory with the architecture you want to bootstrap
 and run kaem --verbose --strict (or just have your preferred shell execute
 the lines in mescc-tools.kaem and mes-m2.kaem [or run them manually yourself])
-https://github.com/oriansj/mescc-tools-seed
+https://github.com/oriansj/stage0-posix
 
 all major work is done in it's dependencies (mes-m2, M2-Planet and mescc-tools)
 save for if a new architecture port needs to be done.
@@ -251,7 +251,7 @@ A universal cross-platform linker buildable via M2-Planet. With support for
 absolute addressing, long labels, multiple offset sizes, allows arbitrary base
 addresses and of course line comments.
 It is written in a subset of C
-It is bootstrapped by M2-Planet in mescc-tools-seed
+It is bootstrapped by M2-Planet in stage0-posix
 and supports Knight, x86, AMD64, armv7l and AArch64
 
 *** M1 macro assembler
@@ -259,7 +259,7 @@ A universal cross-platform macro assembler. With support for DEFINE line-macros,
 raw strings, hex literals, numerics, alignment operations, padding operations and
 arbitrary byte and bit endianness of output.
 It is written in a subset of C
-It is bootstrapped by M2-Planet in mescc-tools-seed
+It is bootstrapped by M2-Planet in stage0-posix
 and supports Knight, x86, AMD64, armv7l and AArch64.
 
 *** blood-elf
@@ -268,7 +268,7 @@ M1-macro files, blood-elf creates a dwarf footer segment from a M1-macro input
 that is in M1-macro format. Not actually needed in bootstrapping but rather
 helpful for those wishing to develop in M1-Macro assembly.
 It is written in a subset of C
-It is bootstrapped by M2-Planet in mescc-tools-seed
+It is bootstrapped by M2-Planet in stage0-posix
 and supports all 32 and 64 elf targets.
 
 *** get_machine
@@ -279,7 +279,7 @@ not on your ARM, SPARC or RISC-V board. Not actually needed in bootstrapping
 but rather helpful for those wishing to have proper tests for their M1-macro
 programs.
 It is written in a subset of C
-It is bootstrapped by M2-Planet in mescc-tools-seed
+It is bootstrapped by M2-Planet in stage0-posix
 and supports all Posix hosts (if we don't support yours let us know)
 
 *** mescc-tools future
@@ -450,7 +450,7 @@ See Current\ bootstrap\ map.pdf
 
 * current status
 + mescc has achieved a full path from mescc to gcc 4.7.4
-+ stage0/mescc-tools-seed has achieved a full path from hex0-seeds to mes-m2 and is porting to armv7l
++ stage0/stage0-posix has achieved a full path from hex0-seeds to mes-m2 and is porting to armv7l
 + mescc-tools is largely *done*
 + M2-Planet is largely *done*
 + mes-m2 is working and slowly expanding in features (feel free to help)
@@ -524,9 +524,9 @@ hardware target and provide the documentation and testing required.
 + We can't port to hardware we don't have
 
 ** Why is there an ELF header?
-+ mescc-tools is the operating system/hardware specific port of stage0
-+ ELF is not actually required for mescc-tools
-+ BIOS level versions of mescc-tools is possible by simply rewriting the
++ stage-posix is the operating system/hardware specific port of stage0
++ ELF is not actually required for stage0
++ BIOS level versions of stage0 is possible by simply rewriting the
 syscalls into BIOS calls, removing the ELF header, adjusting the base address
 and adding the standard PC boot signature (0xAA55)
 + The knight implementation found in stage0 which run on bare metal lack such trivia.
@@ -546,9 +546,16 @@ DOS/CPM only.
 + It doesn't address the problem of the trusting trust attack
 + It would take far far longer than what we are willing waste time.
 
+** What is mescc-tools-seed
+It was the old name for stage0-posix as originally it was just binary blobs created
+by janneke to start work on MesCC's bootstrap in Guix. Jeremiah took it over and
+converted it first to generated M1 programs, then handwritten pieces and expanded
+it until it covered all the steps from hex0 to M2-Planet+mescc-tools; effectively
+becoming a full POSIX port of stage0, hence the name change.
+
 * Caveats
 ** You are depending upon Posix (Linux, *BSD, etc)
-+ For the current work (mescc-tools-seed), you are absolutely correct.
++ For the current work (stage0-posix), you are absolutely correct.
 + But not for the stage0 work running on Knight as all those pieces run on bare
 metal
 + However there is a plan to bootstrap a posix on bare metal using M2-Planet
