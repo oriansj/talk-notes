@@ -1,0 +1,296 @@
+digraph "live-bootstrap" {
+	"NULL"  [label = "cyan3: done and essential\nblack: done but not essential\nred1: paths still being enginneered\nred box = binary non-redistributable", shape = box];
+
+	"kaem-optional-seed" [label = "kaem-optional-seed", fontname = Helvetica];
+	"hex0-seed" [label = "hex0 binary seed", fontname = Helvetica];
+	"kaem-0" [label = "kaem-0", shape=box, fontname = Helvetica];
+	"hex0-assembler" [label = "hex0 Assembler", shape = box, fontname = Helvetica];
+	"catm" [label = "catm", shape = box, fontname = Helvetica];
+	"hex1-assembler" [label = "hex1 Assembler", shape = box, fontname = Helvetica];
+	"hex2-assembler" [label = "hex2 Assembler", shape = box, fontname = Helvetica];
+	"M0-Macro" [label = "M0 Macro assembler", shape = box, fontname = Helvetica];
+	"cc_*" [label = "cc_* family\n(cc_x86, cc_amd64, etc)", shape = box, fontname = Helvetica];
+	"M2" [label = "M2\n(M2-Planet built via cc_*)", shape = box, fontname = Helvetica];
+	"M2-Planet" [label = "M2-PLANET", shape = box, fontname = Helvetica];
+	"mescc-tools" [label = "mescc-tools (hex2, M1, kaem, blood-elf)", shape = box, fontname = Helvetica];
+	"mes-m2" [label = "mes", shape = box, fontname = Helventica];
+	"mescc" [label = "mescc", shape = box, fontname = Helvetica];
+	"meslibc" [label = "meslibc", shape = box, fontname = Helvetica];
+	"mes" [label = "mes (built with mes)", shape = box, fontname = Helventica];
+	"tcc 0.9.26" [label = "tcc 0.9.26", shape = box, fontname = Helvetica];
+	"tcc" [label = "tcc 0.9.27", shape = box, fontname = Helvetica];
+	"mescc-tools-extra" [label = "mescc-tools-extra\n(cp, chown, fletcher16)", shape=box, fontname=Helvetica];
+	"tar" [label = "tar 1.12", shape=box, fontname=Helvetica];
+	"gzip" [label = "gzip 1.2.4", shape=box, fontname=Helvetica];
+	"sed" [label = "sed 4.0.9", shape=box, fontname=Helvetica];
+	"patch" [label = "patch 2.5.9", shape=box, fontname=Helvetica];
+	"sha-2" [label = "sha-2 tool", shape=box, fontname=Helvetica];
+	"make" [label = "make 3.8.0", shape=box, fontname=Helvetica];
+	"bzip2" [label = "bzip2 1.0.8", shape=box, fontname=Helvetica];
+	"coreutils5" [label = "coreutils 5.0", shape=box, fontname=Helvetica];
+	"yacc" [label = "heirloom yacc", shape=box, fontname=Helvetica, color=red];
+	"lex" [label = "heirloom lex", shape=box, fontname=Helvetica, color=red];
+	"bash" [label = "bash 2.05b", shape=box, fontname=Helvetica];
+	"flex0" [label = "flex 2.5.11", shape=box, fontname=Helvetica];
+	"flex" [label = "flex 2.6.4", shape=box, fontname=Helvetica];
+	"musl1" [label = "musl 1.1.24", shape=box, fontname=Helvetica];
+	"tcc-musl0" [label = "tcc-0.9.27\n(musl crosscompiler)", shape = box, fontname = Helvetica];
+	"tcc-musl1" [label = "tcc-0.9.27\n(musl build1)", shape = box, fontname = Helvetica];
+	"tcc-musl2" [label = "tcc-0.9.27\n(musl build2)", shape = box, fontname = Helvetica];
+	"musl2" [label = "musl 1.1.24\n(rebuild)", shape=box, fontname=Helvetica];
+	"sed-musl" [label = "sed 4.0.9\n(musl)", shape=box, fontname=Helvetica];
+	"bzip2-musl" [label = "bzip2 1.0.8\n(musl)", shape=box, fontname=Helvetica];
+	"m4" [label = "m4 1.4.7", shape=box, fontname=Helvetica];
+	"bison" [label = "bison 3.4.1", shape=box, fontname=Helvetica];
+
+
+
+	"M0-Macro" -> "catm" [color = cyan3];
+	"M0-Macro" -> "hex2-assembler" [color = cyan3];
+	"M0-Macro" -> "kaem-0" [color = cyan3];
+
+	"hex0-assembler" -> "hex0-seed" [color = cyan3];
+	"hex0-assembler" -> "kaem-optional-seed" [color = cyan3];
+
+	"kaem-0" -> "hex0-seed" [color = cyan3];
+	"kaem-0" -> "kaem-optional-seed" [color = cyan3];
+
+	"hex0-assembler" -> "kaem-0" [color = cyan3];
+
+	"catm" -> "hex0-assembler" [color = cyan3];
+	"catm" -> "kaem-0" [color = cyan3];
+
+	"cc_*" -> "M0-Macro" [color = cyan3];
+	"cc_*" -> "catm" [color = cyan3];
+	"cc_*" -> "kaem-0" [color = cyan3];
+	"cc_*" -> "hex2-assembler" [color = cyan3];
+
+	"hex1-assembler" -> "hex0-assembler" [color = cyan3];
+	"hex1-assembler" -> "kaem-0" [color = cyan3];
+
+	"hex2-assembler" -> "catm" [color = cyan3];
+	"hex2-assembler" -> "kaem-0" [color = cyan3];
+	"hex2-assembler" -> "hex1-assembler" [color = cyan3];
+
+	"M2" -> "cc_*" [color = cyan3];
+	"M2" -> "catm" [color = cyan3];
+	"M2" -> "M0-Macro" [color = cyan3];
+	"M2" -> "hex2-assembler" [color = cyan3];
+	"M2" -> "kaem-0" [color = cyan3];
+
+	"M2-Planet" -> "mescc-tools" [color = cyan3];
+	"M2-Planet" -> "M2" [color = cyan3];
+
+	"mescc-tools-extra" -> "M2-Planet" [color=black];
+	"mescc-tools-extra" -> "mescc-tools" [color=black];
+
+	"mes-m2" -> "M2-Planet" [color = cyan3];
+	"mes-m2" -> "mescc-tools" [color = cyan3];
+
+	"mescc-tools" -> "M0-Macro" [color = cyan3];
+	"mescc-tools" -> "hex2-assembler" [color = cyan3];
+	"mescc-tools" -> "M2" [color = cyan3];
+	"mescc-tools" -> "kaem-0" [color = cyan3];
+
+	"mescc" -> "mes-m2" [color = cyan3];
+
+	"meslibc" -> "mescc" [color = cyan3];
+	"meslibc" -> "mescc-tools" [color = cyan3];
+	"meslibc" -> "catm" [color = cyan3];
+
+	"mes" -> "mescc" [color = cyan3];
+	"mes" -> "meslibc" [color = cyan3];
+	"mes" -> "mescc-tools" [color = cyan3];
+
+	"tcc 0.9.26" -> "mes" [color = cyan3];
+	"tcc 0.9.26" -> "mescc" [color = cyan3];
+	"tcc 0.9.26" -> "mescc-tools" [color = cyan3];
+	"tcc 0.9.26" -> "meslibc" [color = cyan3];
+	"tcc 0.9.26" -> "mescc-tools" [color = cyan3];
+
+	"tcc" -> "tcc 0.9.26" [color = cyan3];
+	"tcc" -> "mescc-tools" [color = cyan3];
+	"tcc" -> "meslibc" [color = cyan3];
+
+	"tar" -> "meslibc" [color = cyan3];
+	"tar" -> "tcc" [color = cyan3];
+	"tar" -> "mescc-tools" [color = cyan3];
+
+	"gzip" -> "meslibc" [color = cyan3];
+	"gzip" -> "tcc" [color = cyan3];
+	"gzip" -> "tar" [color = cyan3];
+	"gzip" -> "mescc-tools" [color = cyan3];
+
+	"sed" -> "meslibc" [color = cyan3];
+	"sed" -> "tcc" [color = cyan3];
+	"sed" -> "tar" [color = cyan3];
+	"sed" -> "gzip" [color = cyan3];
+	"sed" -> "mescc-tools" [color = cyan3];
+
+	"patch" -> "meslibc" [color = cyan3];
+	"patch" -> "tcc" [color = cyan3];
+	"patch" -> "tar" [color = cyan3];
+	"patch" -> "gzip" [color = cyan3];
+	"patch" -> "mescc-tools" [color = cyan3];
+	"patch" -> "sed" [color = cyan3];
+
+	"sha-2" -> "meslibc" [color = black];
+	"sha-2" -> "tcc" [color = black];
+	"sha-2" -> "tar" [color = black];
+	"sha-2" -> "gzip" [color = black];
+	"sha-2" -> "patch" [color = black];
+	"sha-2" -> "sed" [color = black];
+	"sha-2" -> "mescc-tools" [color = black];
+
+	"make" -> "meslibc" [color = cyan3];
+	"make" -> "tcc" [color = cyan3];
+	"make" -> "tar" [color = cyan3];
+	"make" -> "gzip" [color = cyan3];
+	"make" -> "mescc-tools" [color = black];
+	"make" -> "patch" [color = cyan3];
+
+	"bzip2" -> "meslibc" [color = cyan3];
+	"bzip2" -> "tcc" [color = cyan3];
+	"bzip2" -> "tar" [color = cyan3];
+	"bzip2" -> "gzip" [color = cyan3];
+	"bzip2" -> "make" [color = cyan3];
+	"bzip2" -> "patch" [color = cyan3];
+	"bzip2" -> "mescc-tools" [color = black];
+
+	"coreutils5" -> "meslibc" [color = cyan3];
+	"coreutils5" -> "tcc" [color = cyan3];
+	"coreutils5" -> "tar" [color = cyan3];
+	"coreutils5" -> "bzip2" [color = cyan3];
+	"coreutils5" -> "make" [color = cyan3];
+	"coreutils5" -> "patch" [color = cyan3];
+	"coreutils5" -> "mescc-tools" [color = black];
+
+	"yacc" -> "meslibc" [color = cyan3];
+	"yacc" -> "tcc" [color = cyan3];
+	"yacc" -> "tar" [color = cyan3];
+	"yacc" -> "bzip2" [color = cyan3];
+	"yacc" -> "make" [color = cyan3];
+	"yacc" -> "patch" [color = cyan3];
+	"yacc" -> "mescc-tools" [color = black];
+	"yacc" -> "coreutils5" [color = cyan3];
+
+	"lex" -> "yacc" [color = cyan3];
+	"lex" -> "meslibc" [color = cyan3];
+	"lex" -> "tcc" [color = cyan3];
+	"lex" -> "tar" [color = cyan3];
+	"lex" -> "bzip2" [color = cyan3];
+	"lex" -> "make" [color = cyan3];
+	"lex" -> "patch" [color = cyan3];
+	"lex" -> "mescc-tools" [color = black];
+	"lex" -> "coreutils5" [color = cyan3];
+
+	"bash" -> "meslibc" [color = cyan3];
+	"bash" -> "tcc" [color = cyan3];
+	"bash" -> "tar" [color = cyan3];
+	"bash" -> "gzip" [color = cyan3];
+	"bash" -> "make" [color = cyan3];
+	"bash" -> "patch" [color = cyan3];
+	"bash" -> "mescc-tools" [color = black];
+	"bash" -> "coreutils5" [color = cyan3];
+	"bash" -> "yacc" [color = cyan3];
+
+	"flex0" -> "meslibc" [color = cyan3];
+	"flex0" -> "tcc" [color = cyan3];
+	"flex0" -> "tar" [color = cyan3];
+	"flex0" -> "gzip" [color = cyan3];
+	"flex0" -> "make" [color = cyan3];
+	"flex0" -> "patch" [color = cyan3];
+	"flex0" -> "coreutils5" [color = cyan3];
+	"flex0" -> "lex" [color = cyan3];
+	"flex0" -> "bash" [color = cyan3];
+
+	"musl1" -> "tcc" [color = cyan3];
+	"musl1" -> "tar" [color = cyan3];
+	"musl1" -> "gzip" [color = cyan3];
+	"musl1" -> "make" [color = cyan3];
+	"musl1" -> "patch" [color = cyan3];
+	"musl1" -> "coreutils5" [color = cyan3];
+	"musl1" -> "bash" [color = cyan3];
+
+	"tcc-musl0" -> "tcc 0.9.26" [color = cyan3];
+	"tcc-musl0" -> "bash" [color = cyan3];
+	"tcc-musl0" -> "meslibc" [color = cyan3];
+	"tcc-musl0" -> "patch" [color = cyan3];
+	"tcc-musl0" -> "coreutils5" [color = cyan3];
+
+	"tcc-musl1" -> "tcc-musl0" [color = cyan3];
+	"tcc-musl1" -> "bash" [color = cyan3];
+	"tcc-musl1" -> "musl1" [color = cyan3];
+	"tcc-musl1" -> "patch" [color = cyan3];
+	"tcc-musl1" -> "coreutils5" [color = cyan3];
+
+	"musl2" -> "tcc-musl1" [color = cyan3];
+	"musl2" -> "tar" [color = cyan3];
+	"musl2" -> "gzip" [color = cyan3];
+	"musl2" -> "make" [color = cyan3];
+	"musl2" -> "patch" [color = cyan3];
+	"musl2" -> "coreutils5" [color = cyan3];
+	"musl2" -> "bash" [color = cyan3];
+
+	"tcc-musl2" -> "tcc-musl1" [color = cyan3];
+	"tcc-musl2" -> "bash" [color = cyan3];
+	"tcc-musl2" -> "musl2" [color = cyan3];
+	"tcc-musl2" -> "patch" [color = cyan3];
+	"tcc-musl2" -> "coreutils5" [color = cyan3];
+	"tcc-musl2" -> "bash" [color = cyan3];
+
+	"sed-musl" -> "musl2" [color = cyan3];
+	"sed-musl" -> "tcc-musl2" [color = cyan3];
+	"sed-musl" -> "tar" [color = cyan3];
+	"sed-musl" -> "gzip" [color = cyan3];
+	"sed-musl" -> "make" [color = cyan3];
+	"sed-musl" -> "bash" [color = cyan3];
+	"sed-musl" -> "coreutils5" [color = cyan3];
+
+	"bzip2-musl" -> "musl2" [color = cyan3];
+	"bzip2-musl" -> "tcc-musl2" [color = cyan3];
+	"bzip2-musl" -> "tar" [color = cyan3];
+	"bzip2-musl" -> "make" [color = cyan3];
+	"bzip2-musl" -> "coreutils5" [color = cyan3];
+	"bzip2-musl" -> "bash" [color = cyan3];
+
+	"m4" -> "musl2" [color = cyan3];
+	"m4" -> "tcc-musl2" [color = cyan3];
+	"m4" -> "tar" [color = cyan3];
+	"m4" -> "gzip" [color = cyan3];
+	"m4" -> "make" [color = cyan3];
+	"m4" -> "coreutils5" [color = cyan3];
+	"m4" -> "bash" [color = cyan3];
+
+	"flex" -> "musl2" [color = cyan3];
+	"flex" -> "flex0" [color = cyan3];
+	"flex" -> "tcc-musl2" [color = cyan3];
+	"flex" -> "tar" [color = cyan3];
+	"flex" -> "gzip" [color = cyan3];
+	"flex" -> "make" [color = cyan3];
+	"flex" -> "coreutils5" [color = cyan3];
+	"flex" -> "bash" [color = cyan3];
+	"flex" -> "m4" [color = cyan3];
+
+	"flex" -> "musl2" [color = cyan3];
+	"flex" -> "flex0" [color = cyan3];
+	"flex" -> "tcc-musl2" [color = cyan3];
+	"flex" -> "tar" [color = cyan3];
+	"flex" -> "gzip" [color = cyan3];
+	"flex" -> "make" [color = cyan3];
+	"flex" -> "coreutils5" [color = cyan3];
+	"flex" -> "bash" [color = cyan3];
+	"flex" -> "m4" [color = cyan3];
+
+	"bison" -> "musl2" [color = cyan3];
+	"bison" -> "flex" [color = cyan3];
+	"bison" -> "tcc-musl2" [color = cyan3];
+	"bison" -> "tar" [color = cyan3];
+	"bison" -> "gzip" [color = cyan3];
+	"bison" -> "make" [color = cyan3];
+	"bison" -> "coreutils5" [color = cyan3];
+	"bison" -> "bash" [color = cyan3];
+	"bison" -> "m4" [color = cyan3];
+	"bison" -> "sed-musl" [color = cyan3];
+	"bison" -> "patch" [color = cyan3];
+}
