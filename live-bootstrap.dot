@@ -178,6 +178,7 @@ digraph "live-bootstrap" {
 	"sed" -> "meslibc" [color = grey];
 	"sed" -> "tar" [color = green];
 	"sed" -> "tcc" [color = cyan3];
+	"sed" -> "catm" [color = orange];
 
 	"patch" -> "gzip" [color = green];
 	"patch" -> "kaem" [color = pink];
@@ -185,6 +186,7 @@ digraph "live-bootstrap" {
 	"patch" -> "sed" [color = orange];
 	"patch" -> "tar" [color = green];
 	"patch" -> "tcc" [color = cyan3];
+	"patch" -> "catm" [color = orange];
 
 	"sha-2" -> "gzip" [color = green];
 	"sha-2" -> "kaem" [color = pink];
@@ -200,6 +202,7 @@ digraph "live-bootstrap" {
 	"make" -> "patch" [color = orange];
 	"make" -> "tar" [color = green];
 	"make" -> "tcc" [color = cyan3];
+	"make" -> "catm" [color = orange];
 
 	"bzip2" -> "gzip" [color = green];
 	"bzip2" -> "kaem" [color = pink];
@@ -216,6 +219,7 @@ digraph "live-bootstrap" {
 	"coreutils5" -> "patch" [color = orange];
 	"coreutils5" -> "tar" [color = green];
 	"coreutils5" -> "tcc" [color = cyan3];
+	"coreutils5" -> "catm" [color = orange];
 
 	"yacc" -> "bzip2" [color = green];
 	"yacc" -> "coreutils5" [color = orange];
