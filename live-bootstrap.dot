@@ -245,6 +245,7 @@ digraph "live-bootstrap" {
 	}
 
 	subgraph "sed 4.0.9" {
+	"sed" -> "catm" [color = orange];
 	"sed" -> "gzip" [color = green];
 	"sed" -> "kaem" [color = pink];
 	"sed" -> "meslibc-tcc" [color = grey];
@@ -253,6 +254,7 @@ digraph "live-bootstrap" {
 	}
 
 	subgraph "patch 2.5.9" {
+	"patch" -> "catm" [color = orange];
 	"patch" -> "gzip" [color = green];
 	"patch" -> "kaem" [color = pink];
 	"patch" -> "meslibc-tcc" [color = grey];
@@ -287,6 +289,7 @@ digraph "live-bootstrap" {
 	}
 
 	subgraph "make 3.80" {
+	"make" -> "catm" [color = orange];
 	"make" -> "gzip" [color = green];
 	"make" -> "kaem" [color = pink];
 	"make" -> "meslibc-patch" [color = grey];
@@ -307,6 +310,7 @@ digraph "live-bootstrap" {
 
 	subgraph "coreutils 5.0" {
 	"coreutils5" -> "bzip2" [color = green];
+	"coreutils5" -> "catm" [color = orange];
 	"coreutils5" -> "kaem" [color = pink];
 	"coreutils5" -> "make" [color = pink];
 	"coreutils5" -> "meslibc-patch" [color = grey];
