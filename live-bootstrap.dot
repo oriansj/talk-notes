@@ -6,7 +6,30 @@ digraph "live-bootstrap" {
 	"M1" [label = "mescc-tools (M1)", shape = box, fontname = Helvetica];
 	"M2" [label = "M2\n(M2-Planet built via cc_*)", shape = box, fontname = Helvetica];
 	"M2-Planet" [label = "M2-PLANET", shape = box, fontname = Helvetica];
-	"bash" [label = "bash 2.05b", shape=box, fontname=Helvetica];
+	"autoconf0" [label = "autoconf 2.52 (bootstrap)", shape=box, fontname=Helvetica];
+	"autoconf1" [label = "autoconf 2.52 (self-host)", shape=box, fontname=Helvetica];
+	"autoconf10" [label = "autoconf 2.61", shape=box, fontname=Helvetica];
+	"autoconf2" [label = "autoconf 2.13", shape=box, fontname=Helvetica];
+	"autoconf3" [label = "autoconf 2.12", shape=box, fontname=Helvetica];
+	"autoconf4" [label = "autoconf 2.53 (bootstrap)", shape=box, fontname=Helvetica];
+	"autoconf5" [label = "autoconf 2.53 (self-host)", shape=box, fontname=Helvetica];
+	"autoconf6" [label = "autoconf 2.54", shape=box, fontname=Helvetica];
+	"autoconf7" [label = "autoconf 2.55", shape=box, fontname=Helvetica];
+	"autoconf8" [label = "autoconf 2.57", shape=box, fontname=Helvetica];
+	"autoconf9" [label = "autoconf 2.59", shape=box, fontname=Helvetica];
+	"automake0" [label = "automake 1.6.3 (bootstrap)", shape=box, fontname=Helvetica];
+	"automake1" [label = "automake 1.6.3 (partial)", shape=box, fontname=Helvetica];
+	"automake2" [label = "automake 1.6.3 (self-host)", shape=box, fontname=Helvetica];
+	"automake3" [label = "automake 1.4-p6", shape=box, fontname=Helvetica];
+	"automake4" [label = "automake 1.7 (bootstrap)", shape=box, fontname=Helvetica];
+	"automake5" [label = "automake 1.7 (self-host)", shape=box, fontname=Helvetica];
+	"automake6" [label = "automake 1.7.8", shape=box, fontname=Helvetica];
+	"automake7" [label = "automake 1.8.5", shape=box, fontname=Helvetica];
+	"automake8" [label = "automake 1.9.6 (bootstrap)", shape=box, fontname=Helvetica];
+	"automake9" [label = "automake 1.9.6 (self-host)", shape=box, fontname=Helvetica];
+	"bash0" [label = "bash 2.05b", shape=box, fontname=Helvetica];
+	"bash1" [label = "bash 5.1", shape=box, fontname=Helvetica];
+	"binutils0" [label = "binutils 2.14", shape=box, fontname=Helvetica];
 	"bison0" [label = "bison 3.4.1 (bootstrap)", shape=box, fontname=Helvetica];
 	"bison1" [label = "bison 3.4.1 (partial self-host)", shape=box, fontname=Helvetica];
 	"bison2" [label = "bison 3.4.1 (self-host)", shape=box, fontname=Helvetica];
@@ -24,9 +47,12 @@ digraph "live-bootstrap" {
 	"flex" [label = "flex 2.6.4", shape=box, fontname=Helvetica];
 	"flex0" [label = "flex 2.5.11", shape=box, fontname=Helvetica];
 	"gawk" [label = "gawk 3.0.4", shape=box, fontname=Helvetica];
+	"gcc0" [label = "gcc 4.0.4 (bootstrap)", shape=box, fontname=Helvetica];
+	"gcc1" [label = "gcc 4.0.4 (self-host)", shape=box, fontname=Helvetica];
 	"grep" [label = "grep 2.4", shape=box, fontname=Helvetica];
 	"gzip" [label = "gzip 1.2.4", shape=box, fontname=Helvetica];
 	"hex0-assembler" [label = "hex0 Assembler", shape = box, fontname = Helvetica];
+	"help2man" [label = "help2man 1.36.4", shape = box, fontname = Helvetica];
 	"hex0-seed" [label = "hex0 binary seed", fontname = Helvetica];
 	"hex1-assembler" [label = "hex1 Assembler", shape = box, fontname = Helvetica];
 	"hex2" [label = "mescc-tools (hex2)", shape = box, fontname = Helvetica];
@@ -35,6 +61,8 @@ digraph "live-bootstrap" {
 	"kaem-0" [label = "kaem-0", shape=box, fontname = Helvetica];
 	"kaem-optional-seed" [label = "kaem-optional-seed", fontname = Helvetica];
 	"lex" [label = "heirloom lex", shape=box, fontname=Helvetica, color=red];
+	"libtool0" [label = "libtool 1.4 (bootstrap)", shape=box, fontname=Helvetica];
+	"libtool1" [label = "libtool 1.4 (self-host)", shape=box, fontname=Helvetica];
 	"m4" [label = "m4 1.4.7", shape=box, fontname=Helvetica];
 	"make" [label = "make 3.8.0", shape=box, fontname=Helvetica];
 	"mes" [label = "mes (built with mes)", shape = box, fontname = Helventica];
@@ -47,6 +75,8 @@ digraph "live-bootstrap" {
 	"meslibc-tcc" [label = "meslibc (TCC built)", shape = box, fontname = Helvetica];
 	"musl1" [label = "musl 1.1.24", shape=box, fontname=Helvetica];
 	"musl2" [label = "musl 1.1.24\n(self-host)", shape=box, fontname=Helvetica];
+	"musl3" [label = "musl 1.1.24\n(binutils self-host)", shape=box, fontname=Helvetica];
+	"musl4" [label = "musl 1.2.2", shape=box, fontname=Helvetica];
 	"patch" [label = "patch 2.5.9", shape=box, fontname=Helvetica];
 	"perl0" [label = "perl 5.000\n(miniperl)", shape=box, fontname=Helvetica];
 	"perl1" [label = "perl 5.003", shape=box, fontname=Helvetica];
@@ -62,6 +92,7 @@ digraph "live-bootstrap" {
 	"tcc" [label = "tcc 0.9.27", shape = box, fontname = Helvetica];
 	"tcc-musl0" [label = "tcc-0.9.27\n(musl)", shape = box, fontname = Helvetica];
 	"tcc-musl1" [label = "tcc-0.9.27\n(musl self-host)", shape = box, fontname = Helvetica];
+	"tcc-musl2" [label = "tcc-0.9.27\n(musl self-host)", shape = box, fontname = Helvetica];
 	"tcc-patch" [label = "tcc 0.9.27 (patched)", shape = box, fontname = Helvetica];
 	"yacc" [label = "heirloom yacc", shape=box, fontname=Helvetica, color=red];
 
@@ -306,15 +337,15 @@ digraph "live-bootstrap" {
 	}
 
 	subgraph "bash 2.05b" {
-	"bash" -> "coreutils5" [color = orange];
-	"bash" -> "gzip" [color = green];
-	"bash" -> "kaem" [color = pink];
-	"bash" -> "make" [color = pink];
-	"bash" -> "meslibc-patch" [color = grey];
-	"bash" -> "patch" [color = orange];
-	"bash" -> "tar" [color = green];
-	"bash" -> "tcc-patch" [color = cyan3];
-	"bash" -> "yacc" [color = cyan3];
+	"bash0" -> "coreutils5" [color = orange];
+	"bash0" -> "gzip" [color = green];
+	"bash0" -> "kaem" [color = pink];
+	"bash0" -> "make" [color = pink];
+	"bash0" -> "meslibc-patch" [color = grey];
+	"bash0" -> "patch" [color = orange];
+	"bash0" -> "tar" [color = green];
+	"bash0" -> "tcc-patch" [color = cyan3];
+	"bash0" -> "yacc" [color = cyan3];
 	}
 
 	subgraph "flex 2.5.11" {
@@ -538,5 +569,271 @@ digraph "live-bootstrap" {
 	"perl4" -> "musl2" [color = grey];
 	"perl4" -> "tar" [color = green];
 	"perl4" -> "tcc-musl1" [color = cyan3];
+	}
+
+	subgraph "autocrap vol1" {
+	"autoconf0" -> "coreutils6" [color = pink];
+	"autoconf0" -> "m4" [color = orange];
+	"autoconf0" -> "sed-musl" [color = orange];
+	"autoconf0" -> "gawk" [color = orange];
+
+	"automake0" -> "coreutils6" [color = pink];
+	"automake0" -> "m4" [color = orange];
+	"automake0" -> "sed-musl" [color = orange];
+
+	"automake1" -> "autoconf0" [color = orange];
+	"automake1" -> "automake0" [color = orange];
+	"automake1" -> "coreutils6" [color = pink];
+	"automake1" -> "m4" [color = orange];
+	"automake1" -> "sed-musl" [color = orange];
+
+	"automake2" -> "autoconf0" [color = orange];
+	"automake2" -> "automake1" [color = orange];
+	"automake2" -> "coreutils6" [color = pink];
+	"automake2" -> "m4" [color = orange];
+	"automake2" -> "sed-musl" [color = orange];
+
+	"automake3" -> "autoconf0" [color = orange];
+	"automake3" -> "automake2" [color = orange];
+	"automake3" -> "coreutils6" [color = pink];
+	"automake3" -> "m4" [color = orange];
+	"automake3" -> "sed-musl" [color = orange];
+
+	"autoconf1" -> "autoconf0" [color = orange];
+	"autoconf1" -> "automake3" [color = orange];
+	"autoconf1" -> "coreutils6" [color = pink];
+	"autoconf1" -> "gawk" [color = orange];
+	"autoconf1" -> "m4" [color = orange];
+	"autoconf1" -> "sed-musl" [color = orange];
+
+	"autoconf2" -> "autoconf1" [color = orange];
+	"autoconf2" -> "automake3" [color = orange];
+	"autoconf2" -> "coreutils6" [color = pink];
+	"autoconf2" -> "gawk" [color = orange];
+	"autoconf2" -> "m4" [color = orange];
+	"autoconf2" -> "sed-musl" [color = orange];
+
+	"autoconf3" -> "autoconf2" [color = orange];
+	"autoconf3" -> "automake3" [color = orange];
+	"autoconf3" -> "coreutils6" [color = pink];
+	"autoconf3" -> "gawk" [color = orange];
+	"autoconf3" -> "m4" [color = orange];
+	"autoconf3" -> "sed-musl" [color = orange];
+
+	"libtool0" -> "autoconf2" [color = orange];
+	"libtool0" -> "automake3" [color = orange];
+	"libtool0" -> "coreutils6" [color = pink];
+	"libtool0" -> "make" [color = pink];
+	"libtool0" -> "musl2" [color = grey];
+	"libtool0" -> "tar" [color = green];
+	"libtool0" -> "tcc-musl1" [color = cyan3];
+	}
+
+	subgraph "binutils 2.14" {
+	"binutils0" -> "autoconf2" [color = orange];
+	"binutils0" -> "automake3" [color = orange];
+	"binutils0" -> "libtool0" [color = orange];
+	"binutils0" -> "coreutils6" [color = pink];
+	"binutils0" -> "make" [color = pink];
+	"binutils0" -> "musl2" [color = grey];
+	"binutils0" -> "tar" [color = green];
+	"binutils0" -> "tcc-musl1" [color = cyan3];
+	}
+
+	subgraph "libtool 1.4" {
+	"libtool1" -> "autoconf2" [color = orange];
+	"libtool1" -> "automake3" [color = orange];
+	"libtool1" -> "binutils0" [color = cyan3];
+	"libtool1" -> "coreutils6" [color = pink];
+	"libtool1" -> "libtool0" [color = orange];
+	"libtool1" -> "make" [color = pink];
+	"libtool1" -> "musl2" [color = grey];
+	"libtool1" -> "tar" [color = green];
+	"libtool1" -> "tcc-musl1" [color = cyan3];
+	}
+
+	subgraph "musl 1.1.24 (v3)" {
+	"musl3" -> "autoconf2" [color = orange];
+	"musl3" -> "automake3" [color = orange];
+	"musl3" -> "binutils0" [color = cyan3];
+	"musl3" -> "coreutils6" [color = orange];
+	"musl3" -> "libtool1" [color = orange];
+	"musl3" -> "make" [color = pink];
+	"musl3" -> "musl2" [color = grey];
+	"musl3" -> "tcc-musl1" [color = cyan3];
+	}
+
+	subgraph "tcc 0.9.27 (musl v3)" {
+	"tcc-musl2" -> "autoconf2" [color = orange];
+	"tcc-musl2" -> "automake3" [color = orange];
+	"tcc-musl2" -> "binutils0" [color = cyan3];
+	"tcc-musl2" -> "coreutils6" [color = orange];
+	"tcc-musl2" -> "libtool1" [color = orange];
+	"tcc-musl2" -> "make" [color = pink];
+	"tcc-musl2" -> "musl2" [color = grey];
+	"tcc-musl2" -> "tcc-musl1" [color = cyan3];
+	}
+
+	subgraph "autocrap vol2" {
+	"autoconf4" -> "autoconf3" [color = orange];
+	"autoconf4" -> "automake3" [color = orange];
+	"autoconf4" -> "coreutils6" [color = pink];
+	"autoconf4" -> "gawk" [color = orange];
+	"autoconf4" -> "libtool1" [color = orange];
+	"autoconf4" -> "m4" [color = orange];
+	"autoconf4" -> "make" [color = pink];
+	"autoconf4" -> "perl4" [color = orange];
+	"autoconf4" -> "sed-musl" [color = orange];
+
+	"autoconf5" -> "autoconf4" [color = orange];
+	"autoconf5" -> "automake3" [color = orange];
+	"autoconf5" -> "coreutils6" [color = pink];
+	"autoconf5" -> "gawk" [color = orange];
+	"autoconf5" -> "libtool1" [color = orange];
+	"autoconf5" -> "m4" [color = orange];
+	"autoconf5" -> "make" [color = pink];
+	"autoconf5" -> "perl4" [color = orange];
+	"autoconf5" -> "sed-musl" [color = orange];
+
+	"automake4" -> "autoconf5" [color = orange];
+	"automake4" -> "automake3" [color = orange];
+	"automake4" -> "coreutils6" [color = pink];
+	"automake4" -> "m4" [color = orange];
+	"automake4" -> "make" [color = pink];
+	"automake4" -> "patch" [color = orange];
+	"automake4" -> "sed-musl" [color = orange];
+
+	"autoconf6" -> "autoconf5" [color = orange];
+	"autoconf6" -> "automake4" [color = orange];
+	"autoconf6" -> "gawk" [color = orange];
+	"autoconf6" -> "libtool1" [color = orange];
+	"autoconf6" -> "m4" [color = orange];
+	"autoconf6" -> "make" [color = pink];
+	"autoconf6" -> "perl4" [color = orange];
+
+	"automake5" -> "autoconf6" [color = orange];
+	"automake5" -> "automake4" [color = orange];
+	"automake5" -> "coreutils6" [color = pink];
+	"automake5" -> "m4" [color = orange];
+	"automake5" -> "make" [color = pink];
+
+	"autoconf7" -> "autoconf6" [color = orange];
+	"autoconf7" -> "automake5" [color = orange];
+	"autoconf7" -> "gawk" [color = orange];
+	"autoconf7" -> "libtool1" [color = orange];
+	"autoconf7" -> "m4" [color = orange];
+	"autoconf7" -> "make" [color = pink];
+	"autoconf7" -> "perl4" [color = orange];
+
+	"automake6" -> "autoconf7" [color = orange];
+	"automake6" -> "automake5" [color = orange];
+	"automake6" -> "coreutils6" [color = pink];
+	"automake6" -> "m4" [color = orange];
+	"automake6" -> "make" [color = pink];
+
+	"autoconf8" -> "autoconf7" [color = orange];
+	"autoconf8" -> "automake6" [color = orange];
+	"autoconf8" -> "gawk" [color = orange];
+	"autoconf8" -> "libtool1" [color = orange];
+	"autoconf8" -> "m4" [color = orange];
+	"autoconf8" -> "make" [color = pink];
+	"autoconf8" -> "perl4" [color = orange];
+
+	"autoconf9" -> "autoconf8" [color = orange];
+	"autoconf9" -> "automake6" [color = orange];
+	"autoconf9" -> "gawk" [color = orange];
+	"autoconf9" -> "libtool1" [color = orange];
+	"autoconf9" -> "m4" [color = orange];
+	"autoconf9" -> "make" [color = pink];
+	"autoconf9" -> "perl4" [color = orange];
+
+	"automake7" -> "autoconf9" [color = orange];
+	"automake7" -> "automake6" [color = orange];
+	"automake7" -> "coreutils6" [color = pink];
+	"automake7" -> "m4" [color = orange];
+	"automake7" -> "make" [color = pink];
+	}
+
+	subgraph "help2man 1.36.4" {
+	"help2man" -> "autoconf9" [color = orange];
+	"help2man" -> "automake7" [color = orange];
+	"help2man" -> "libtool1" [color = orange];
+	"help2man" -> "binutils0" [color = cyan3];
+	"help2man" -> "make" [color = pink];
+	"help2man" -> "musl2" [color = grey];
+	"help2man" -> "tcc-musl2" [color = cyan3];
+	}
+
+	subgraph "autocrap vol3" {
+	"autoconf10" -> "autoconf9" [color = orange];
+	"autoconf10" -> "automake7" [color = orange];
+	"autoconf10" -> "gawk" [color = orange];
+	"autoconf10" -> "help2man" [color = orange];
+	"autoconf10" -> "libtool1" [color = orange];
+	"autoconf10" -> "m4" [color = orange];
+	"autoconf10" -> "make" [color = pink];
+	"autoconf10" -> "perl4" [color = orange];
+
+	"automake8" -> "autoconf10" [color = orange];
+	"automake8" -> "automake7" [color = orange];
+	"automake8" -> "coreutils6" [color = pink];
+	"automake8" -> "help2man" [color = orange];
+	"automake8" -> "m4" [color = orange];
+	"automake8" -> "make" [color = pink];
+
+	"automake9" -> "autoconf10" [color = orange];
+	"automake9" -> "automake8" [color = orange];
+	"automake9" -> "coreutils6" [color = pink];
+	"automake9" -> "help2man" [color = orange];
+	"automake9" -> "m4" [color = orange];
+	"automake9" -> "make" [color = pink];
+	}
+
+	subgraph "doing something actually useful" {
+	"gcc0" -> "autoconf10" [color = orange];
+	"gcc0" -> "automake9" [color = orange];
+	"gcc0" -> "binutils0" [color = cyan3];
+	"gcc0" -> "coreutils6" [color = orange];
+	"gcc0" -> "help2man" [color = orange];
+	"gcc0" -> "libtool1" [color = orange];
+	"gcc0" -> "make" [color = pink];
+	"gcc0" -> "musl2" [color = grey];
+	"gcc0" -> "tcc-musl2" [color = cyan3];
+
+	"musl4" -> "autoconf10" [color = orange];
+	"musl4" -> "automake9" [color = orange];
+	"musl4" -> "binutils0" [color = cyan3];
+	"musl4" -> "coreutils6" [color = orange];
+	"musl4" -> "gcc0" [color = cyan3]
+	"musl4" -> "gzip" [color = green];
+	"musl4" -> "help2man" [color = orange];
+	"musl4" -> "libtool1" [color = orange];
+	"musl4" -> "make" [color = pink];
+	"musl4" -> "musl2" [color = grey];
+	"musl4" -> "tar" [color = green];
+
+	"gcc1" -> "autoconf10" [color = orange];
+	"gcc1" -> "automake9" [color = orange];
+	"gcc1" -> "binutils0" [color = cyan3];
+	"gcc1" -> "coreutils6" [color = orange];
+	"gcc1" -> "gcc0" [color = cyan3];
+	"gcc1" -> "help2man" [color = orange];
+	"gcc1" -> "libtool1" [color = orange];
+	"gcc1" -> "make" [color = pink];
+	"gcc1" -> "musl4" [color = grey];
+	}
+
+	subgraph "interactive shell" {
+	"bash1" -> "autoconf10" [color = orange];
+	"bash1" -> "automake9" [color = orange];
+	"bash1" -> "binutils0" [color = cyan3];
+	"bash1" -> "bison2" [color = cyan3];
+	"bash1" -> "coreutils6" [color = orange];
+	"bash1" -> "gcc1" [color = cyan3];
+	"bash1" -> "help2man" [color = orange];
+	"bash1" -> "libtool1" [color = orange];
+	"bash1" -> "make" [color = pink];
+	"bash1" -> "musl4" [color = grey];
+	"bash1" -> "yacc" [color = cyan3];
 	}
 }
