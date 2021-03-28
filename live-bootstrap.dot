@@ -79,8 +79,8 @@ digraph "live-bootstrap" {
 	"musl4" [label = "musl 1.2.2", shape=box, fontname=Helvetica];
 	"patch" [label = "patch 2.5.9", shape=box, fontname=Helvetica];
 	"perl0" [label = "perl 5.000\n(miniperl)", shape=box, fontname=Helvetica];
-	"perl1" [label = "perl 5.003", shape=box, fontname=Helvetica];
-	"perl2" [label = "perl 5.004_05", shape=box, fontname=Helvetica];
+	"perl1" [label = "perl 5.003\n(miniperl)", shape=box, fontname=Helvetica];
+	"perl2" [label = "perl 5.004_05\n(miniperl)", shape=box, fontname=Helvetica];
 	"perl3" [label = "perl5.005_03", shape=box, fontname=Helvetica];
 	"perl4" [label = "perl5.6.2", shape=box, fontname=Helvetica];
 	"sed" [label = "sed 4.0.9", shape=box, fontname=Helvetica];
