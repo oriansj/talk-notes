@@ -353,7 +353,7 @@ digraph "live-bootstrap" {
 	}
 
 	subgraph "flex 2.5.11" {
-	"flex0" -> "bash" [color = pink];
+	"flex0" -> "bash0" [color = pink];
 	"flex0" -> "coreutils5" [color = orange];
 	"flex0" -> "gzip" [color = green];
 	"flex0" -> "lex" [color = orange];
@@ -366,7 +366,7 @@ digraph "live-bootstrap" {
 	}
 
 	subgraph "musl 1.1.24" {
-	"musl1" -> "bash" [color = pink];
+	"musl1" -> "bash0" [color = pink];
 	"musl1" -> "coreutils5" [color = orange];
 	"musl1" -> "gzip" [color = green];
 	"musl1" -> "make" [color = pink];
@@ -377,7 +377,7 @@ digraph "live-bootstrap" {
 	}
 
 	subgraph "tcc 0.9.27 (musl)" {
-	"tcc-musl0" -> "bash" [color = pink];
+	"tcc-musl0" -> "bash0" [color = pink];
 	"tcc-musl0" -> "coreutils5" [color = orange];
 	"tcc-musl0" -> "musl1" [color = grey];
 	"tcc-musl0" -> "patch" [color = orange];
@@ -385,7 +385,7 @@ digraph "live-bootstrap" {
 	}
 
 	subgraph "musl 1.1.24 (tcc-musl)" {
-	"musl2" -> "bash" [color = pink];
+	"musl2" -> "bash0" [color = pink];
 	"musl2" -> "coreutils5" [color = orange];
 	"musl2" -> "gzip" [color = green];
 	"musl2" -> "make" [color = pink];
@@ -396,7 +396,7 @@ digraph "live-bootstrap" {
 	}
 
 	subgraph "tcc 0.9.27 (musl v2)" {
-	"tcc-musl1" -> "bash" [color = pink];
+	"tcc-musl1" -> "bash0" [color = pink];
 	"tcc-musl1" -> "coreutils5" [color = orange];
 	"tcc-musl1" -> "musl2" [color = grey];
 	"tcc-musl1" -> "patch" [color = orange];
@@ -404,7 +404,7 @@ digraph "live-bootstrap" {
 	}
 
 	subgraph "sed 4.0.9" {
-	"sed-musl" -> "bash" [color = pink];
+	"sed-musl" -> "bash0" [color = pink];
 	"sed-musl" -> "coreutils5" [color = orange];
 	"sed-musl" -> "gzip" [color = green];
 	"sed-musl" -> "make" [color = pink];
@@ -414,7 +414,7 @@ digraph "live-bootstrap" {
 	}
 
 	subgraph "bzip2 1.0.8" {
-	"bzip2-musl" -> "bash" [color = pink];
+	"bzip2-musl" -> "bash0" [color = pink];
 	"bzip2-musl" -> "coreutils5" [color = orange];
 	"bzip2-musl" -> "make" [color = pink];
 	"bzip2-musl" -> "musl2" [color = grey];
@@ -423,7 +423,7 @@ digraph "live-bootstrap" {
 	}
 
 	subgraph "m4 1.4.7" {
-	"m4" -> "bash" [color = pink];
+	"m4" -> "bash0" [color = pink];
 	"m4" -> "coreutils5" [color = orange];
 	"m4" -> "gzip" [color = green];
 	"m4" -> "make" [color = pink];
@@ -434,7 +434,7 @@ digraph "live-bootstrap" {
 	}
 
 	subgraph "flex 2.6.14" {
-	"flex" -> "bash" [color = pink];
+	"flex" -> "bash0" [color = pink];
 	"flex" -> "coreutils5" [color = orange];
 	"flex" -> "flex0" [color = orange];
 	"flex" -> "gzip" [color = green];
@@ -446,7 +446,7 @@ digraph "live-bootstrap" {
 	}
 
 	subgraph "bison 3.4.1" {
-	"bison0" -> "bash" [color = pink];
+	"bison0" -> "bash0" [color = pink];
 	"bison0" -> "coreutils5" [color = orange];
 	"bison0" -> "flex" [color = orange];
 	"bison0" -> "gzip" [color = green];
@@ -458,7 +458,7 @@ digraph "live-bootstrap" {
 	"bison0" -> "tar" [color = green];
 	"bison0" -> "tcc-musl1" [color = cyan3];
 
-	"bison1" -> "bash" [color = pink];
+	"bison1" -> "bash0" [color = pink];
 	"bison1" -> "bison0" [color = orange];
 	"bison1" -> "coreutils5" [color = orange];
 	"bison1" -> "flex" [color = orange];
@@ -471,7 +471,7 @@ digraph "live-bootstrap" {
 	"bison1" -> "tar" [color = green];
 	"bison1" -> "tcc-musl1" [color = cyan3];
 
-	"bison2" -> "bash" [color = pink];
+	"bison2" -> "bash0" [color = pink];
 	"bison2" -> "bison1" [color = orange];
 	"bison2" -> "coreutils5" [color = orange];
 	"bison2" -> "flex" [color = orange];
@@ -486,7 +486,7 @@ digraph "live-bootstrap" {
 	}
 
 	subgraph "grep 2.4" {
-	"grep" -> "bash" [color = pink];
+	"grep" -> "bash0" [color = pink];
 	"grep" -> "coreutils5" [color = orange];
 	"grep" -> "gzip" [color = green];
 	"grep" -> "make" [color = pink];
@@ -496,7 +496,7 @@ digraph "live-bootstrap" {
 	}
 
 	subgraph "diffutils 2.7" {
-	"diffutils" -> "bash" [color = pink];
+	"diffutils" -> "bash0" [color = pink];
 	"diffutils" -> "coreutils5" [color = orange];
 	"diffutils" -> "gzip" [color = green];
 	"diffutils" -> "make" [color = pink];
@@ -507,7 +507,7 @@ digraph "live-bootstrap" {
 
 	subgraph "coreutils 5.0 musl" {
 	"coreutils5-musl" -> "bzip2" [color = green];
-	"coreutils5-musl" -> "bash" [color = pink];
+	"coreutils5-musl" -> "bash0" [color = pink];
 	"coreutils5-musl" -> "make" [color = pink];
 	"coreutils5-musl" -> "musl2" [color = grey];
 	"coreutils5-musl" -> "tar" [color = green];
@@ -516,7 +516,7 @@ digraph "live-bootstrap" {
 
 	subgraph "coreutils 6.10" {
 	"coreutils6" -> "bzip2" [color = green];
-	"coreutils6" -> "bash" [color = pink];
+	"coreutils6" -> "bash0" [color = pink];
 	"coreutils6" -> "make" [color = pink];
 	"coreutils6" -> "musl2" [color = grey];
 	"coreutils6" -> "tar" [color = green];
@@ -526,7 +526,7 @@ digraph "live-bootstrap" {
 	subgraph "gawk 3.0.4" {
 	"gawk" -> "bison2" [color = orange];
 	"gawk" -> "bzip2" [color = green];
-	"gawk" -> "bash" [color = pink];
+	"gawk" -> "bash0" [color = pink];
 	"gawk" -> "make" [color = pink];
 	"gawk" -> "musl2" [color = grey];
 	"gawk" -> "tar" [color = green];
@@ -534,7 +534,7 @@ digraph "live-bootstrap" {
 	}
 
 	subgraph "perl" {
-	"perl0" -> "bash" [color = pink];
+	"perl0" -> "bash0" [color = pink];
 	"perl0" -> "bzip2" [color = green];
 	"perl0" -> "gawk" [color = orange];
 	"perl0" -> "make" [color = pink];
@@ -542,7 +542,7 @@ digraph "live-bootstrap" {
 	"perl0" -> "tar" [color = green];
 	"perl0" -> "tcc-musl1" [color = cyan3];
 
-	"perl1" -> "bash" [color = pink];
+	"perl1" -> "bash0" [color = pink];
 	"perl1" -> "bzip2" [color = green];
 	"perl1" -> "perl0" [color = orange];
 	"perl1" -> "make" [color = pink];
@@ -550,7 +550,7 @@ digraph "live-bootstrap" {
 	"perl1" -> "tar" [color = green];
 	"perl1" -> "tcc-musl1" [color = cyan3];
 
-	"perl2" -> "bash" [color = pink];
+	"perl2" -> "bash0" [color = pink];
 	"perl2" -> "bzip2" [color = green];
 	"perl2" -> "perl1" [color = orange];
 	"perl2" -> "make" [color = pink];
@@ -558,7 +558,7 @@ digraph "live-bootstrap" {
 	"perl2" -> "tar" [color = green];
 	"perl2" -> "tcc-musl1" [color = cyan3];
 
-	"perl3" -> "bash" [color = pink];
+	"perl3" -> "bash0" [color = pink];
 	"perl3" -> "bzip2" [color = green];
 	"perl3" -> "perl2" [color = orange];
 	"perl3" -> "make" [color = pink];
@@ -566,7 +566,7 @@ digraph "live-bootstrap" {
 	"perl3" -> "tar" [color = green];
 	"perl3" -> "tcc-musl1" [color = cyan3];
 
-	"perl4" -> "bash" [color = pink];
+	"perl4" -> "bash0" [color = pink];
 	"perl4" -> "bzip2" [color = green];
 	"perl4" -> "perl3" [color = orange];
 	"perl4" -> "make" [color = pink];
@@ -635,6 +635,7 @@ digraph "live-bootstrap" {
 
 	subgraph "binutils 2.14" {
 	"binutils0" -> "autoconf2" [color = orange];
+	"binutils0" -> "autoconf3" [color = orange];
 	"binutils0" -> "automake3" [color = orange];
 	"binutils0" -> "libtool0" [color = orange];
 	"binutils0" -> "coreutils6" [color = pink];
@@ -657,8 +658,6 @@ digraph "live-bootstrap" {
 	}
 
 	subgraph "musl 1.1.24 (v3)" {
-	"musl3" -> "autoconf2" [color = orange];
-	"musl3" -> "automake3" [color = orange];
 	"musl3" -> "binutils0" [color = cyan3];
 	"musl3" -> "coreutils6" [color = orange];
 	"musl3" -> "libtool1" [color = orange];
@@ -668,8 +667,6 @@ digraph "live-bootstrap" {
 	}
 
 	subgraph "tcc 0.9.27 (musl v3)" {
-	"tcc-musl2" -> "autoconf2" [color = orange];
-	"tcc-musl2" -> "automake3" [color = orange];
 	"tcc-musl2" -> "binutils0" [color = cyan3];
 	"tcc-musl2" -> "coreutils6" [color = orange];
 	"tcc-musl2" -> "libtool1" [color = orange];

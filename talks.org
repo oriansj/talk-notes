@@ -42,4 +42,13 @@ A brief talk by janneke about halving the size of the Guix bootstrap seed again,
 https://video.fosdem.org/2020/AW1.125/gnumes.webm
 https://fosdem.org/2020/schedule/event/gnumes/attachments/slides/3942/export/events/attachments/gnumes/slides/3942/fosdem20.pdf
 
+** PackagingCon 2021
+Civodul's guix talk on the packaging grail:
+https://www.youtube.com/watch?v=tcTOkXlE_ac
+And bootstrap bit starting at 5:20 to 8:44
+
+And Jeremiah's first talk about his stage0 project.
+https://www.youtube.com/watch?v=BpRef4U-4sI
+From 8:52 to 10:48
+
 * Future
