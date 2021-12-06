@@ -1,0 +1,210 @@
+* root
+The root of trust must ultimately come from 1 or more binaries.
+For Guix this is the 50MB Guile binary statically built.
+In the case of stage0, we opted for hex0.
+and in the case of stage0-posix: hex0 with kaem-optional.
+
+So it is best to explain why we made these choices.
+
+** hex0
+The reason for hex0's design comes from:
+
+*** A desire to make the root auditable
+Ideally we wanted something that could be golf'd to under 150bytes in competition.
+This point restricted us to binary, octal, hex and ascii word mapping.
+
+Of which ascii word mapping was the smallest but the hardest to do and/or audit; which ruled it out.
+The second smallest was octal but most instruction documentation was in hex.
+The third smallest was hex and was selected by the availabilty of those encoding being available in printed form.
+the fourth smallest was binary and honestly would have required much more tedious work to use and thus was ruled out.
+
+*** A desire to use commonly available instruction mappings.
+Most tools provide hex mapping for instructions, but few provide octal.
+Most published books/manuals list hex encodings for instructions.
+
+*** A desire for human readablity
+As there was two standards for line comments for assembly:
+; and \#
+we opted to just support both as it wouldn't require more than 2 instructions to do so.
+
+*** A desire for minimal memory footprint
+To support linkages, requires a table or list to store the address of all labels
+and atleast 2 passes and all the associated implementation complexity that comes
+with it.
+
+So hex0 skips all of that and just reads 2 valid (non-commented out) chars and outputs a byte.
+
+** kaem-optional
+The reason for kaem-optional's design:
+
+*** A desire to automate builds on bootup
+as POSIX systems require an init or a shell to run commands, we designed kaem-optional
+to replace the need for an init and to also replace the need for a shell.
+
+This is why we read the kaem.run file; which in bootstrap-seeds became kaem.${ARCH}
+to enable the root to be shared by all ports and live-bootstrap to no longer need
+to unpack stage0-posix.
+
+*** The flexiblity to deal with an existing unknown.
+As it would be smaller to just encode a couple exec commands but would require a
+custom build for each change for the init.
+The rational decision was to use a script file (kaem.${ARCH}) to enable trivial
+changes and updates until a future time when we know we could switch to a static
+exec block instead.
+
+* step 0
+step zero in stage0 and stage0-posix is to self-host our bootstrap-seed(s)
+The reason for that is to enable a trivial self-audit of our root of trust.
+
+As hex0 input files are much easier to read than binaries and assuming the binaries
+correspond to the hex0 sources that have been audited, we know our root is good.
+
+* step 1
+The most important thing to realize is the most tedious and error prone part of
+hex0 programs is calculating offsets used by jumps and calls.
+
+As it requires manually figuring out the addresses of all labels (updating all
+of them on the slightest code change.)
+
+Then figuring out the address of the call/jump and which calculation needs to be
+done to put the correct offset formatted correctly.
+
+With that goal in mind and a couple minor reasons for the choice made:
+
+** A desire to self-host
+As hex0 is in hex and we wanted the ability to self-host, the simplest way to do
+so was to make all hex0 input also valid hex1 input as well.
+
+So we simply extended hex0 with :label and %label (or @label or !label or ~label
+depending on jump/call instruction immediate size).
+
+as label: and :label are both common ways of expressing labels in standard assembly.
+
+** A desire for minimal pain
+label: would end up being much more complexity than :label so :label was selected.
+
+a single letter label would enable a trivial 256 entry table for all possible labels
+of exactly one word in size for each.
+
+Simplifying both implementation and reducing the amount of jumps actually needed
+to actually implement.
+
+(Word based architectures require additional complexity but that is more working
+around a shitty design rather than something actually needed by bootstrapping itself)
+
+* step 2
+Now that the biggest pain has been addressed, the next most annoying thing is
+dealing with absolute addresses; which require us to count up the number of bytes
+until the label and use that value in the handful of spots which require such.
+
+Several instruction sequences would have been smaller if we supported different
+immediate sizes as well for offsets.
+
+And in elf headers we wanted the ability to measure automatically the number of
+bytes between two labels.
+
+With that goal in mind and a couple minor reasons for the choice made:
+
+** A desire to self-host
+As hex1 is in hex and we wanted the ability to self-host, the simplest way to do
+so was to make all hex1 input also valid hex2 input as well.
+
+we just extended :label to much longer 256-4Mbytes depending on implementation
+
+Added support for the immediate sizes we didn't include before:
+!8bit @16bit ~24bit %32bit
+
+$16bit_absolute and &32bit_absolute
+
+and for ELF headers: %label>label is supported as well
+
+** A desire for minimal pain
+hex2 thus is the most useful version of hex one would want while still being
+much simpler than a lisp, FORTH or any other language.
+
+In fact only 26-38 labels are needed to implement this language (depending on the
+stupidity of the CPU architecture)
+
+* step 3
+Now that the most tedious part of programming in assembly has been solved by hex2,
+it becomes very obvious that we want to write human names for instructions rather
+than hex blocks with human names in line comments.
+
+Secondly encoding strings into hex can be tedious and we would want to stop doing that.
+
+Third encoding numbers like !8, @16, ~24 and %32 was tedious and could be done
+without much additional effort.
+
+Finally I want the ability to just dump out hex to extend M0 in ways we can't imagine yet.
+
+** minimal work required
+Leveraging previous experience.
+"raw strings" and 'hex literals' were selected as one only needed to do specific
+behavior when one sees a " or ' and either convert to hex or just dump as is.
+
+Which saved the complexity of supporting \" and \' behavior along with other \n
+messy bits.
+
+So " this
+is
+fine to embed newline characters
+"
+
+To save the complexity of encoding multiple instructions and having to change
+it everytime we added more; we opted to just use a match function and DEFINE
+keyword to define blocks to replace when seen.
+
+* step 4
+Once you have a macro assembler with proper labels, line comments and everything
+needed to work on real assembly programs. The problem becomes what real language
+to bootstrap first.
+
+To explain the decision made, it is best to examine what was considered, tried
+and ultimately decided and why.
+
+** FORTH
+There are volumes of praise out there for using FORTH as a language for bootstrapping.
+However when it comes to useful programs actually written in FORTH, the selection
+is quite thin.
+
+Combined with the lack of FORTH developers being available to help with the work,
+it was abandoned after a couple months of work.
+
+** LISP
+Lisp is the Maxwell Equations of Software and such a powerful language.
+However, LISP is not an easy language to implement in LISP, C and definitely
+not an easy task to implement in assembly.
+
+Never ending garbage collection bugs plague every assembly implementation of LISP.
+
+So despite having wonderful tools and useful programs available, none would work
+on trivial LISP implementations without major effort and doing a proper LISP
+in assembly is a multi-month effort under the best of conditions.
+
+** C
+Everyone hates C for some reason.
+And I do mean everyone.
+Especially C programmers, they never want to write a C compiler.
+It is ugly.
+It requires you to jump through hoops
+
+However, the minimal subset (cc_* implements this) can be written in under 24hours
+from scratch with no previous experience. With speed runs being done in under 30
+minutes to implement that subset.
+
+So it was the first through the gate and the major real high level language used.
+
+* step 5
+Now that we have a high level language (C) that is actually portable, it is worth
+the effort to harmonize all of the ports to a common set of cross-platform tools.
+So we self-host M2-Planet + mescc-tools which allows us to check all other
+bootstraps ports from any single bootstrap port. Making compromised hardware/software
+harder to find.
+
+* step 6
+Now that everything is written in a high language, portable and validated
+we just build the handful of remaining pieces needed to uncompress, unpack and start
+building what is required to bootstrap GCC.
+
+Everything after this is off the shelf (excluding the bits that required bootstrapping
+work arounds to address)
