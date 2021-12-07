@@ -1,3 +1,25 @@
+* Culture
+The single most important rule is:
+Who does decides.
+
+The single most important metric is:
+What work is someone willing to do *NOW*
+
+As grand designs with magic languages have not yet produced useful results,
+we recommend looking for something you can improve or fix *NOW* and do it.
+
+Someone else might see your work and complete another bootstrapping chain.
+
+The single biggest mistake made:
+Not asking questions when something isn't clear to *YOU* and following up
+with clarifying questions if something about the answer doesn't make sense.
+
+The single most common mistake made:
+Forgetting to tell people about your work.
+
+Some people might find your work awesome and want to help, telling us increases
+the odds that some of us might just help you.
+
 * root
 The root of trust must ultimately come from 1 or more binaries.
 For Guix this is the 50MB Guile binary statically built.
