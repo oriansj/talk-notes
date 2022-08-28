@@ -51,4 +51,14 @@ And Jeremiah's first talk about his stage0 project.
 https://www.youtube.com/watch?v=BpRef4U-4sI
 From 8:52 to 10:48
 
+** FOSDEM 2022 (Feb 6, 2022 @ 10:45)
+A brief talk by ekaitz on his work on RISC-V bootstrapping
+https://fosdem.org/2022/schedule/event/riscvadventures/
+
+Video:
+https://video.fosdem.org/2022/D.minimalistic/riscvadventures.webm
+
+Slides:
+https://fosdem.org/2022/schedule/event/riscvadventures/attachments/slides/4815/export/events/attachments/riscvadventures/slides/4815/Slides.pdf
+
 * Future
