@@ -61,4 +61,10 @@ https://video.fosdem.org/2022/D.minimalistic/riscvadventures.webm
 Slides:
 https://fosdem.org/2022/schedule/event/riscvadventures/attachments/slides/4815/export/events/attachments/riscvadventures/slides/4815/Slides.pdf
 
+** LAS 2023 (Apr 23, 2023, 10:00am)
+A 40minute talk on the new bootstrapped root for the Freedesktop SDK
+
+Video:
+https://www.youtube.com/watch?v=jwMEDI4WsAE
+
 * Future

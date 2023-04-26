@@ -1,6 +1,6 @@
 *- org -*-
 bootstrappable.org project
-#bootstrappable on freenode
+#bootstrappable on libera.chat
 
 * What is this all about?
 A full source bootstrapping for all free software programs
@@ -113,7 +113,7 @@ reduced down to the essentials.
 We give ourselves an alien hardware platform to verify the stage0 steps for x86
 bootstraps and know if a Nexus Intruder attack occured in any of the steps.
 
-*** Stage0 steps
+*** Stage0/stage0-posix/stage0-uefi steps
 - hex0 monitor (280bytes) ensures you don't need a text editor or any other
 software period. Trivial to make by hand (toggling in bytes if you want) or
 using a trivial program of your own written in any language you desire.
@@ -141,6 +141,25 @@ inline assembly, gotos and other standard C goodies.
 is capable of self-hosting. Weighing in at 1910 lines of C Code and slowly
 expanding in terms of functionality.
 
+- M2-Mesoplanet (128,366 bytes) written in the subset of C that M2-Planet can
+compile is a more standard C preprocessor and simplifies compilation, assembly
+and linking.
+
+- mescc-tools (M1 [67,186 bytes], hex2 [67,109 bytes], blood-elf [49,601 bytes],
+get_machine [34,125 bytes] and kaem [79,340 bytes]) a crossplatform assembler,
+linker, dwarf stub generator, a tool for detecting what architecture we are running
+on and a basic shell which provides enough functionality to drive any further
+bootstrap required.
+
+- mescc-tools-extra (catm [22,649 bytes], chmod [36,610 bytes], cp [43,447 bytes],
+match [33,717 bytes], mkdir [34,913 bytes], replace [39,649 bytes], rm [34,062
+bytes], sha256sum [50,008 bytes], unbz2 [61,587 bytes], ungz [62,265 bytes] and
+untar [46,574 bytes]) finishing off the stage0 steps, we provide some tools to
+enable a semi-comfortable development basis. The ability to combine files, mark
+them as executable, copy files around, support conditional paths in kaem scripts,
+make folders, perform sed like file alterations, delete files, checksum everything,
+unpack bz2, gz and tar archives (allowing much more standard package sources).
+
 *** abandoned Stage0 paths
 - Stage0 FORTH (4008 bytes) written in M0 macro assembly and extends itself in
 its own FORTH Primitives and has a slowly growing initial library (approaching
@@ -163,84 +182,14 @@ attack/Nexus Intruder attack)
 - Simply verify our sha256sum'd steps produce identical binaries on your weird
 shit (git clone 'https://git.savannah.nongnu.org/git/stage0.git' && cd stage0 &&
 make && make test
+- Or help porting your architecture to stage0-posix or stage0-uefi
+(https://github.com/oriansj/stage0-posix and https://git.stikonas.eu/andrius/stage0-uefi)
 - Find/report bugs
 - Audit stage0
-- Help out on mes-m2
-
-** stage0-posix
-stage0-posix is a one stop shop to bootstrap from 357bytes to mes-m2
-simply cd into the directory with the architecture you want to bootstrap
-and run kaem --verbose --strict (or just have your preferred shell execute
-the lines in mescc-tools.kaem and mes-m2.kaem [or run them manually yourself])
-https://github.com/oriansj/stage0-posix
-
-all major work is done in it's dependencies (mes-m2, M2-Planet and mescc-tools)
-save for if a new architecture port needs to be done.
-
-*** hex0
-The essential core required for bootstrapping, it takes a single input file and
-generates an executable binary following the following rule:
-Add 2 hex characters together and write a byte.
-Supports both \# and ; as line comments
-Weighing in at 357bytes total
-It has been implemented for knight, x86 and AMD64
-
-*** catm
-Since we don't want a bunch of duplicate code and also don't want to depend on
-cat or any shell providing piping or indirection, we created catm. It provides
-the same functionality as cat $Input1 $Input2 ... $InputN > $Output in a smaller
-package that works like catm $Output $Input1 $Input2 ... $InputN.
-Weighing in at 215bytes
-It has been implemented for knight, x86 and AMD64
-
-*** hex1
-Building off of the functionality of hex0, we extend our hex to include single
-character relative labels. Serving only a single purpose (build hex2)
-Weighing in at 689bytes total
-It has been implemented for knight, x86 and AMD64
-
-*** hex2
-The final hex stage needed in any bootstrap project. This adds support for absolute
-addressing, long labels, multiple offset sizes and allows arbitrary base addresses.
-Weighing in at 1406bytes total
-It has been implemented for knight, x86 and AMD64
-
-*** M0
-The only Macro assembly stage needed in any bootstrap project. This adds support
-for immediates, DEFINE statements, RAW strings, hex literals and line comments.
-Weighing in at 1860bytes total.
-It has been implemented for knight, x86 and AMD64
-
-*** cc_*
-The only C compiler you would ever need to write in assembly in any bootstrap
-project. With support for: CONSTANT statements, globals, locals, function pointers,
-indirection, C strings, chars, integers, arrays, -> member access, sizeof, *, /,
-%, +, -, >>, <<, <, <=, ==, !=, >=, >, &, &&, |, ||, ^, if, for, while, do,
-inline assembly, breaks, gotos, labels, returns and structs with union support.
-Weighing in at 16,079bytes total
-It has been implemented for knight, x86 and AMD64
-
-This is just used to bootstrap M2-Planet.
-
-** mes-m2
-mes-m2 is a scheme interpreter that is currently buildable via M2-Planet and thus
-bootstrappable from our hex0 seed.
-https://github.com/oriansj/mes-m2
-
-Works on knight-posix, x86, AMD64, ARMv7l and AArch64
-
-It is written in a subset of C and slowly growing to include all functionality
-required to finish the bootstrap of GCC and guile. With its ultimate goal of
-functioning as a drop in replacement for guile and thus enable the bootstrap of
-guix as well.
-
-This is a rewrite of mes.c with the implicit goal of being easy to understand
-and easy to maintain. Thus preserving a long term path of ensuring scheme's
-bootstrappability. While at the same time being buildable via M2-Planet at all
-times.
+- Do something cool
 
 ** mescc-tools
-A port of Stage0 to Linux (i386, AMD64, armv7l and AArch64) using ELF format binaries
+A port of Stage0 to Linux (i386, AMD64, armv7l, AArch64, RISC-V 32 and 64bit) using ELF format binaries
 https://github.com/oriansj/mescc-tools
 
 *** exec_enable
@@ -296,7 +245,7 @@ you can do development in GCC and use M2-Planet to compile the result.
 https://github.com/oriansj/M2-Planet
 
 *** Currently supports
-knight-native, knight-posix, x86, AMD64, ARMv7l and AArch64
+knight-native, knight-posix, x86, AMD64, ARMv7l, AArch64, RISC-V 32 and 64bit
 
 **** Types
 void
@@ -313,12 +262,11 @@ long
 long*
 SCM (unsigned long)
 SCM* (unsigned long*)
-FILE
-FILE*
 FUNCTION (void (*FUNCTION) ()
 FUNCTION* (void* (*FUNCTION) ())
 any struct you wish to define (with unions or arrays supported as well)
 Pointers to any struct you wish to define
+typedef statements
 
 All in a trivial to understand implementation
 https://github.com/oriansj/M2-Planet/blob/master/cc_types.c
@@ -328,7 +276,7 @@ All in a trivial to understand implementation
 https://github.com/oriansj/M2-Planet/blob/master/cc_strings.c
 
 **** Comments to an amusing result
-M2-Planet supports 2 types of comments:
+M2-Planet in --bootstrap-mode supports 2 types of comments:
 /* Stuff */ block comments
 and
 \# Stuff line comments
@@ -356,7 +304,6 @@ CONSTANT CELL_SIZE sizeof(struct cell) to replace #define CELL_SIZE 1  eliminate
 the need for a C preprocessor entirely.
 
 *** M2-Planet future
-- Porting to RISC-V
 - Porting to SPARC
 - Porting to MIPS
 - Porting to PowerPC
@@ -375,18 +322,19 @@ A late stage bootstrap core componet that ensures that once you have achieved a
 certain minimal floor, that you have a solid path to producing GCC and thus
 everything you desire.
 https://gitlab.com/janneke/mes
+https://git.savannah.gnu.org/git/mes.git
 
 *** mes.c
 A scheme interpreter prototyped in C ~5000 Lines that standards at our baseline
 target of minimal functionality. If you can build this or provide equivalent
-functionality, you are good to go. (This will be replaced by mes-m2 when it is
-completed)
+functionality, you are good to go. This is buildable by M2-Planet or better C
+compiler.
 
 *** mescc.scm
 Provided a reasonable scheme exists and is functional, we leverage that to
 provide a C compiler written in Scheme (uses Nyacc C99 parser in Scheme) that
 is the core of this project and is the path to full GCC bootstrapping.
-mescc along with slow-utils (or mescc-tools) are capable of self bootstrapping.
+mescc along with mescc-tools are capable of self bootstrapping.
 
 ** NYACC
 Not Yet Another Compiler Compiler, is set of guile modules for generating parsers
@@ -394,7 +342,7 @@ and lexical analyzers.
 https://savannah.nongnu.org/projects/nyacc
 
 ** Gash
-A guile replacement for shell+binutils that can in the future run on mes-m2
+A guile replacement for shell+binutils that can in the future run on Gnu MES
 https://savannah.gnu.org/projects/gash
 
 *** Features
@@ -437,11 +385,30 @@ https://savannah.gnu.org/projects/gash
 + wc.scm
 + which.scm
 
-** Slow-utils
-A guile replacement for mescc-tools; allowing the bootstrap to be reduced down
-to any scheme interpreter.
-https://github.com/oriansj/slow-utils
-(only M1.scm needs to be finished)
+** Live-bootstrap
+A lovingly crafted work of art by Fosslinux and Stikonas with a good deal of help
+from numerous great individuals which took stage0 and Gnu Mes and ran it all the
+way to a complete Linux distribution without requiring any generated files of any
+kind.
+
+https://github.com/fosslinux/live-bootstrap
+
+This solid piece of art can be the basis of your distro, bootstrap yourself today.
+
+** guile psyntax bootstrapping
+A very clever route to bootstrapping Gnu Guile without requiring pregenerated
+files by Michael Schierl. Definitely worth a read and a solid reminder that even
+GNU tools might have bootstrapping problems.
+
+https://github.com/schierlm/guile-psyntax-bootstrapping
+
+** Builder-hex0
+A brilliant effort by Richard R. Masters which is a 384byte bootloader (written
+in hex0) builds an elegant 3.5KB POSIX kernel written in hex0 which builds and
+spawns hex0 and kaem-optional and runs all of the steps of stage0-posix/live-bootstrap
+until it builds TCC and bootstraps a bigger and more standard kernel written in
+the C that TCC can build.
+https://github.com/ironmeld/builder-hex0
 
 * How to bootstrap?
 See Current\ bootstrap\ map.pdf
@@ -449,21 +416,15 @@ See Current\ bootstrap\ map.pdf
 *done*
 
 * current status
-+ mescc has achieved a full path from mescc to gcc 4.7.4
-+ stage0/stage0-posix has achieved a full path from hex0-seeds to mes-m2 and is porting to armv7l
-+ mescc-tools is largely *done*
-+ M2-Planet is largely *done*
-+ mes-m2 is working and slowly expanding in features (feel free to help)
++ stage0/stage0-posix/stage0-uefi are able to build mes.c
++ mescc can build TCC and the path to modern software is done
++ builder-hex0 is in progress to sorting out the zero to Linux path
 + Gash is progressing and growing nicely
-+ Slow-utils is nearly finished
 
 * help
-+ programmers to help develop mes-m2 and MesCC
-+ help find and eliminate bootstrap-loops: (Nyacc?, psyntax.pp?)
-+ integrate with GuixSD (lots of little easy things to do)
++ programmers to port the steps to more architectures
 + report bugs, issues, concerns or recommendations
 + testing and finding issues with our documentation (we are human after all)
-+ We need more scheme programmers
 + We need people willing to improve documentation (art would be nice)
 + People to tell us all the ways things are broken and we can make it better
 
@@ -482,17 +443,16 @@ and thus function as a cross-platform, self-hosting compiler.
 + M2-Planet's output is 100% deterministic and easily predictable; even major
 code changes result in only in differences directly related to the changed code
 block.
-+ mes-m2's behavior is 100% deterministic and not in any way architecture specific
-+ No specific host platform is required until the mescc-tools stage.
++ no operating system is required until long after we bootstrap some
 
 * weakness of current plan
-+ Need to write a Posix in M2-Planet
++ Low level encoding details need to be figured out for various architectures
 + Poorly thought out instruction encodings make for low density binaries (AArch64, RISC-V, etc)
 + Requires large amounts of largely mechanical effort
 + Very very few developers or contributors
 
 * Contact
-#bootstrappable and #guix on freenode
+#bootstrappable and #guix on libera.chat
 via bootstrappable.org
 via our mailing list: bootstrappable@freelists.org
 or if issues are entirely MesCC only bug-mes@gnu.org
@@ -500,14 +460,14 @@ or if issues are entirely MesCC only bug-mes@gnu.org
 * FAQ
 ** Why aren't you doing more in FORTH
 + Because FORTH developers have not contributed more.
-+ FORTH sucks as a bootstrapping language
++ FORTH programmers would find collapseOS and duskos more to their liking:
+ https://git.sr.ht/~vdupras/duskos
 
 ** Why don't you have this language?
 + Because you did not write it yet or make any useful bootstrapping programs in
 it either.
-+ Probably because it sucks at bootstrapping
-+ One can bootstrap 4 C compilers in 2 hours in Assembly or C; can you even do 1
-in that amount of time in your "magic bootstrapping language"?
++ Probably because it sucks at bootstrapping or requires a great deal of work that
+no one wants to do.
 
 ** What about backdoored hardware?
 + The good news is this is simple to port to arbitrary hardware, so the cost
@@ -557,8 +517,8 @@ becoming a full POSIX port of stage0, hence the name change.
 ** You are depending upon Posix (Linux, *BSD, etc)
 + For the current work (stage0-posix), you are absolutely correct.
 + But not for the stage0 work running on Knight as all those pieces run on bare
-metal
-+ However there is a plan to bootstrap a posix on bare metal using M2-Planet
+metal or stage0-uefi.
++ Builder-hex0 is 4KB of hex0, you can audit that.
 
 ** You are depending upon special hardware that people don't have
 + You are absolutely correct.
