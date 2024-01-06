@@ -67,4 +67,17 @@ A 40minute talk on the new bootstrapped root for the Freedesktop SDK
 Video:
 https://www.youtube.com/watch?v=jwMEDI4WsAE
 
+** FOSDEM 2023 (Feb 4, 2023 @ noon)
+A brief talk by ekaitz on his work on RISC-V bootstrapping
+https://archive.fosdem.org/2023/schedule/event/guixriscv/
+
+Video:
+https://video.fosdem.org/2023/D.minimalistic/guixriscv.webm
+
+Slides:
+https://archive.fosdem.org/2023/schedule/event/guixriscv/attachments/slides/5325/export/events/attachments/guixriscv/slides/5325/RISCV_Bootstrap_guix.pdf
+
 * Future
+** FOSDEM 2024 (Feb 4, 2024 @11:20am)
+A brief talk by ekaitz on his work on RISC-V bootstrapping
+https://fosdem.org/2024/schedule/event/fosdem-2024-1755-risc-v-bootstrapping-in-guix-and-live-bootstrap/
